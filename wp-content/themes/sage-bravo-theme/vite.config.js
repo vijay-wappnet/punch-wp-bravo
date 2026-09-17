@@ -42,4 +42,14 @@ export default defineConfig({
       '@images': '/resources/images',
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Bootstrap's own SCSS still uses @import/global color functions,
+        // which spam deprecation warnings under newer Dart Sass.
+        // This silences warnings coming from node_modules only, not our own scss.
+        quietDeps: true,
+      },
+    },
+  },
 })
