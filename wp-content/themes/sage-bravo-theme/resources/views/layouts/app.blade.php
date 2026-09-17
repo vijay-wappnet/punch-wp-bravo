@@ -6,16 +6,19 @@
     @php(do_action('get_header'))
     @php(wp_head())
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
   </head>
 
-  <body @php(body_class())>
+  <body
+    @php(body_class())
+    @if(get_the_title()) data-title="{{ get_the_title() }}" @endif
+    >
     @php(wp_body_open())
 
     <div id="app">
-      <a class="sr-only focus:not-sr-only" href="#main">
+      {{-- <a class="sr-only focus:not-sr-only" href="#main">
         {{ __('Skip to content', 'sage') }}
-      </a>
+      </a> --}}
 
       @include('sections.header')
 

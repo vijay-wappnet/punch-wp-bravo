@@ -1,0 +1,191 @@
+@use "fonts" as *;
+@use "variables" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+*:focus-visible {
+  outline: none;
+}
+
+html {
+  line-height: 25px;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 18px;
+  line-height: 25px;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-light-weight; // 300
+  color: $black-off-color; // #2E2E2E
+  background-color: $white-color;
+  outline: none;
+}
+
+// Sticky footer layout - ensures footer stays at bottom
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  flex-shrink: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: 50px;
+  font-family: $font-articulat-family;
+  line-height: 60px;
+  font-weight: $font-articulat-regular-weight; // 400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 42px;
+    line-height: 50px;
+  }
+}
+
+h2 {
+  font-size: 40px;
+  font-family: $font-articulat-family;
+  line-height: 48px;
+  font-weight: $font-articulat-regular-weight; //400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 40px;
+    line-height: 48px;
+  }
+}
+
+h3 {
+  font-size: 32px;
+  font-family: $font-articulat-family;
+  line-height: 38px;
+  font-weight: $font-articulat-regular-weight; //400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+h4 {
+  font-size: 24px;
+  font-family: $font-articulat-family;
+  line-height: 30px;
+  font-weight: $font-articulat-regular-weight; //400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+
+h5 {
+  font-size: 22px;
+  font-family: $font-articulat-family;
+  line-height: 25px;
+  font-weight: $font-articulat-regular-weight; //400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 22px;
+  }
+}
+
+h6 {
+  font-size: 18px;
+  font-family: $font-articulat-family;
+  line-height: 25px;
+  font-weight: $font-articulat-regular-weight; //400
+  margin-bottom: 20px;
+  @media (max-width: $screen-md-min) {
+    font-size: 18px;
+  }
+}
+
+p {
+  font-size: 18px;
+  font-family: $font-articulat-family;
+  line-height: 25px;
+  font-weight: $font-articulat-light-weight; // 300
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: $screen-md-min) {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+pre {
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 25px;
+}
+
+a {
+  background-color: transparent;
+  line-height: 25px;
+  color: $black-off-color;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: $black-off-color;
+  text-decoration: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: block;
+  }
+}
+
+strong,
+b{
+  font-weight: $font-articulat-demi-bold-weight;
+}
+
+
+.bg_white_off {
+  background-color: $white-off-color;
+}
+
+.bg_white {
+  background-color: $white-color;
+}
+
+.fonts-articulat {
+  font-family: $font-articulat-family;
+}
+
+.fonts-articulat-heavy {
+  font-family: $font-articulat-heavy-family;
+  font-weight: $font-articulat-heavy-weight;
+}

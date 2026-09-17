@@ -1,0 +1,34 @@
+$fonts-dyslexie: "dyslexie";
+
+/*
+* Typekit / Webfont names (loaded via Typekit in PHP)
+* ============== Articulat CF - Adobe Typekit ==============
+*/
+
+ $font-articulat-family: "articulat-cf", sans-serif;
+ $font-articulat-heavy-family: "articulat-heavy-cf", sans-serif;
+
+/* Font Weights */
+$font-articulat-thin-weight: 100;
+$font-articulat-extra-light-weight: 200;
+$font-articulat-light-weight: 300;
+$font-articulat-regular-weight: 400;
+$font-articulat-medium-weight: 600;
+$font-articulat-demi-bold-weight: 700;
+$font-articulat-bold-weight: 800;
+$font-articulat-extra-bold-weight: 900;
+$font-articulat-heavy-weight: 900;
+
+$font-style-normal: normal;
+$font-style-italic: italic;
+
+/* Dyslexie Fonts */
+@font-face {
+  font-family: $fonts-dyslexie;
+  src:
+    url("../../fonts/Dyslexie-Regular.woff2") format("woff2"),
+    url("../../fonts/Dyslexie-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

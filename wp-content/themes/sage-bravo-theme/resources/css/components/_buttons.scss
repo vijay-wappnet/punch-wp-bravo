@@ -1,0 +1,22 @@
+@use '../common/fonts' as *;
+@use '../common/variables' as *;
+
+// ----------- Star button components list
+.btn {
+  display: inline-block;
+  padding: 0.5rem 2.5rem;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  @media (max-width: $screen-md-min) {
+    font-size: 22px !important;
+    line-height: 26px;
+  }
+}

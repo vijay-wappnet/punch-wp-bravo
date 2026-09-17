@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Vite;
  * @return array
  */
 add_filter('block_editor_settings_all', function ($settings) {
-    $style = Vite::asset('resources/css/editor.css');
+    $style = Vite::asset('resources/css/editor.scss');
 
     $settings['styles'][] = [
         'css' => "@import url('{$style}')",
@@ -84,7 +84,8 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
      */
     register_nav_menus([
-        'primary_navigation' => __('Primary Navigation', 'sage'),
+        'primary_navigation' => __('Header Primary Navigation', 'sage'),
+        'footer_main_navigation' => __('Footer Main Navigation', 'sage'),
     ]);
 
     /**
@@ -161,3 +162,22 @@ add_action('widgets_init', function () {
         'id' => 'sidebar-footer',
     ] + $config);
 });
+
+
+/**
+ * Enqueue Typekit on the frontend only.
+ * Use "Articulat CF" font family in the theme's CSS.
+ *
+ * @return void
+ */
+add_action('wp_enqueue_scripts', function () {
+    if (is_admin()) {
+        return;
+    }
+
+    wp_enqueue_style('typekit', 'https://use.typekit.net/bff5fur.css', [], null);
+}, 5);
+
+require_once __DIR__ . '/custom-function.php';
+require_once __DIR__ . '/remove-default-blocks.php';
+require_once __DIR__ . '/blocks.php';
