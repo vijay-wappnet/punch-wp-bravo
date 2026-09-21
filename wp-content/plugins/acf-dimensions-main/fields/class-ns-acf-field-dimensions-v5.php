@@ -49,13 +49,7 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 			$this->units = array(
 				'px'  => 'px',
 				'%'   => '%',
-				'in'  => 'in',
-				'cm'  => 'cm',
-				'mm'  => 'mm',
 				'em'  => 'em',
-				'ex'  => 'ex',
-				'pt'  => 'pt',
-				'pc'  => 'pc',
 				'rem' => 'rem',
 			);
 
@@ -100,7 +94,8 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 		public function render_field( $field ) {
 			$devices = array(
 				'desktop',
-				'tablet',
+				'tablet_landscape',
+				'tablet_portrait',
 				'mobile',
 			);
 			?>
@@ -108,16 +103,35 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 				<div class="acf-dimensions__buttons">
 					<ul>
 						<?php $cnt = 1; ?>
+
 						<?php foreach ( $devices as $item ) : ?>
 							<?php
-							$icon    = ( 'mobile' === $item ) ? 'dashicons-smartphone' : 'dashicons-' . $item;
-							$classes = ( 1 === $cnt ) ? 'btn--active' : '';
+								if('mobile' === $item){
+									$icon = 'dashicons-smartphone';
+								}elseif('tablet_landscape' === $item){
+									$icon = 'dashicons-tablet';
+								}elseif('tablet_portrait' === $item){
+									$icon = 'dashicons-tablet';
+								}else{
+									$icon = 'dashicons-desktop';
+								}
+
+								$classes = ( 1 === $cnt ) ? 'btn--active' : '';
 							?>
+
 							<li>
-								<a href="#" rel="acf-dimensions__device--<?php echo esc_attr( $item ); ?>" class="btn <?php echo esc_attr( $classes ); ?>" rel="acf-dimensions__device--<?php echo esc_attr( $item ); ?>"><span class="dashicons <?php echo esc_attr( $icon ); ?>"></span></a>
+								<a href="#" class="btn <?php echo esc_attr( $classes ); ?>" data-device="acf-dimensions__device--<?php echo esc_attr( $item ); ?>">
+									<?php if('tablet_landscape' === $item){	?>
+										<span class="dashicons <?php echo esc_attr( $icon ); ?>" style="rotate: 90deg"></span>
+									<?php }else{ ?>
+										<span class="dashicons <?php echo esc_attr( $icon ); ?>"></span>
+									<?php } ?>
+								</a>
 							</li>
+
 							<?php $cnt++; ?>
 						<?php endforeach; ?>
+
 					</ul>
 				</div><!-- .acf-dimensions__buttons -->
 
@@ -127,29 +141,25 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 					<?php foreach ( $devices as $item ) : ?>
 
 						<?php
-						$device_classes = 'acf-dimensions__device--' . $item;
+							$device_classes = 'acf-dimensions__device--' . $item;
 
-						if ( 1 === $cnt ) {
-							$device_classes .= ' acf-dimensions__device--active';
-						}
+							if ( 1 === $cnt ) {
+								$device_classes .= ' acf-dimensions__device--active';
+							}
 						?>
 
 						<div class="acf-dimensions__device <?php echo esc_attr( $device_classes ); ?>">
 							<?php
-							// Values.
-							$value_top    = isset( $field['value'][ $item ]['top'] ) ? $field['value'][ $item ]['top'] : '';
-							$value_right  = isset( $field['value'][ $item ]['right'] ) ? $field['value'][ $item ]['right'] : '';
-							$value_bottom = isset( $field['value'][ $item ]['bottom'] ) ? $field['value'][ $item ]['bottom'] : '';
-							$value_left   = isset( $field['value'][ $item ]['left'] ) ? $field['value'][ $item ]['left'] : '';
+								// Values.
+								$value_top    = isset( $field['value'][ $item ]['top'] ) ? $field['value'][ $item ]['top'] : '';
+								$value_bottom = isset( $field['value'][ $item ]['bottom'] ) ? $field['value'][ $item ]['bottom'] : '';
 
-							// Linked status.
-							$is_linked = ( isset( $field['value'][ $item ]['linked'] ) && 1 !== absint( $field['value'][ $item ]['linked'] ) ) ? 0 : 1;
+								// Linked status.
+								$is_linked = ( isset( $field['value'][ $item ]['linked'] ) && 1 !== absint( $field['value'][ $item ]['linked'] ) ) ? 0 : 1;
 
-							if ( 1 === $is_linked ) {
-								$value_right  = $value_top;
-								$value_bottom = $value_top;
-								$value_left   = $value_top;
-							}
+								if ( 1 === $is_linked ) {
+									$value_bottom = $value_top;
+								}
 							?>
 
 							<div class="acf-dimensions__inputs">
@@ -164,15 +174,6 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 									</div><!-- .acf-dimensions__input -->
 									<div class="acf-dimensions__input">
 										<input type="text"
-											class="input-right"
-											name="<?php echo esc_attr( $field['name'] ); ?>[<?php echo esc_attr( $item ); ?>][right]"
-											value="<?php echo esc_attr( $value_right ); ?>"
-											<?php echo $is_linked ? ' readonly ' : ''; ?>
-											/>
-											<span class="input-label"><?php esc_html_e( 'Right', 'acf-dimensions' ); ?></span>
-									</div>
-									<div class="acf-dimensions__input">
-										<input type="text"
 											class="input-bottom"
 											name="<?php echo esc_attr( $field['name'] ); ?>[<?php echo esc_attr( $item ); ?>][bottom]"
 											value="<?php echo esc_attr( $value_bottom ); ?>"
@@ -180,16 +181,8 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 											/>
 										<span class="input-label"><?php esc_html_e( 'Bottom', 'acf-dimensions' ); ?></span>
 									</div>
-									<div class="acf-dimensions__input">
-										<input type="text"
-											class="input-left"
-											name="<?php echo esc_attr( $field['name'] ); ?>[<?php echo esc_attr( $item ); ?>][left]"
-											value="<?php echo esc_attr( $value_left ); ?>"
-											<?php echo $is_linked ? ' readonly ' : ''; ?>
-											/>
-										<span class="input-label"><?php esc_html_e( 'Left', 'acf-dimensions' ); ?></span>
-									</div>
 								</div><!-- .acf-dimensions__texts -->
+
 								<div class="acf-dimensions__linker">
 									<?php
 									$button_classes = '';
@@ -198,7 +191,7 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 										$button_classes .= ' btn--active';
 									}
 									?>
-									<button class="btn btn--linker <?php echo esc_attr( $button_classes ); ?>">
+									<button type="button" class="btn btn--linker <?php echo esc_attr( $button_classes ); ?>">
 										<span class="linked dashicons dashicons-admin-links"></span>
 										<span class="unlinked dashicons dashicons-editor-unlink"></span>
 									</button>
@@ -276,7 +269,8 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 
 			$devices = array(
 				'desktop',
-				'tablet',
+				'tablet_landscape',
+				'tablet_portrait',
 				'mobile',
 			);
 
@@ -284,13 +278,11 @@ if ( ! class_exists( 'NS_ACF_Field_Dimensions' ) ) :
 				$css = '';
 
 				$top    = isset( $value[ $item ]['top'] ) ? $value[ $item ]['top'] : '';
-				$right  = isset( $value[ $item ]['right'] ) ? $value[ $item ]['right'] : '';
 				$bottom = isset( $value[ $item ]['bottom'] ) ? $value[ $item ]['bottom'] : '';
-				$left   = isset( $value[ $item ]['left'] ) ? $value[ $item ]['left'] : '';
 				$unit   = isset( $value[ $item ]['unit'] ) ? $value[ $item ]['unit'] : '';
 
-				if ( '' !== $top || '' !== $right || '' !== $bottom || '' !== $left ) {
-					$css .= sprintf( '%2$s%1$s %3$s%1$s %4$s%1$s %5$s%1$s', $unit, (float) $top, (float) $right, (float) $bottom, (float) $left );
+				if ('' !== $top || '' !== $bottom) {
+					$css .= sprintf( '%2$s%1$s 0%1$s %3$s%1$s 0%1$s', $unit, (float) $top, (float) $bottom);
 				}
 
 				$output[ $item ] = $css;

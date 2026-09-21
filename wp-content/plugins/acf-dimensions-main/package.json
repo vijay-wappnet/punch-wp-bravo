@@ -1,7 +1,7 @@
 {
   "name": "acf-dimensions",
   "title": "ACF Dimensions",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "GPL-2.0+",
   "main_file": "acf-dimensions.php",
   "repository": {

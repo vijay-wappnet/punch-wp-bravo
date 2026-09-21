@@ -1,7 +1,12 @@
 .acf-dimensions {
 	input,
 	select {
-		border-radius: 0;
+		border-radius: 3px;
+    	border: 1px solid #bbb;
+	}
+
+	select {
+		padding: 5.5px 10px;
 	}
 
 	a {
@@ -33,9 +38,13 @@
 
 		li {
 			margin-right: 3px;
+			margin-bottom: 3px;
 
 			a {
 				text-decoration: none;
+				border-radius: 3px;
+    			padding: 8px !important;
+				border-radius: 3px;
 			}
 		}
 	}
@@ -59,7 +68,10 @@
 
 		input[type="text"] {
 			max-width: 70px;
-			border-right-width: 0;
+			border-right-width: 1;
+			border-radius: 3px;
+			margin-right: 5px;
+			padding: 5px;
 		}
 
 		.input-left {
@@ -83,6 +95,7 @@
 	.btn--linker {
 		background-color: #7e8993;
 		color: #fff;
+		border-radius: 3px;
 
 		.linked,
 		&.btn--active .unlinked {
@@ -101,7 +114,8 @@
 	.acf-dimensions {
 		input,
 		select {
-			border-radius: 0;
+		    border-radius: 3px;
+    		border: 1px solid #bbb;
 		}
 	}
 
@@ -124,7 +138,8 @@
 	.acf-dimensions {
 		input,
 		select {
-			border-radius: 0;
+			border-radius: 3px;
+    		border: 1px solid #bbb;
 		}
 	}
 
