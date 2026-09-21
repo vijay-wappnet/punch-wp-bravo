@@ -25,6 +25,7 @@ add_action('init', function () {
             'icon'            => 'text',
             'mode'            => 'edit',
             'align'           => 'full',
+            'api_version'     => 3,
             'supports'        => [
                 'align'           => false,
                 'mode'            => true,
