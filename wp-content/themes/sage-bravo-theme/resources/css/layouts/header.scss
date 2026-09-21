@@ -1,0 +1,458 @@
+@use '../common/variables' as *;
+@use '../common/fonts' as *;
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 40px;
+
+    @media (max-width: $screen-lg-min) {
+      padding: 16px 20px;
+    }
+  }
+
+  // Non-front pages are always in the "scrolled" (light) state.
+  &:not(.site-header--home) {
+    background-color: $white-off-color;
+  }
+
+  &.site-header--home.header-scrolled,
+  &:not(.site-header--home) {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  &.site-header--home.header-scrolled {
+    background-color: $white-off-color;
+  }
+}
+
+/* ==========================================
+   MENU TOGGLE (burger icon)
+========================================== */
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+
+  .menu-toggle-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-icon-mobile {
+    display: none;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    .menu-icon-desktop {
+      display: none;
+    }
+
+    .menu-icon-mobile {
+      display: block;
+      position: static;
+    }
+
+    .menu-icon-mobile.menu-icon-black {
+      position: absolute;
+    }
+  }
+}
+
+// Front page: white icon by default, black icon once scrolled/light.
+.site-header--home .menu-toggle .menu-icon-white {
+  opacity: 1;
+}
+
+.site-header--home.header-scrolled .menu-toggle .menu-icon-white {
+  opacity: 0;
+}
+
+.site-header--home.header-scrolled .menu-toggle .menu-icon-black {
+  opacity: 1;
+}
+
+// Inner pages: always the black/dark icon on the light header.
+.site-header:not(.site-header--home) .menu-toggle .menu-icon-white {
+  opacity: 0;
+}
+
+.site-header:not(.site-header--home) .menu-toggle .menu-icon-black {
+  opacity: 1;
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+.logo-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+
+  img {
+    height: 28px;
+    width: auto;
+  }
+}
+
+.brand-logo-white,
+.brand-logo-transition {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+// Front page top state: white logo visible, black + transition logo hidden.
+.site-header--home {
+  .brand-logo-black {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .brand-logo-white {
+    opacity: 1;
+  }
+
+  &.header-scrolled {
+    .brand-logo-white {
+      opacity: 0;
+    }
+
+    .brand-logo-transition {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
+/* ==========================================
+   HEADER ACTIONS (login + CTA)
+========================================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-login-link {
+  font-size: 16px;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  color: $white-color;
+  transition: color 0.3s ease;
+
+  @media (max-width: $screen-lg-min) {
+    display: none;
+  }
+}
+
+.site-header--home.header-scrolled .header-login-link,
+.site-header:not(.site-header--home) .header-login-link {
+  color: $black-off-color;
+}
+
+.header-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  background-color: $red-fusion-color;
+  color: $white-color;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 16px;
+  white-space: nowrap;
+
+  &::after {
+    content: '\2192';
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover::after {
+    transform: translateX(4px);
+  }
+
+  &:hover,
+  &:focus {
+    color: $white-color;
+  }
+}
+
+/* ==========================================
+   FULLSCREEN MENU (BURGER OVERLAY)
+========================================== */
+
+.fullscreen-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  background-color: $white-off-color;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+
+  &.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 40px;
+
+  @media (max-width: $screen-lg-min) {
+    padding: 16px 20px;
+  }
+}
+
+.menu-header-logo {
+  display: none;
+
+  img {
+    height: 26px;
+    width: auto;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    display: block;
+  }
+}
+
+.close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: $font-articulat-family;
+  font-size: 18px;
+  color: $black-off-color;
+  margin-left: auto;
+
+  @media (max-width: $screen-lg-min) {
+    margin-left: 0;
+  }
+
+  .close-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .close-label {
+    @media (max-width: $screen-lg-min) {
+      display: none;
+    }
+  }
+}
+
+.fullscreen-menu-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.fullscreen-nav {
+  display: flex;
+  height: 100%;
+
+  @media (max-width: $screen-lg-min) {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.menu-left {
+  flex: 0 0 40%;
+  padding: 20px 40px 40px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $screen-lg-min) {
+    flex: 1;
+    padding: 0 20px;
+  }
+}
+
+.fullscreen-menu-list {
+  list-style: none;
+
+  li {
+    display: block;
+  }
+}
+
+.fullscreen-menu-link,
+.fullscreen-menu-login-item {
+  display: block;
+}
+
+.fullscreen-menu-link {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 32px;
+  line-height: 1.4;
+  color: $black-off-color;
+  padding: 8px 0;
+
+  &:hover,
+  &:focus {
+    color: $red-fusion-color;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    font-size: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid $white-off-light-grayish-color;
+  }
+}
+
+.fullscreen-menu-login-item .fullscreen-menu-link {
+  @media (max-width: $screen-lg-min) {
+    border-bottom: 1px solid $white-off-light-grayish-color;
+  }
+}
+
+.menu-right {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: $red-fusion-color;
+
+  @media (max-width: $screen-lg-min) {
+    display: none;
+  }
+}
+
+.dot-grid-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.menu-right-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-right-label {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 32px;
+  color: $black-off-color;
+}
+
+.menu-right-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background-color: $black-off-color;
+  color: $white-color;
+
+  &::after {
+    content: '\2192';
+  }
+
+  &:hover,
+  &:focus {
+    color: $white-color;
+  }
+}
+
+.menu-footer {
+  display: none;
+
+  @media (max-width: $screen-lg-min) {
+    display: block;
+    padding: 20px;
+  }
+}
+
+.menu-footer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px;
+  border-radius: 100px;
+  background-color: $red-fusion-color;
+  color: $white-color;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 18px;
+
+  &:hover,
+  &:focus {
+    color: $white-color;
+  }
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+// Inner pages: header isn't overlaying a hero, so push content below it.
+body:not(.home) .main {
+  padding-top: 96px;
+
+  @media (max-width: $screen-lg-min) {
+    padding-top: 76px;
+  }
+}

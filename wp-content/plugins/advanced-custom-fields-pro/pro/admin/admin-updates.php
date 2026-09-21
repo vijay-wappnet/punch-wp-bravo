@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -64,7 +73,7 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 		 * @since   5.7.10
 		 *
 		 * @param   string $changelog The changelog text.
-		 * @param   string $version The version to find.
+		 * @param   string $version   The version to find.
 		 * @return  string
 		 */
 		function get_changelog_changes( $changelog = '', $version = '' ) {
@@ -108,13 +117,8 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 				return;
 			}
 
-			// Bail early if no show_updates.
-			if ( ! acf_get_setting( 'show_updates' ) ) {
-				return;
-			}
-
-			// Bail early if not a plugin (included in theme).
-			if ( ! acf_is_plugin_active() ) {
+			// Bail early if the updates page is not visible.
+			if ( ! acf_pro_is_updates_page_visible() ) {
 				return;
 			}
 
@@ -141,19 +145,26 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
 
 			// Check activate.
-			if ( acf_verify_nonce( 'activate_pro_license' ) ) {
-				acf_pro_activate_license( sanitize_text_field( $_POST['acf_pro_license'] ) );
+			if ( acf_verify_nonce( 'activate_pro_license' ) && ! empty( $_POST['acf_pro_license'] ) ) {
+				acf_pro_activate_license( sanitize_text_field( $_POST['acf_pro_license'] ) ); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- unslash not needed.
 
 				// Check deactivate.
 			} elseif ( acf_verify_nonce( 'deactivate_pro_license' ) ) {
 				acf_pro_deactivate_license();
 			}
 
+			// Check if we should force check the license status.
+			$force_get_license_status = false;
+			$retry_license_nonce      = acf_request_arg( 'acf_retry_nonce' );
+			if ( wp_verify_nonce( $retry_license_nonce, 'acf_recheck_status' ) || ! empty( $_GET['force-license-check'] ) ) {
+				$force_get_license_status = true;
+			}
+
 			// vars
 			$license    = acf_pro_get_license_key();
 			$this->view = array(
 				'license'            => $license,
-				'license_status'     => acf_pro_get_license_status( ! empty( $_GET['acf-recheck-license'] ) ),
+				'license_status'     => acf_pro_get_license_status( $force_get_license_status ),
 				'active'             => $license ? 1 : 0,
 				'current_version'    => acf_get_setting( 'version' ),
 				'remote_version'     => '',
@@ -206,7 +217,6 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 
 				if ( $license ) {
 					if ( isset( $update['license_valid'] ) && ! $update['license_valid'] ) {
-
 						$this->view['license_error'] = true;
 						acf_new_admin_notice(
 							array(
@@ -214,7 +224,6 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 								'type' => 'error',
 							)
 						);
-
 					} else {
 						// display error if no package url - possible if license key or site URL has been modified.
 						if ( $update && ! $update['package'] ) {
@@ -261,11 +270,10 @@ if ( ! class_exists( 'ACF_Admin_Updates' ) ) :
 		 * @return  void
 		 */
 		function html() {
-			acf_get_view( dirname( __FILE__ ) . '/views/html-settings-updates.php', $this->view );
+			acf_get_view( __DIR__ . '/views/html-settings-updates.php', $this->view );
 		}
 	}
 
 	// Initialize.
 	acf_new_instance( 'ACF_Admin_Updates' );
-
 endif; // class_exists check

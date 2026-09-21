@@ -1,0 +1,88 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.intro-section {
+
+  h1,
+  h2 {
+    &.intro-section__heading {
+      font-family: $font-articulat-family;
+      font-weight: $font-articulat-light-weight;
+    }
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    &.intro-section__heading {
+      font-family: $font-articulat-family;
+      font-weight: $font-articulat-light-weight;
+      margin-bottom: 25px;
+    }
+  }
+
+  .intro-section__content {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    margin-bottom: 25px;
+
+    @media (max-width: $screen-md-min) {
+      font-size: 22px;
+      margin-bottom: 35px;
+
+    }
+
+    ul {
+      padding-left: 30px;
+      margin-bottom: 20px;
+
+      li {
+        display: list-item;
+        padding-bottom: 5px;
+      }
+
+      &.split-ul {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 20px;
+
+        @media (max-width: $screen-md-min) {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+  }
+
+  .intro-section__buttons {
+    .its-btn {
+      min-width: 217px;
+    }
+  }
+}
+
+.home {
+  .intro-section {
+    .intro-section__content {
+      font-size: 32px;
+      line-height: 38px;
+      font-family: $font-articulat-family;
+      font-weight: $font-articulat-light-weight;
+
+      p {
+        font-size: 32px;
+        line-height: 38px;
+        font-family: $font-articulat-family;
+        font-weight: $font-articulat-light-weight;
+      }
+    }
+  }
+}
