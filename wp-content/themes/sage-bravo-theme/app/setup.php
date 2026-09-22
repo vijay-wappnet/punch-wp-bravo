@@ -86,7 +86,6 @@ add_action('after_setup_theme', function () {
     register_nav_menus([
         'primary_navigation' => __('Header Primary Navigation', 'sage'),
         'footer_main_navigation_one' => __('Footer Main Navigation One', 'sage'),
-        'footer_main_navigation_two' => __('Footer Main Navigation Two', 'sage'),
     ]);
 
     /**

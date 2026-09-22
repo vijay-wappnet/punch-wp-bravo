@@ -12,3 +12,4 @@ window.bootstrap = bootstrap;
    BLOCK SCRIPTS
 ========================================== */
 import './header.js'; // Header JS
+import './footer.js'; // Footer JS

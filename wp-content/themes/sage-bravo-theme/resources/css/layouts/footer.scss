@@ -1,0 +1,551 @@
+@use '../common/variables' as *;
+@use '../common/fonts' as *;
+
+/* ==========================================
+   FOOTER — SHARED
+========================================== */
+
+.site-footer {
+  background-color: $black-off-color;
+}
+
+.footer-newsletter-inner,
+.footer-main-inner,
+.footer-bottom-inner {
+  max-width: $screen-xl-min;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   NEWSLETTER ROW
+========================================== */
+
+.footer-newsletter {
+  background-color: $white-color;
+  border-bottom: 1px solid $white-off-light-grayish-color;
+  padding: 32px 40px;
+
+  @media (max-width: $screen-lg-min) {
+    padding: 32px 20px;
+  }
+}
+
+.footer-newsletter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  @media (max-width: $screen-lg-min) {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 20px;
+  }
+}
+
+.footer-newsletter-copy {
+  flex: 0 1 auto;
+}
+
+.footer-newsletter-title {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 24px;
+  line-height: 30px;
+  color: $black-off-color;
+  margin: 0;
+}
+
+.footer-newsletter-title-mobile {
+  display: none;
+}
+
+@media (max-width: $screen-lg-min) {
+  .footer-newsletter-title-desktop {
+    display: none;
+  }
+
+  .footer-newsletter-title-mobile {
+    display: block;
+  }
+}
+
+.footer-newsletter-description {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-light-weight;
+  font-size: 16px;
+  line-height: 22px;
+  color: $gray-granite-color;
+  margin: 8px 0 0;
+}
+
+.footer-newsletter-form {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 640px;
+  @media (max-width: $screen-lg-min) {
+    max-width: 100%;
+  }
+  form {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 15px;
+
+    @media (max-width: $screen-lg-min) {
+      justify-content: center;
+    }
+  }
+
+  // The CF7 field wraps its input in a <label>Email Address <span>...<input></span></label>.
+  // The visible "Email Address" text node isn't part of this design — only the
+  // placeholder shows — so it's hidden with the classic font-size:0 trick and
+  // restored on the wrapped control below.
+  label {
+    font-size: 0;
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+    margin: 0;
+    min-width: 260px;
+  }
+
+  // CF7's own core stylesheet sets `.wpcf7-form-control-wrap { position: relative; }`.
+  // That's a plain single-class rule, but since we don't otherwise declare
+  // `position` here, it still wins that property (the cascade resolves
+  // specificity per-property, not per-rule) - so it has to be reset
+  // explicitly. The not-valid-tip below needs its containing block to be
+  // <form>, not this wrap, so it can span under the input AND the button.
+  .wpcf7-form-control-wrap {
+    position: static;
+    display: block;
+    flex: 1;
+  }
+
+  // The CF7 image-captcha field isn't wrapped in a <p> - its own JS inserts
+  // it as this same .wpcf7-form-control-wrap class directly inside <form>,
+  // physically sitting between the email field and the submit button in the
+  // DOM. `order` visually moves it after the button (both of which stay at
+  // the default order 0, so they lay out together first); flex-basis:100%
+  // then forces it onto its own full-width row below them.
+  .wpcf7-form-control-wrap.kc_captcha {
+    order: 2;
+    flex: 0 0 100%;
+    margin-top: 12px;
+    font-size: 14px;
+    color: $gray-granite-color;
+  }
+
+  p:has(input[type='email']) {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  input[type='email'] {
+    width: 100%;
+    font-size: 22px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    color: $black-off-color;
+    background-color: $white-color;
+    border: 1.5px solid $black-off-color;
+    border-radius: 8px;
+    padding: 18px 28px;
+
+    &::placeholder {
+      color: $black-off-color;
+      opacity: 1;
+    }
+
+    @media (max-width: $screen-mobile-min) {
+      font-size: 18px;
+      padding: 14px 20px;
+    }
+  }
+
+  input[type='submit'] {
+    flex: 0 0 auto;
+    font-size: 20px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    color: $black-off-color;
+    background-color: $red-fusion-color;
+    border: 0;
+    border-radius: 8px;
+    padding: 18px 56px 18px 32px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover,
+    &:focus {
+      background-color: $black-off-color;
+      color: $white-color;
+    }
+  }
+
+  .footer-newsletter-submit {
+    position: relative;
+    display: flex;
+
+    &::after {
+      content: '\2192';
+      position: absolute;
+      top: 50%;
+      right: 28px;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: $black-off-color;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    &:has(input:hover)::after,
+    &:has(input:focus)::after {
+      color: $white-color;
+    }
+  }
+
+  .wpcf7-response-output {
+    flex-basis: 100%;
+    font-size: 14px;
+    color: $gray-granite-color;
+    margin: 8px 0 0;
+  }
+
+  // Positioned relative to <form> (not its immediate wrap) so it spans the
+  // full width below the input AND the submit button, instead of squeezing
+  // in between them and pushing the button out of the joined pill.
+  .wpcf7-not-valid-tip {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 13px;
+    color: $red-fusion-color;
+  }
+
+  // Mobile: input and button each become their own full-width, centered row
+  // instead of sharing a line.
+  @media (max-width: $screen-lg-min) {
+    p:has(input[type='email']),
+    p:has(input[type='submit']) {
+      flex: 1 1 100%;
+      min-width: 0;
+    }
+
+    input[type='email'] {
+      text-align: center;
+    }
+
+    .footer-newsletter-submit {
+      width: 100%;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    input[type='submit'] {
+      width: 100%;
+      text-align: center;
+      padding: 18px 24px;
+    }
+  }
+}
+
+/* ==========================================
+   MAIN ROW (logo / contact, nav, banner)
+========================================== */
+
+.footer-main {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 40px;
+
+  @media (max-width: $screen-lg-min) {
+    padding: 40px 20px;
+  }
+}
+
+.footer-main-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+
+  // The dot banner is pinned flush to the edge of .footer-main (outside this
+  // max-width column), so reserve room here to keep the nav from running
+  // underneath it.
+  @media (min-width: $screen-lg-min) {
+    padding-right: 300px;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+}
+
+.footer-branding {
+  flex: 0 0 auto;
+}
+
+.footer-logo-wrapper {
+  display: inline-flex;
+
+  @media (max-width: $screen-lg-min) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+
+  img {
+    height: 55px;
+    width: auto;
+
+    @media (max-width: $screen-lg-min) {
+      height: 85px;
+    }
+  }
+}
+
+.footer-contact-list {
+  list-style: none;
+  margin: 24px 0 0;
+
+  @media (max-width: $screen-lg-min) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+}
+
+.footer-contact-item {
+  margin-bottom: 8px;
+
+  @media (max-width: $screen-lg-min) {
+    margin-bottom: 0;
+  }
+}
+
+.footer-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 18px;
+  line-height: 25px;
+  color: $white-off-color;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $red-fusion-color;
+  }
+}
+
+// Desktop shows the text label, mobile swaps to the icon only.
+.footer-contact-icon {
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: $screen-lg-min) {
+  .footer-contact-icon {
+    display: block;
+  }
+
+  .footer-contact-title {
+    display: none;
+  }
+}
+
+/* ==========================================
+   FOOTER NAVIGATION (+ mobile "Site map" accordion)
+========================================== */
+
+.footer-nav-wrapper {
+  flex: 1;
+  max-width: 460px;
+
+  @media (max-width: $screen-lg-min) {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.footer-nav-toggle {
+  display: none;
+
+  @media (max-width: $screen-lg-min) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 0;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+}
+
+.footer-nav-toggle-label {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 18px;
+  color: $white-color;
+}
+
+.footer-nav-toggle-icon {
+  width: 14px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.footer-nav-toggle.is-open .footer-nav-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.footer-menu-list {
+  list-style: none;
+  column-count: 2;
+  column-gap: 48px;
+
+  li {
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    column-count: 1;
+  }
+}
+
+.footer-menu-link {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-regular-weight;
+  font-size: 18px;
+  line-height: 25px;
+  color: $white-off-color;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $red-fusion-color;
+  }
+}
+
+@media (max-width: $screen-lg-min) {
+  .footer-navigation {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .footer-navigation.is-open {
+    max-height: 1000px;
+  }
+
+  .footer-menu-list {
+    padding-top: 20px;
+
+    li {
+      text-align: center;
+      margin-bottom: 0;
+    }
+  }
+
+  .footer-menu-link {
+    display: block;
+    padding: 10px 0;
+  }
+}
+
+/* ==========================================
+   BANNER (decorative dot image)
+========================================== */
+
+.footer-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  line-height: 0;
+  pointer-events: none;
+
+  @media (max-width: $screen-lg-min) {
+    display: none;
+  }
+}
+
+.footer-banner-image {
+  width: auto;
+  max-width: none;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================
+   BOTTOM BAR (copyright)
+========================================== */
+
+.footer-bottom {
+  background-color: $back-color;
+  padding: 18px 40px;
+
+  @media (max-width: $screen-lg-min) {
+    padding: 18px 20px;
+  }
+}
+
+.footer-bottom-inner {
+  font-family: $font-articulat-family;
+  font-weight: $font-articulat-light-weight;
+  font-size: 14px;
+  line-height: 20px;
+  color: $white-off-light-grayish-color;
+
+  @media (max-width: $screen-lg-min) {
+    text-align: center;
+  }
+
+  a {
+    color: $white-off-light-grayish-color;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      color: $white-color;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    color: inherit;
+    margin: 0;
+  }
+}
