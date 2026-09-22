@@ -18,6 +18,12 @@
     padding: 20px 40px;
 
     @media (max-width: $screen-lg-min) {
+      // Logo is centered independently (position: absolute on
+      // .logo-wrapper below); menu-toggle is the only element left in
+      // flow now that .header-actions is hidden on mobile, so it must
+      // sit at the start (left) rather than space-between's end position.
+      position: relative;
+      justify-content: flex-start;
       padding: 16px 20px;
     }
   }
@@ -69,6 +75,17 @@
     display: none;
   }
 
+  // One icon stays in-flow (position: static) so the button has real,
+  // clickable dimensions; the alternate state overlays it absolutely
+  // for the opacity crossfade.
+  .menu-icon-desktop {
+    position: static;
+  }
+
+  .menu-icon-desktop.menu-icon-black {
+    position: absolute;
+  }
+
   @media (max-width: $screen-lg-min) {
     .menu-icon-desktop {
       display: none;
@@ -115,6 +132,13 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+
+  @media (max-width: $screen-lg-min) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .brand-logo {
@@ -123,7 +147,7 @@
   line-height: 0;
 
   img {
-    height: 28px;
+    height: 55px;
     width: auto;
   }
 }
@@ -170,6 +194,9 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  @media (max-width: $screen-lg-min) {
+    display: none;
+  }
 }
 
 .header-login-link {
@@ -177,6 +204,7 @@
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   color: $white-color;
+  text-decoration: none;
   transition: color 0.3s ease;
 
   @media (max-width: $screen-lg-min) {
@@ -194,9 +222,9 @@
   align-items: center;
   gap: 10px;
   padding: 12px 24px;
-  border-radius: 100px;
+  border-radius: 5px;
   background-color: $red-fusion-color;
-  color: $white-color;
+  color: $black-off-color;
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   font-size: 16px;
@@ -214,7 +242,8 @@
 
   &:hover,
   &:focus {
-    color: $white-color;
+    background-color: $black-off-color;
+    color: $white-off-color;
   }
 }
 
@@ -245,10 +274,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 40px;
+  padding: 0 0 24px;
 
   @media (max-width: $screen-lg-min) {
-    padding: 16px 20px;
+    // Logo is centered independently (position: absolute below), so on
+    // mobile close-btn is the only element left in flow - it must sit at
+    // the start (left) rather than space-between's implicit end position.
+    position: relative;
+    justify-content: flex-start;
+    padding: 16px 0;
   }
 }
 
@@ -256,26 +290,31 @@
   display: none;
 
   img {
-    height: 26px;
+    height: 55px;
     width: auto;
   }
 
   @media (max-width: $screen-lg-min) {
     display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
 .close-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 30px;
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: $font-articulat-family;
-  font-size: 18px;
+  font-size: 24px;
+  line-height: 40px;
   color: $black-off-color;
-  margin-left: auto;
+  margin-left: right;
 
   @media (max-width: $screen-lg-min) {
     margin-left: 0;
@@ -300,23 +339,45 @@
 
 .fullscreen-nav {
   display: flex;
-  height: 100%;
+  // min-height (not height): the row must fill the viewport when the
+  // nav list is short, but grow taller when it isn't - otherwise the
+  // red .menu-right panel gets clipped at one viewport tall while
+  // .menu-left's content keeps scrolling past it.
+  min-height: 100%;
 
   @media (max-width: $screen-lg-min) {
     flex-direction: column;
-    height: auto;
+    min-height: auto;
   }
 }
 
 .menu-left {
-  flex: 0 0 40%;
+  flex: 0 0 50%;
   padding: 20px 40px 40px;
   display: flex;
   flex-direction: column;
+  // Centers the nav block vertically when the column is taller than its
+  // content (short nav list against a tall/zoomed-out viewport), matching
+  // how .menu-right already centers its own content.
+  justify-content: center;
 
   @media (max-width: $screen-lg-min) {
     flex: 1;
     padding: 0 20px;
+    justify-content: flex-start;
+  }
+}
+
+.menu-left-inner {
+  width: 100%;
+  max-width: 640px;
+  margin: auto 0 auto 0;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $screen-lg-min) {
+    max-width: none;
+    margin: 0;
   }
 }
 
@@ -325,6 +386,10 @@
 
   li {
     display: block;
+    margin-bottom: 30px;
+    @media (max-width: $screen-lg-min) {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -336,9 +401,10 @@
 .fullscreen-menu-link {
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
-  font-size: 32px;
-  line-height: 1.4;
+  font-size: 48px;
+  line-height: 40px;
   color: $black-off-color;
+  text-decoration: none;
   padding: 8px 0;
 
   &:hover,
@@ -348,7 +414,7 @@
 
   @media (max-width: $screen-lg-min) {
     font-size: 20px;
-    padding: 16px 0;
+    padding: 5px 0;
     border-bottom: 1px solid $white-off-light-grayish-color;
   }
 }
@@ -388,23 +454,31 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  width: 100%;
+  min-height: 223px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background: linear-gradient(45deg, #ff5f5da1, #ff5f5da1);
 }
 
 .menu-right-label {
+  font-size: 40px;
   font-family: $font-articulat-family;
-  font-weight: $font-articulat-regular-weight;
-  font-size: 32px;
+  line-height: 48px;
+  font-weight: $font-articulat-regular-weight; //400
   color: $black-off-color;
 }
 
 .menu-right-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   padding: 14px 28px;
-  border-radius: 100px;
+  border-radius: 0px;
   background-color: $black-off-color;
   color: $white-color;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   &::after {
     content: '\2192';
@@ -412,7 +486,8 @@
 
   &:hover,
   &:focus {
-    color: $white-color;
+    background-color: $white-off-color;
+    color: $black-off-color;
   }
 }
 
@@ -421,7 +496,7 @@
 
   @media (max-width: $screen-lg-min) {
     display: block;
-    padding: 20px;
+    padding: 0px;
   }
 }
 
@@ -431,7 +506,7 @@
   justify-content: center;
   width: 100%;
   padding: 18px;
-  border-radius: 100px;
+  border-radius: 0px;
   background-color: $red-fusion-color;
   color: $white-color;
   font-family: $font-articulat-family;
@@ -439,8 +514,13 @@
   font-size: 18px;
 
   &:hover,
-  &:focus {
-    color: $white-color;
+  &:focus,
+  &:active {
+    color: $black-off-color;
+    background-color: $red-fusion-color;
+  }
+  @media (max-width: $screen-lg-min) {
+    color: $black-off-color;
   }
 }
 

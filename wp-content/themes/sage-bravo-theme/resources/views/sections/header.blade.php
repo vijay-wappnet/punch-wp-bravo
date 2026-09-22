@@ -170,11 +170,11 @@
         <a
           href="{{ esc_url($cta_url) }}"
           class="btn header-cta-btn"
-          aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_main_title'] ?? '') }}"
+          aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_title'] ?? '') }}"
           @if ($cta_target) target="{{ esc_attr($cta_target) }}" @endif
           @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif
         >
-          <span>{{ $primary_button['button_main_title'] ?? __('Get Started', 'sage') }}</span>
+          <span>{{ $primary_button['button_title'] ?? __('Get Started', 'sage') }}</span>
         </a>
       @endif
     </div>
