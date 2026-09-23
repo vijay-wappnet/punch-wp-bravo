@@ -4,7 +4,10 @@
 // ----------- Star button components list
 .btn {
   display: inline-block;
-  padding: 0.5rem 2.5rem;
+  align-items: center;
+  padding: 0.6rem 0rem;
+  width: 171px;
+  gap: 10px;
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   font-size: 18px;
@@ -12,18 +15,9 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-
-  img {
-    transition: transform 0.2s ease;
-  }
-
-  &:hover img,
-  &:focus img {
-    transform: translateX(4px);
-  }
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 
   @media (max-width: $screen-md-min) {
     font-size: 22px !important;
@@ -32,18 +26,41 @@
 }
 
 // Red fusion CTA - reused across blocks (bg red-fusion, hover black-off)
+// Transition matches bravo.works' own .btn-coral reference exactly:
+// background/text fade over 350ms, icon slides + flips to white via filter.
 .btn-red-fusion {
-  display: inline-flex;
+  display: flex;
+  justify-content: space-around;
   align-items: center;
-  gap: 10px;
-  border-radius: 5px;
   background-color: $red-fusion-color;
   color: $black-off-color;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
+
+  img {
+    transition: transform 350ms ease-in-out, filter 350ms ease-in-out;
+  }
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: $black-off-color;
-    color: $white-off-color;
+    color: $white-color;
+
+    img {
+      filter: brightness(0) invert(1);
+      transform: translateX(0.5em);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    img {
+      transition: none;
+    }
+
+    &:hover,
+    &:focus-visible img {
+      transform: none;
+    }
   }
 }
