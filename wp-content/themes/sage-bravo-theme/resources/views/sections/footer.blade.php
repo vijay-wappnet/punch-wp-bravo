@@ -156,7 +156,7 @@
             aria-controls="footer-nav-menu"
           >
             <span class="footer-nav-toggle-label">{{ __('Site map', 'sage') }}</span>
-            <img src="{{ Vite::asset('resources/images/arrrow_down.svg') }}" alt="" class="footer-nav-toggle-icon" aria-hidden="true">
+            <img src="{{ Vite::asset('resources/images/arrow-down.svg') }}" alt="" class="footer-nav-toggle-icon" aria-hidden="true">
           </button>
 
           <nav

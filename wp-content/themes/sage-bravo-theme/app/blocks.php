@@ -33,8 +33,27 @@ add_action('init', function () {
                 'align_text'      => false,
             ],
         ]);
+
+        //Register the Video Banner Section Block
+        acf_register_block_type([
+            'name'            => 'video-banner-section',
+            'title'           => __('Video Banner Section', 'sage'),
+            'description'     => __('A fullscreen video banner section with heading and scroll arrow', 'sage'),
+            'render_callback' => ['App\Blocks\VideoBannerSection', 'render'],
+            'category'        => 'common',
+            'icon'            => 'format-video',
+            'mode'            => 'preview',
+            'align'           => 'full',
+            'supports'        => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
-    // Register a custom block with ACF
+
 });
 
 /**
