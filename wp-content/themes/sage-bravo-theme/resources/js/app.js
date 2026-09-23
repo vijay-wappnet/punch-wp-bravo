@@ -9,7 +9,12 @@ import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 
 /* ==========================================
-   BLOCK SCRIPTS
+   Header & Footer SCRIPTS
 ========================================== */
 import './header.js'; // Header JS
 import './footer.js'; // Footer JS
+
+/* ==========================================
+   BLOCK SCRIPTS
+========================================== */
+import './gsap-animations.js';
