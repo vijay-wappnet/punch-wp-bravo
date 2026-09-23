@@ -96,12 +96,12 @@
     text-align: left;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    font-size: 40px;
-    line-height: 48px;
+    // font-size: 50px;
+    // line-height: 60px;
 
     @media (max-width: $screen-md-min) {
-      font-size: 28px;
-      line-height: 36px;
+      // font-size: 42px;
+      // line-height: 50px;
     }
   }
 
