@@ -217,36 +217,6 @@
   color: $black-off-color;
 }
 
-.header-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border-radius: 5px;
-  background-color: $red-fusion-color;
-  color: $black-off-color;
-  font-family: $font-articulat-family;
-  font-weight: $font-articulat-regular-weight;
-  font-size: 16px;
-  white-space: nowrap;
-
-  &::after {
-    content: '\2192';
-    display: inline-block;
-    transition: transform 0.2s ease;
-  }
-
-  &:hover::after {
-    transform: translateX(4px);
-  }
-
-  &:hover,
-  &:focus {
-    background-color: $black-off-color;
-    color: $white-off-color;
-  }
-}
-
 /* ==========================================
    FULLSCREEN MENU (BURGER OVERLAY)
 ========================================== */

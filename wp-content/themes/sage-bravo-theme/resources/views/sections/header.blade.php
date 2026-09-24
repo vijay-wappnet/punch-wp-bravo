@@ -169,12 +169,13 @@
       @if ($primary_button && $cta_url)
         <a
           href="{{ esc_url($cta_url) }}"
-          class="btn header-cta-btn"
+          class="btn btn-red-fusion header-cta-btn"
           aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_title'] ?? '') }}"
           @if ($cta_target) target="{{ esc_attr($cta_target) }}" @endif
           @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif
         >
           <span>{{ $primary_button['button_title'] ?? __('Get Started', 'sage') }}</span>
+          <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="header-cta-btn__icon" aria-hidden="true">
         </a>
       @endif
     </div>
