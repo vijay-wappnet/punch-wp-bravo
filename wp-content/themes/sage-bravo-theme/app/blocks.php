@@ -43,7 +43,8 @@ add_action('init', function () {
             'category'        => 'common',
             'icon'            => 'format-video',
             'mode'            => 'preview',
-            'align'           => 'full',
+            'align'           => 'false',
+            'api_version'     => 3,
             'supports'        => [
                 'align'           => false,
                 'mode'            => true,
