@@ -1,13 +1,6 @@
 @if(!empty($responsiveCss))
 <style>{{ $responsiveCss }}</style>
 @endif
-<style>
-  @media (max-width: 768px) {
-    #{{ $blockId }} .intro-section__content-wrapper {
-      text-align: left !important;
-    }
-  }
-</style>
 <div id="{{ $blockId }}" class="intro-section" @if($bg_color) style="background-color: {{ esc_attr($bg_color) }};" @endif>
 
   <div class="container">

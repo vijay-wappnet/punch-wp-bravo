@@ -2,6 +2,9 @@
 // `block_editor_settings_all` filter (see app/setup.php). Never reaches
 // the front end.
 
+// Block styles needed to render the block preview in the editor canvas.
+@use "blocks/2-columns-image-icons-with-cta-section" as two-columns-image-icons-with-cta-section;
+
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),
 // regardless of WordPress's alignment system. `supports.align` is
@@ -15,7 +18,8 @@
 // alignfull mechanism.
 .editor-styles-wrapper {
   .wp-block-acf-video-banner-section,
-  .wp-block-acf-introtext-section {
+  .wp-block-acf-introtext-section,
+  .wp-block-acf-two-columns-image-icons-with-cta-section {
     max-width: none;
     overflow: hidden;
   }

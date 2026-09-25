@@ -18,3 +18,6 @@ import './footer.js'; // Footer JS
    BLOCK SCRIPTS
 ========================================== */
 import './gsap-animations.js';
+import initTwoColumnsImageIconsWithCtaSection from './blocks/two-columns-image-icons-with-cta-section.js';
+
+document.addEventListener('DOMContentLoaded', initTwoColumnsImageIconsWithCtaSection);

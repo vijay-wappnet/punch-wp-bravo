@@ -53,6 +53,30 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Two Columns Image Icons with CTA Section Block
+        // (block names must start with a letter, so the "2-columns" file names
+        // map to a "two-columns" block name)
+        acf_register_block_type([
+            'name'                   => 'two-columns-image-icons-with-cta-section',
+            'title'                  => __('Two Columns Image Icons with CTA Section', 'sage'),
+            'description'            => __('Two columns: content with CTA buttons, and a central image with icons orbiting it', 'sage'),
+            'render_callback'        => ['App\Blocks\TwoColumnsImageIconsWithCtaSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'networking',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });

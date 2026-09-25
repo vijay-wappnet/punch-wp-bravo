@@ -24,7 +24,7 @@ body {
   font-family: $font-articulat-family;
   font-weight: $font-articulat-light-weight; // 300
   color: $black-off-color; // #2E2E2E
-  background-color: $white-off-color; // #F4F1EB
+  background-color: $white-color; // #F4F1EB
   outline: none;
 }
 
@@ -130,6 +130,22 @@ p {
   @media (max-width: $screen-md-min) {
     font-size: 22px;
     line-height: 26px;
+  }
+}
+.fs-30{
+  p{
+    font-size: 30px;
+    font-family: $font-articulat-family;
+    line-height: 38px;
+    font-weight: $font-articulat-regular-weight; //400
+    margin-bottom: 20px;
+    strong{
+      font-weight: $font-articulat-demi-bold-weight; //700
+    }
+    @media (max-width: $screen-md-min) {
+      font-size: 30px;
+      line-height: 38px;
+    }
   }
 }
 

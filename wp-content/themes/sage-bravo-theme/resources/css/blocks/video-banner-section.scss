@@ -88,6 +88,23 @@
     }
   }
 
+  .video-banner-section__button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .vbs-btn {
+      min-width: 171px;
+      width: auto;
+      gap: 10px;
+    }
+
+    .vbs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+
   .video-banner-section__heading {
     margin: 0;
     color: $black-off-color;

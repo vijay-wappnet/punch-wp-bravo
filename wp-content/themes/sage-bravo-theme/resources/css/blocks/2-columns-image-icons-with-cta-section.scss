@@ -1,0 +1,288 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+// Easing used for the icon "build out" transition
+$tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+.two-columns-image-icons-with-cta-section {
+  position: relative;
+  padding: 80px 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $black-off-color;
+
+  @media (max-width: $screen-md-min) {
+    padding: 60px 0;
+  }
+
+  .two-columns-image-icons-with-cta-section__wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 40px 60px;
+
+    @media (max-width: $screen-lg-min) {
+      gap: 40px 30px;
+    }
+
+    @media (max-width: $screen-md-min) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .two-columns-image-icons-with-cta-section__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  // Swap columns on desktop/tablet only; on mobile content always comes first
+  &.two-columns-image-icons-with-cta-section--image-left {
+    .two-columns-image-icons-with-cta-section__column--visual {
+      order: -1;
+
+      @media (max-width: $screen-md-min) {
+        order: 0;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- Content
+  .two-columns-image-icons-with-cta-section__content {
+    width: 100%;
+    max-width: 480px;
+
+    @media (max-width: $screen-md-min) {
+      max-width: 100%;
+    }
+  }
+
+  .two-columns-image-icons-with-cta-section__heading {
+    margin-bottom: 25px;
+  }
+
+  .two-columns-image-icons-with-cta-section__description {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+
+    p {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+
+    ul,
+    ol {
+      padding-left: 30px;
+      margin-bottom: 15px;
+
+      li {
+        padding-bottom: 5px;
+      }
+    }
+  }
+
+  .two-columns-image-icons-with-cta-section__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 35px;
+
+    .twociiwcs-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .twociiwcs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+
+  // -------------------------------------------------- Image / icons orbit
+  .two-columns-image-icons-with-cta-section__image_icon {
+    --icon-size: 64px;
+    --center-size: 20%;
+    --outer-r: calc((100cqi - var(--icon-size)) / 2);
+    --inner-r: calc(var(--outer-r) * 0.6);
+
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    container-type: inline-size;
+
+    @media (max-width: $screen-lg-min) {
+      --icon-size: 52px;
+      max-width: 400px;
+    }
+
+    @media (max-width: $screen-md-min) {
+      --icon-size: 48px;
+      max-width: 360px;
+    }
+
+    @media (max-width: $screen-mobile-min) {
+      --icon-size: 40px;
+    }
+  }
+
+  // Static orbit lines
+  .two-columns-image-icons-with-cta-section__ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba($black-off-color, 0.45);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+
+    &--outer {
+      width: calc(var(--outer-r) * 2);
+    }
+
+    &--inner {
+      width: calc(var(--inner-r) * 2);
+    }
+  }
+
+  // Central image sits above the orbit lines
+  .two-columns-image-icons-with-cta-section__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: var(--center-size);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .two-columns-image-icons-with-cta-section__center-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .two-columns-image-icons-with-cta-section__icons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Each icon is rotated to its angle, pushed out by the ring radius, then
+  // counter-rotated so the artwork stays upright.
+  .two-columns-image-icons-with-cta-section__icon-item {
+    --r: var(--outer-r);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin: calc(var(--icon-size) / -2) 0 0 calc(var(--icon-size) / -2);
+    border-radius: 50%;
+    background-color: $white-color;
+    box-shadow: 0 2px 8px rgba($back-color, 0.06);
+    transform: rotate(var(--angle)) translateX(var(--r)) rotate(calc(var(--angle) * -1)) scale(1);
+
+    &--inner {
+      --r: var(--inner-r);
+    }
+  }
+
+  .two-columns-image-icons-with-cta-section__icon {
+    display: block;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+
+  // ------------------------------------------------------------ Animation
+  // `is-animate-ready` is added by JS only when animations are enabled, so
+  // the block renders in its final state in the editor / without JS.
+  // The transition is declared on `is-visible` only, and that class is never
+  // removed, so icons build out from the centre once and never go back.
+  .js-tcic-orbit.is-animate-ready {
+    .two-columns-image-icons-with-cta-section__ring {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.2);
+    }
+
+    .two-columns-image-icons-with-cta-section__center {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.6);
+    }
+
+    .two-columns-image-icons-with-cta-section__icon-item {
+      opacity: 0;
+      transform: rotate(var(--angle)) translateX(0) rotate(calc(var(--angle) * -1)) scale(0.3);
+    }
+
+    // Sequence: centre image -> inner ring + inner icons -> outer ring +
+    // outer icons. `--i` is the icon's position within its own ring.
+    &.is-visible {
+      .two-columns-image-icons-with-cta-section__center {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition: transform 700ms $tcic-ease-out, opacity 500ms ease;
+      }
+
+      .two-columns-image-icons-with-cta-section__ring {
+        --ring-delay: 150ms;
+
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        transition:
+          transform 900ms $tcic-ease-out var(--ring-delay),
+          opacity 600ms ease var(--ring-delay);
+
+        &--outer {
+          --ring-delay: 750ms;
+        }
+      }
+
+      .two-columns-image-icons-with-cta-section__icon-item {
+        --icon-delay: calc(300ms + var(--i) * 150ms);
+
+        opacity: 1;
+        transform: rotate(var(--angle)) translateX(var(--r)) rotate(calc(var(--angle) * -1)) scale(1);
+        transition:
+          transform 1000ms $tcic-ease-out var(--icon-delay),
+          opacity 600ms ease var(--icon-delay);
+
+        &--outer {
+          --icon-delay: calc(900ms + var(--i) * 90ms);
+        }
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-tcic-orbit.is-animate-ready {
+      .two-columns-image-icons-with-cta-section__ring,
+      .two-columns-image-icons-with-cta-section__center,
+      .two-columns-image-icons-with-cta-section__icon-item {
+        transition: none !important;
+      }
+    }
+  }
+}
