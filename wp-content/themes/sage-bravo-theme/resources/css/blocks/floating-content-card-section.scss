@@ -1,0 +1,163 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.floating-content-card-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 620px;
+  padding: 80px 0;
+  overflow: hidden;
+  color: $black-off-color;
+
+  @media (max-width: $screen-lg-min) {
+    min-height: 540px;
+    padding: 60px 0;
+  }
+
+  // Mobile: card sits near the top, leaving the image visible below it
+  @media (max-width: $screen-md-min) {
+    align-items: flex-start;
+    min-height: 0;
+    padding: 20px 0 180px;
+  }
+
+  // ------------------------------------------------ Background image
+  // Separate layer so the filter only affects the image, not the card.
+  // Any colour image is shown as the faded, warm monochrome from the design:
+  // contrast + brightness lift the blacks to ~#474747 and soften whites to
+  // ~#D5D3D0, then a touch of sepia adds the slight warm tint.
+  .floating-content-card-section__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+    pointer-events: none;
+
+    @media (max-width: $screen-md-min) {
+      background-position: 60% center;
+    }
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: $screen-md-min) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------ Alignment
+  .floating-content-card-section__inner {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 80px;
+
+    @media (max-width: $screen-xl-min) {
+      padding: 0 40px;
+    }
+
+    @media (max-width: $screen-lg-min) {
+      padding: 0;
+    }
+  }
+
+  &--align-right .floating-content-card-section__inner {
+    justify-content: flex-end;
+  }
+
+  &--align-center .floating-content-card-section__inner {
+    justify-content: center;
+  }
+
+  // ----------------------------------------------------------- Card
+  .floating-content-card-section__card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    padding: 50px 45px 45px;
+    border-radius: 8px;
+    background-color: $white-off-color;
+
+    @media (max-width: $screen-lg-min) {
+      max-width: 480px;
+      padding: 40px 35px;
+    }
+
+    @media (max-width: $screen-md-min) {
+      max-width: 100%;
+      padding: 30px 30px 40px;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .floating-content-card-section__heading {
+    margin-bottom: 25px;
+    overflow-wrap: break-word;
+  }
+
+  .floating-content-card-section__description {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    overflow-wrap: break-word;
+
+    p {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+
+    ul,
+    ol {
+      padding-left: 30px;
+      margin-bottom: 15px;
+
+      li {
+        padding-bottom: 5px;
+      }
+    }
+  }
+
+  .floating-content-card-section__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 35px;
+
+    .fccs-btn {
+      min-width: 171px;
+      max-width: 100%;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .fccs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+}

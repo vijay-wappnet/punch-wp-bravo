@@ -77,6 +77,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Floating Content Card Section Block
+        acf_register_block_type([
+            'name'                   => 'floating-content-card-section',
+            'title'                  => __('Floating Content Card Section', 'sage'),
+            'description'            => __('A full background image section with a floating content card and CTA buttons', 'sage'),
+            'render_callback'        => ['App\Blocks\FloatingContentCardSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'id-alt',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });
