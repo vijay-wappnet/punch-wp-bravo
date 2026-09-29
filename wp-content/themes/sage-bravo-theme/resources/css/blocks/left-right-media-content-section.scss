@@ -62,11 +62,11 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     min-width: 0;
   }
 
-  // Desktop / tablet: the media column is fluid on its own side. It stays in
+  // Desktop only: the media column is fluid on its own side. It stays in
   // the grid next to the content (which keeps the container alignment) and a
   // negative margin stretches it out to the viewport edge.
   // Bleed = distance from the container's edge to the viewport's edge.
-  @media (min-width: $screen-md-min) {
+  @media (min-width: $screen-lg-min + 1) {
     .left-right-media-content-section__column--media {
       margin-right: calc((100cqw - 100vw) / 2);
     }
@@ -192,13 +192,14 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   // ---------------------------------------------------------- Media
+  // Desktop only: the full media image is drawn wider than its (already
+  // fluid) column, anchored to the content side, so its outer part runs past
+  // the viewport edge and is cut off by the section's `overflow-x: clip`.
+  // The image itself is never distorted; only the part off-screen is hidden.
+  // Tablet and mobile show the full image inside the container.
   .left-right-media-content-section__media {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  &--media-left .left-right-media-content-section__media {
-    justify-content: flex-start;
+    // How far the image extends past the viewport edge (% of the column width)
+    --lrmcs-media-overflow: 12%;
   }
 
   .left-right-media-content-section__image {
@@ -206,13 +207,20 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     max-width: 100%;
     height: auto;
 
-    // Desktop / tablet: fill the fluid column so the media meets the viewport edge
-    @media (min-width: $screen-md-min) {
-      width: 100%;
+    @media (min-width: $screen-lg-min + 1) {
+      width: calc(100% + var(--lrmcs-media-overflow));
+      max-width: none;
     }
 
     @media (max-width: $screen-md-min-767) {
       margin: 0 auto;
+    }
+  }
+
+  // Media on the left: anchor to the right (content) side and overflow left
+  @media (min-width: $screen-lg-min + 1) {
+    &--media-left .left-right-media-content-section__image {
+      margin-left: calc(var(--lrmcs-media-overflow) * -1);
     }
   }
 
