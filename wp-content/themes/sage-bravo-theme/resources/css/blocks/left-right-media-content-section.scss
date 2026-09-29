@@ -1,0 +1,226 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// Easing used for the media "move into place" transition
+$lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+.left-right-media-content-section {
+  // Horizontal distance the media travels when it enters the viewport
+  --lrmcs-media-offset: 40px;
+
+  position: relative;
+  padding: 80px 0;
+  // Clip (not hidden) so the media's start offset never causes a horizontal
+  // scrollbar, without creating a new scroll container.
+  overflow-x: clip;
+  color: $black-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min) {
+    --lrmcs-media-offset: 24px;
+
+    padding: 60px 0;
+  }
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // Content column is narrower than the media column, as in the design.
+  // DOM order is content -> media; the modifiers only change `order`.
+  .left-right-media-content-section__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: 40px 80px;
+
+    @media (max-width: $screen-xl-min) {
+      gap: 40px 50px;
+    }
+
+    @media (max-width: $screen-lg-min) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 40px 30px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+
+  .left-right-media-content-section__column {
+    min-width: 0;
+  }
+
+  // Desktop / tablet: media on the left
+  &--media-left {
+    .left-right-media-content-section__inner {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+
+      @media (max-width: $screen-lg-min) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+
+      @media (max-width: $screen-md-min-767) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .left-right-media-content-section__column--media {
+      order: -1;
+    }
+  }
+
+  // Mobile: stacking order from content_alignment_in_mobile overrides the
+  // desktop left / right order.
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-content-top .left-right-media-content-section__column--media {
+      order: 1;
+    }
+
+    &--mobile-content-bottom .left-right-media-content-section__column--media {
+      order: -1;
+    }
+  }
+
+  // No media: the content spans the full row
+  &--no-media .left-right-media-content-section__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // -------------------------------------------------------- Content
+  .left-right-media-content-section__content {
+    width: 100%;
+    max-width: 480px;
+
+    @media (max-width: $screen-md-min-767) {
+      max-width: 100%;
+    }
+  }
+
+  .left-right-media-content-section__heading {
+    margin-bottom: 25px;
+    color: inherit;
+    overflow-wrap: break-word;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .left-right-media-content-section__description {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+
+    p {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ul,
+    ol {
+      padding-left: 30px;
+      margin-bottom: 15px;
+
+      li {
+        padding-bottom: 5px;
+      }
+    }
+  }
+
+  .left-right-media-content-section__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 35px;
+
+    .lrmcs-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+
+      // Full-width CTA on mobile, as in the design
+      @media (max-width: $screen-md-min-767) {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+
+    .lrmcs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+
+  // ---------------------------------------------------------- Media
+  .left-right-media-content-section__media {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &--media-left .left-right-media-content-section__media {
+    justify-content: flex-start;
+  }
+
+  .left-right-media-content-section__image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+
+    @media (max-width: $screen-md-min-767) {
+      margin: 0 auto;
+    }
+  }
+
+  // ------------------------------------------------------ Animation
+  // `is-animate-ready` is added by JS only when animations are enabled, so the
+  // block renders in its final state in the editor / without JS. The
+  // transition is declared on `is-visible` only, and that class is never
+  // removed, so the media moves into place once and then stays put.
+  .js-lrmcs-media.is-animate-ready {
+    opacity: 0.4;
+    transform: translate3d(var(--lrmcs-media-offset), 0, 0);
+
+    &.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition:
+        transform 1400ms $lrmcs-ease-out,
+        opacity 900ms ease;
+    }
+  }
+
+  // Media on the left starts slightly further left
+  &--media-left .js-lrmcs-media.is-animate-ready:not(.is-visible) {
+    transform: translate3d(calc(var(--lrmcs-media-offset) * -1), 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-lrmcs-media.is-animate-ready {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+}
