@@ -99,6 +99,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Trusted & Secure Section Block
+        acf_register_block_type([
+            'name'                   => 'trusted-secure-section',
+            'title'                  => __('Trusted & Secure Section', 'sage'),
+            'description'            => __('A row of trusted / certification icons alongside a heading, description and CTA buttons', 'sage'),
+            'render_callback'        => ['App\Blocks\TrustedSecureSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'shield',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });

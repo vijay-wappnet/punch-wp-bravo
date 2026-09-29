@@ -1,0 +1,185 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.trusted-secure-section {
+  position: relative;
+  padding: 40px 0;
+  overflow: hidden;
+  color: $black-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // Icons first, content alongside on desktop / tablet. content_alignment only
+  // aligns the text inside the content column, so the icon row never reverses.
+  .trusted-secure-section__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+
+    @media (max-width: $screen-lg-min) {
+      gap: 35px;
+    }
+
+    // Mobile: icon row on top, centred content below
+    @media (max-width: $screen-md-min-767) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 30px;
+    }
+  }
+
+  // ---------------------------------------------------------- Icons
+  .trusted-secure-section__icons {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: 55px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (max-width: $screen-xl-min) {
+      gap: 40px;
+    }
+
+    @media (max-width: $screen-lg-min) {
+      gap: 25px;
+    }
+
+    // Mobile: keep all icons on one row, spread across the full width
+    @media (max-width: $screen-md-min-767) {
+      justify-content: space-between;
+      gap: 16px;
+    }
+  }
+
+  .trusted-secure-section__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+
+    @media (max-width: $screen-md-min-767) {
+      flex: 1 1 0;
+    }
+
+    // Size by a max box so every logo keeps its natural aspect ratio
+    img {
+      display: block;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+
+      @media (max-width: $screen-lg-min) {
+        max-width: 80px;
+        max-height: 54px;
+      }
+
+      @media (max-width: $screen-md-min-767) {
+        max-width: 100%;
+        max-height: min(80px, 18vw);
+      }
+    }
+  }
+
+  // -------------------------------------------------------- Content
+  .trusted-secure-section__content {
+    flex: 0 1 auto;
+    min-width: 0;
+    text-align: left;
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      text-align: center;
+    }
+  }
+
+  &--align-right .trusted-secure-section__content {
+    text-align: right;
+
+    @media (max-width: $screen-md-min-767) {
+      text-align: center;
+    }
+  }
+
+  .trusted-secure-section__heading {
+    margin-bottom: 15px;
+    color: inherit;
+    overflow-wrap: break-word;
+  }
+
+  .trusted-secure-section__description {
+    margin-bottom: 20px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    overflow-wrap: break-word;
+
+    p {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+
+    ul,
+    ol {
+      padding-left: 30px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+  }
+
+  // -------------------------------------------------------- Buttons
+  .trusted-secure-section__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 20px;
+
+    @media (max-width: $screen-md-min-767) {
+      justify-content: center;
+    }
+
+    .tss-btn {
+      max-width: 100%;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  &--align-right .trusted-secure-section__buttons {
+    justify-content: flex-end;
+
+    @media (max-width: $screen-md-min-767) {
+      justify-content: center;
+    }
+  }
+}
