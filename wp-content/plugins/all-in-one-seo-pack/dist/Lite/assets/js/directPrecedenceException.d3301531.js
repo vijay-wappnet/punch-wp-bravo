@@ -1,0 +1,1 @@
+import{a}from"./TruSeoWrapper.8ccd2303.js";import{v as i}from"./vendor-lodash.f281943c.js";function p(o,t,e=[]){const n=a(o).map(c=>c.toLowerCase()),r=n.indexOf(t.toLowerCase());if(1>r)return!1;const s=n[r-1];return i(e,s)}export{p as d};

@@ -107,10 +107,17 @@ class WritingAssistant {
 				], 200 );
 			}
 
+			if ( empty( $newProgress['status'] ) ) {
+				return new \WP_REST_Response( [
+					'success' => false,
+					'error'   => __( 'Empty response from service', 'all-in-one-seo-pack' )
+				], 200 );
+			}
+
 			if ( 'success' !== $newProgress['status'] ) {
 				return new \WP_REST_Response( [
 					'success' => false,
-					'error'   => $newProgress['msg']
+					'error'   => $newProgress['msg'] ?? __( 'Unknown error from service', 'all-in-one-seo-pack' )
 				], 200 );
 			}
 
@@ -237,7 +244,7 @@ class WritingAssistant {
 		if ( 'success' !== $userInfo['status'] ) {
 			return new \WP_REST_Response( [
 				'success' => false,
-				'error'   => $userInfo['msg']
+				'error'   => $userInfo['msg'] ?? __( 'Unknown error from service', 'all-in-one-seo-pack' )
 			], 200 );
 		}
 

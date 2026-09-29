@@ -224,19 +224,141 @@ class RobotsTxt {
 	/**
 	 * Extracts the Search Appearance related rules.
 	 *
-	 * @since 4.8.1
+	 * @since   4.8.1
+	 * @version 5.0.2 Guard against a non-array rules value and non-string rule entries.
 	 *
 	 * @param  array $rules The rules to extract from.
 	 * @return array        The Search Appearance related rules.
 	 */
 	public function extractSearchAppearanceRules( $rules = [] ) {
 		$currentRules = $rules ?: aioseo()->options->tools->robots->rules;
+		if ( ! is_array( $currentRules ) ) {
+			return [];
+		}
 
 		return array_filter( $currentRules, function ( $rule ) {
-			$parseRule = json_decode( $rule, true );
+			$parseRule = $this->decodeStoredRule( $rule );
 
 			return ! empty( $parseRule['bot'] ) || ! empty( $parseRule['preventCrawling'] );
 		} );
+	}
+
+	/**
+	 * Decodes a stored rule entry.
+	 *
+	 * NOTE: an import or external write can store a native array instead of a JSON string.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  mixed $rule The stored entry.
+	 * @return mixed       The decoded rule, or null if the entry can't be decoded.
+	 */
+	public function decodeStoredRule( $rule ) {
+		if ( is_array( $rule ) ) {
+			return $rule;
+		}
+
+		return is_string( $rule ) ? json_decode( $rule, true ) : null;
+	}
+
+	/**
+	 * Normalizes stored robots rules into canonical JSON strings.
+	 *
+	 * NOTE: classifies the decoded entry whatever its encoding; a non-rule string would render as a blank editor row.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  mixed $rules The raw rules value from options.
+	 * @return array        Canonical JSON-string rules.
+	 */
+	public function normalizeRules( $rules ) {
+		if ( ! is_array( $rules ) ) {
+			return [];
+		}
+
+		$normalized = [];
+		foreach ( $rules as $rule ) {
+			$decoded = $this->decodeStoredRule( $rule );
+			if ( ! $this->isRuleShaped( $decoded ) ) {
+				continue;
+			}
+
+			$encoded = is_string( $rule ) ? $rule : $this->encodeRule( $decoded );
+			if ( is_string( $encoded ) ) {
+				$normalized[] = $encoded;
+			}
+		}
+
+		return array_values( $normalized );
+	}
+
+	/**
+	 * Encodes a rule into its canonical stored form.
+	 *
+	 * NOTE: slashes stay unescaped so a repaired rule matches what the editor's JSON.stringify() writes.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array        $rule The rule to encode.
+	 * @return string|false       The canonical JSON string, or false if it can't be encoded.
+	 */
+	public function encodeRule( $rule ) {
+		return wp_json_encode( $rule, JSON_UNESCAPED_SLASHES );
+	}
+
+	/**
+	 * Removes duplicate rules, comparing the rules they describe instead of their raw strings.
+	 *
+	 * NOTE: not array_unique() — it stringifies a native-array entry to "Array", collapsing unrelated entries.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array $rules The JSON-encoded rules.
+	 * @return array        The rules without duplicates.
+	 */
+	public function uniqueRules( $rules ) {
+		$unique = [];
+		foreach ( $rules as $rule ) {
+			$decoded = $this->decodeStoredRule( $rule );
+			if ( is_array( $decoded ) ) {
+				ksort( $decoded );
+				$key = (string) wp_json_encode( $decoded );
+			} else {
+				// An entry that doesn't decode to a rule has no canonical form; only exact copies are duplicates.
+				$key = 'raw:' . (string) wp_json_encode( $rule );
+			}
+
+			if ( ! array_key_exists( $key, $unique ) ) {
+				$unique[ $key ] = $rule;
+			}
+		}
+
+		return array_values( $unique );
+	}
+
+	/**
+	 * Whether an entry has the shape of a custom robots rule: an array carrying every rule field.
+	 *
+	 * NOTE: keys, not values — the editor stores a row before it is filled in, and that row must survive a reload.
+	 * The JS mirror in `src/vue/utils/robots.js` has to classify every entry exactly the way this does.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  mixed $rule The decoded entry to test.
+	 * @return bool        Whether the entry is a rule record.
+	 */
+	private function isRuleShaped( $rule ) {
+		if ( ! is_array( $rule ) ) {
+			return false;
+		}
+
+		foreach ( [ 'userAgent', 'directive', 'fieldValue' ] as $field ) {
+			if ( ! array_key_exists( $field, $rule ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -244,14 +366,19 @@ class RobotsTxt {
 	 *
 	 * @since   4.0.0
 	 * @version 4.4.2
+	 * @version 5.0.2 Guard against a non-array rules value; decode via {@see decodeStoredRule()}.
 	 *
 	 * @param  array $rules An array of rules.
 	 * @return array        The rules grouped by user agent.
 	 */
 	private function groupRulesByUserAgent( $rules ) {
+		if ( ! is_array( $rules ) ) {
+			return [];
+		}
+
 		$groups = [];
 		foreach ( $rules as $rule ) {
-			$r = is_string( $rule ) ? json_decode( $rule, true ) : $rule;
+			$r = $this->decodeStoredRule( $rule );
 			if ( empty( $r['userAgent'] ) || empty( $r['fieldValue'] ) ) {
 				continue;
 			}
@@ -454,7 +581,8 @@ class RobotsTxt {
 	/**
 	 * Import robots.txt from a URL.
 	 *
-	 * @since 4.4.2
+	 * @since   4.4.2
+	 * @version 5.0.2 Merge through {@see saveImportedRules()}.
 	 *
 	 * @param  string     $text   The text to import from.
 	 * @param  int|string $blogId The blog ID or 'network'.
@@ -467,12 +595,7 @@ class RobotsTxt {
 			throw new \Exception( esc_html__( 'No User-agent found in the content beginning.', 'all-in-one-seo-pack' ) );
 		}
 
-		$options = aioseo()->options;
-		if ( 'network' === $blogId ) {
-			$options = aioseo()->networkOptions;
-		}
-
-		$options->tools->robots->rules = array_unique( array_merge( $options->tools->robots->rules, $this->prepareRobotsTxt( $newRules ) ) );
+		$this->saveImportedRules( $newRules, $blogId );
 
 		return true;
 	}
@@ -480,7 +603,8 @@ class RobotsTxt {
 	/**
 	 * Import robots.txt from a URL.
 	 *
-	 * @since 4.4.2
+	 * @since   4.4.2
+	 * @version 5.0.2 Merge through {@see saveImportedRules()}.
 	 *
 	 * @param  string     $url    The URL to import from.
 	 * @param  int|string $blogId The blog ID or 'network'.
@@ -498,16 +622,28 @@ class RobotsTxt {
 			throw new \Exception( esc_html__( 'There was an error importing the robots.txt content from the URL.', 'all-in-one-seo-pack' ) );
 		}
 
-		$options = aioseo()->options;
-		if ( 'network' === $blogId ) {
-			$options = aioseo()->networkOptions;
-		}
-
-		$newRules = $this->extractRules( $robotsTxtContent );
-
-		$options->tools->robots->rules = array_unique( array_merge( $options->tools->robots->rules, $this->prepareRobotsTxt( $newRules ) ) );
+		$this->saveImportedRules( $this->extractRules( $robotsTxtContent ), $blogId );
 
 		return true;
+	}
+
+	/**
+	 * Merges freshly imported rules into the stored ones.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array      $newRules The extracted rules to merge in.
+	 * @param  int|string $blogId   The blog ID or 'network'.
+	 * @return void
+	 */
+	private function saveImportedRules( $newRules, $blogId ) {
+		$options = 'network' === $blogId ? aioseo()->networkOptions : aioseo()->options;
+
+		// Normalize before merging — the stored value may not be an array, and array_merge() rejects that.
+		$options->tools->robots->rules = $this->uniqueRules( array_merge(
+			$this->normalizeRules( $options->tools->robots->rules ),
+			$this->prepareRobotsTxt( $newRules )
+		) );
 	}
 
 	/**
@@ -539,7 +675,8 @@ class RobotsTxt {
 	/**
 	 * Prepare robots.txt rules to save.
 	 *
-	 * @since 4.1.4
+	 * @since   4.1.4
+	 * @version 5.0.2 Encode through {@see encodeRule()}.
 	 *
 	 * @param  array $allRules Array with the rules.
 	 * @return array           The prepared rules array.
@@ -567,11 +704,14 @@ class RobotsTxt {
 					continue;
 				}
 
-				$robots[] = wp_json_encode( [
+				$encoded = $this->encodeRule( [
 					'userAgent'  => $userAgent,
 					'directive'  => $directive,
 					'fieldValue' => $value
 				] );
+				if ( is_string( $encoded ) ) {
+					$robots[] = $encoded;
+				}
 			}
 		}
 
@@ -648,15 +788,15 @@ class RobotsTxt {
 	/**
 	 * Reset the Search Appearance related rules.
 	 *
-	 * @since 4.8.1
+	 * @since   4.8.1
+	 * @version 5.0.2 Normalize the stored rules before filtering them.
 	 *
 	 * @return void
 	 */
 	public function resetSearchAppearanceRules() {
-		$currentRules = aioseo()->options->tools->robots->rules;
-		$newRules     = [];
-		foreach ( ( $currentRules ?? [] ) as $rule ) {
-			$parseRule = json_decode( $rule, true );
+		$newRules = [];
+		foreach ( $this->normalizeRules( aioseo()->options->tools->robots->rules ) as $rule ) {
+			$parseRule = $this->decodeStoredRule( $rule );
 			if ( empty( $parseRule['bot'] ) && empty( $parseRule['preventCrawling'] ) ) {
 				$newRules[] = $rule;
 			}

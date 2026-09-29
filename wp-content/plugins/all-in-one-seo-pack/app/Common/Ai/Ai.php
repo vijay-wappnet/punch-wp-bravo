@@ -621,19 +621,25 @@ class Ai {
 	 *
 	 * @since   4.8.4
 	 * @version 4.9.6 Moved from {@see \AIOSEO\Plugin\Common\Api\Ai}.
+	 * @version 5.0.2 Only writes the credit balance and orders when the response carries them.
 	 *
 	 * @param  object $responseBody The response body.
 	 * @return void
 	 */
 	public function updateAiOptions( $responseBody ) {
-		aioseo()->internalOptions->internal->ai->credits->total     = (int) ( $responseBody->total ?? 0 );
-		aioseo()->internalOptions->internal->ai->credits->remaining = (int) ( $responseBody->remaining ?? 0 );
+		// A generation response only piggybacks the post-deduction balance, so an absent figure
+		// means "no news" — writing 0 would report an exhausted account the user still has credit on.
+		if ( isset( $responseBody->total ) ) {
+			aioseo()->internalOptions->internal->ai->credits->total = (int) $responseBody->total;
+		}
 
-		// Get existing orders and append the new ones to prevent 'Indirect modification of overloaded prop' PHP warning.
-		$existingOrders = aioseo()->internalOptions->internal->ai->credits->orders ?? [];
-		$existingOrders = array_merge( $existingOrders, aioseo()->helpers->sanitizeOption( $responseBody->orders ?? [] ) );
+		if ( isset( $responseBody->remaining ) ) {
+			aioseo()->internalOptions->internal->ai->credits->remaining = (int) $responseBody->remaining;
+		}
 
-		aioseo()->internalOptions->internal->ai->credits->orders = $existingOrders;
+		if ( isset( $responseBody->orders ) ) {
+			aioseo()->internalOptions->internal->ai->credits->orders = aioseo()->helpers->sanitizeOption( $responseBody->orders );
+		}
 
 		if ( ! empty( $responseBody->license ) ) {
 			aioseo()->internalOptions->internal->ai->credits->license->total     = (int) $responseBody->license->total ?? 0;

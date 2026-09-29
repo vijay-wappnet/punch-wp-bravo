@@ -736,7 +736,8 @@ class PostsTerms {
 	/**
 	 * Get the processed content by the given raw content.
 	 *
-	 * @since 4.5.2
+	 * @since   4.5.2
+	 * @version 5.0.2 Fixed a PHP warning when the request body has no content key.
 	 *
 	 * @param  \WP_REST_Request  $request The REST Request.
 	 * @return \WP_REST_Response          The response.
@@ -764,7 +765,7 @@ class PostsTerms {
 		if ( ! empty( $pageBuilder ) ) {
 			return new \WP_REST_Response( [
 				'success' => true,
-				'content' => aioseo()->standalone->pageBuilderIntegrations[ $pageBuilder ]->processContent( $args['postId'], $body['content'] ),
+				'content' => aioseo()->standalone->pageBuilderIntegrations[ $pageBuilder ]->processContent( $args['postId'], $body['content'] ?? null ),
 			], 200 );
 		}
 

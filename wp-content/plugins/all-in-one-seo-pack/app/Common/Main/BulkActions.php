@@ -57,14 +57,43 @@ class BulkActions {
 	}
 
 	/**
+	 * Whether the batch scan will regenerate the score in the current list view.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return bool Whether the score can be regenerated.
+	 */
+	private function canRegenerateTruSeoScore() {
+		// The Trash view never rescans, so clearing a trashed row's score loses it for good. Decided
+		// here rather than through the batch scan gate below, because a filter must not be able to
+		// switch a destructive action back on where nothing would undo it.
+		if ( aioseo()->helpers->isTrashListView() ) {
+			return false;
+		}
+
+		// This action computes nothing itself — it empties the score and leans on the list table's
+		// batch scan to recompute it. So the only safe question is whether that scan runs here, and
+		// the column that ships it is what answers it. Restating its conditions is what let the two
+		// drift apart: the column also needs its capability and its own post type / taxonomy
+		// include-list, neither of which this class can see.
+		return ! empty( aioseo()->standalone->detailsColumn ) &&
+			aioseo()->standalone->detailsColumn->isBatchScanEnabled();
+	}
+
+	/**
 	 * Register the TruSEO Reset bulk action.
 	 *
-	 * @since 5.0.0
+	 * @since   5.0.0
+	 * @version 5.0.2 Only offer the action where the batch scan can regenerate the score.
 	 *
 	 * @param  array $bulkActions The existing bulk actions.
 	 * @return array              The modified bulk actions.
 	 */
 	public function registerTruSeoResetBulkAction( $bulkActions ) {
+		if ( ! $this->canRegenerateTruSeoScore() ) {
+			return $bulkActions;
+		}
+
 		$bulkActions[ AIOSEO_PLUGIN_SHORT_NAME ]['aioseo_truseo_reset'] = __( 'Regenerate TruSEO score', 'all-in-one-seo-pack' );
 
 		return $bulkActions;
@@ -73,7 +102,9 @@ class BulkActions {
 	/**
 	 * Handle the TruSEO Reset bulk action.
 	 *
-	 * @since 5.0.0
+	 * @since   5.0.0
+	 * @version 5.0.2 Clears only truseo and seo_score; keeps keywords and page_analysis.
+	 * @version 5.0.2 Bails where the batch scan will not regenerate the score.
 	 *
 	 * @param  string $redirectTo The redirect URL.
 	 * @param  string $doAction   The action being performed.
@@ -82,6 +113,12 @@ class BulkActions {
 	 */
 	public function handleTruSeoResetBulkAction( $redirectTo, $doAction, $postIds ) {
 		if ( 'aioseo_truseo_reset' !== $doAction ) {
+			return $redirectTo;
+		}
+
+		// Hiding the dropdown entry is not enough — the action name can be passed by hand, which
+		// would blank the score in a view where nothing rescans it.
+		if ( ! $this->canRegenerateTruSeoScore() ) {
 			return $redirectTo;
 		}
 
@@ -95,16 +132,14 @@ class BulkActions {
 			return $redirectTo;
 		}
 
-		// Reset TruSEO fields for selected posts.
+		// The keyword columns are input to the analysis, not output: wiping them destroys the user's
+		// keyphrases and leaves the rescan nothing to score. page_analysis is left alone too — the
+		// batch scan keys off truseo and never writes it back, so clearing it would empty it for good.
 		aioseo()->core->db->update( 'aioseo_posts' )
 			->whereIn( 'post_id', $postIds )
 			->set( [
-				'truseo'              => null,
-				'focus_keyword'       => null,
-				'additional_keywords' => null,
-				'keyphrases'          => null,
-				'page_analysis'       => null,
-				'seo_score'           => 0
+				'truseo'    => null,
+				'seo_score' => 0
 			] )
 			->run();
 
@@ -120,7 +155,9 @@ class BulkActions {
 	 * NOTE: Core passes term IDs here (from `delete_tags`), not post IDs, so this cannot share the
 	 * post handler.
 	 *
-	 * @since 5.0.1
+	 * @since   5.0.1
+	 * @version 5.0.2 Clears only truseo and seo_score; keeps keywords.
+	 * @version 5.0.2 Bails where the batch scan will not regenerate the score.
 	 *
 	 * @param  string $redirectTo The redirect URL.
 	 * @param  string $doAction   The action being performed.
@@ -129,6 +166,12 @@ class BulkActions {
 	 */
 	public function handleTermTruSeoResetBulkAction( $redirectTo, $doAction, $termIds ) {
 		if ( 'aioseo_truseo_reset' !== $doAction ) {
+			return $redirectTo;
+		}
+
+		// Hiding the dropdown entry is not enough — the action name can be passed by hand, which
+		// would blank the score in a view where nothing rescans it.
+		if ( ! $this->canRegenerateTruSeoScore() ) {
 			return $redirectTo;
 		}
 
@@ -148,15 +191,13 @@ class BulkActions {
 			return $redirectTo;
 		}
 
-		// NOTE: No `keyphrases`/`page_analysis` here — those are post-only stores with no column on
-		// the terms table.
+		// The keyword columns are input to the analysis, not output: wiping them destroys the user's
+		// keyphrases and leaves the rescan nothing to score.
 		aioseo()->core->db->update( 'aioseo_terms' )
 			->whereIn( 'term_id', $termIds )
 			->set( [
-				'truseo'              => null,
-				'focus_keyword'       => null,
-				'additional_keywords' => null,
-				'seo_score'           => 0
+				'truseo'    => null,
+				'seo_score' => 0
 			] )
 			->run();
 
@@ -187,6 +228,7 @@ class BulkActions {
 	 *
 	 * @since   5.0.0
 	 * @version 5.0.1 Names the object type being reset instead of always saying "post".
+	 * @version 5.0.2 Says the score is being regenerated instead of reset.
 	 *
 	 * @return void
 	 */
@@ -202,8 +244,8 @@ class BulkActions {
 				'<div class="notice-truseo-reset notice notice-success is-dismissible"><p>%s</p></div>',
 				esc_html(
 					sprintf(
-						// Translators: 1 - The number of objects reset, 2 - The object noun, e.g. "categories".
-						__( 'TruSEO data reset for %1$d %2$s.', 'all-in-one-seo-pack' ),
+						// Translators: 1 - The number of objects, 2 - The object noun, e.g. "categories".
+						__( 'TruSEO score is being regenerated for %1$d %2$s.', 'all-in-one-seo-pack' ),
 						$count,
 						1 === $count ? $nouns['singular'] : $nouns['plural']
 					)

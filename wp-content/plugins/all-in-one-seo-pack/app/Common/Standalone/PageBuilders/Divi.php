@@ -210,7 +210,8 @@ class Divi extends Base {
 	 * Returns the processed page builder content.
 	 *
 	 * @since   4.9.6
-	 * @version 4.9.9 Reset Divi's module order index after the front-end the_content() pass.
+	 * @version 4.9.9  Reset Divi's module order index after the front-end the_content() pass.
+	 * @version 5.0.2 Extract Divi 5 text from the raw block markup on front-end requests instead of rendering it.
 	 *
 	 * @param  int    $postId  The post ID.
 	 * @param  mixed  $content The raw content.
@@ -219,41 +220,182 @@ class Divi extends Base {
 	public function processContent( $postId, $content = null ) {
 		$templateVersion = aioseo()->helpers->getThemeVersion( true ) ?? aioseo()->helpers->getThemeVersion();
 
-		// Divi 5+ stores content as blocks that only render to text through the_content;
-		// do_blocks() (the parent's safe path) returns empty for them.
+		// Divi 5+ stores content as blocks whose text lives in block attributes; do_blocks()
+		// (the parent's safe path) does not reliably render them across Divi 5 versions.
 		if (
 			version_compare( (string) $templateVersion, '5.0', '>=' ) &&
 			! doing_filter( 'the_content' )
 		) {
-			return $this->renderDivi5ContentForExtraction( (string) $content );
+			$content = $this->getRawContent( $postId, $content );
+
+			// In AJAX/cron/REST, Divi does not run its front-end asset pipeline, so a full render is safe
+			// and gives the editor and SEO analysis the exact front-end markup.
+			if ( aioseo()->helpers->isAjaxCronRestRequest() ) {
+				return apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+			}
+
+			// Plain text on purpose: it also defuses the runShortcodes=true path, where WpContext::theContent()
+			// would otherwise run do_shortcode/do_blocks on this content out of the main loop. Divi indexes such
+			// off-loop renders at its 10000 offset and caches their static CSS (e.g. et_pb_blurb_10000) into the
+			// shared et-cache, which pollutes the real page render.
+			return $this->extractDivi5Text( $content );
 		}
 
 		return parent::processContent( $postId, $content );
 	}
 
 	/**
-	 * Renders Divi 5+ block content via the_content for text extraction.
+	 * Extracts human-readable text from raw Divi 5 block markup without rendering it.
 	 *
-	 * NOTE: On the front end this advances Divi's static-CSS module order index, so we reset it
-	 * afterward to keep the real page render's per-index classes (and cached CSS) intact.
+	 * NOTE: On front-end requests we must never run Divi 5 content through Divi's parse/render machinery.
+	 * Divi swaps in its own block parser globally and advances its module order counters on every parse,
+	 * an out-of-loop the_content pass consumes its one-shot order index resets, and rendered module styles
+	 * pollute the static CSS registry it persists to et-cache - each of which breaks the real page render.
 	 *
-	 * @since 4.9.9
+	 * @since 5.0.2
 	 *
 	 * @param  string $content The raw block content.
-	 * @return string          The rendered content.
+	 * @return string          The extracted text.
 	 */
-	private function renderDivi5ContentForExtraction( $content ) {
-		// In AJAX/cron/REST, Divi does not generate cached static CSS, so there is no order-index
-		// side effect to undo. On front-end views there is, so reset it after rendering.
-		$resetOrderIndex = ! aioseo()->helpers->isAjaxCronRestRequest()
-			&& is_callable( [ 'ET_Builder_Module_Order', 'reset_all_indexes' ] );
+	private function extractDivi5Text( $content ) {
+		if ( empty( $content ) ) {
+			return '';
+		}
 
-		try {
-			return apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-		} finally {
-			if ( $resetOrderIndex ) {
-				\ET_Builder_Module_Order::reset_all_indexes();
+		return $this->getDivi5BlockText( aioseo()->helpers->parseBlocksSafely( $content ) );
+	}
+
+	/**
+	 * Recursively collects text from parsed Divi 5 blocks.
+	 *
+	 * Module text lives in `innerContent` attributes; inner HTML covers unconverted
+	 * Divi 4 shortcode content inside Divi 5 placeholder blocks.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array  $blocks The parsed blocks.
+	 * @return string         The collected text.
+	 */
+	private function getDivi5BlockText( $blocks ) {
+		$parts = [];
+		foreach ( $blocks as $block ) {
+			if ( ! empty( $block['attrs'] ) && is_array( $block['attrs'] ) ) {
+				$this->collectDivi5InnerContentText( $block['attrs'], $parts );
 			}
+
+			$innerHtml = trim( (string) ( $block['innerHTML'] ?? '' ) );
+			if ( '' !== $innerHtml ) {
+				// Lazily-unconverted Divi 4 pages parse as a freeform block whose innerHTML is the raw
+				// shortcode string. Returning it verbatim would let the downstream strip_shortcodes()
+				// delete the enclosed copy and empty the description, so reduce it to plain text here.
+				if ( false !== strpos( $innerHtml, '[et_pb_' ) ) {
+					$innerHtml = $this->extractDivi5ShortcodeText( $innerHtml );
+				}
+
+				if ( '' !== $innerHtml ) {
+					$parts[] = $innerHtml;
+				}
+			}
+
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$parts[] = $this->getDivi5BlockText( $block['innerBlocks'] );
+			}
+		}
+
+		return implode( "\n", array_filter( $parts ) );
+	}
+
+	/**
+	 * Reduces raw Divi 4 shortcode markup to plain readable text without rendering it.
+	 *
+	 * Drops only Divi (`et_pb_*`) tags - keeping the text enclosed between them plus the text-bearing
+	 * attributes on their opening tags (e.g. Blurb/CTA titles) - so the downstream strip_shortcodes()
+	 * cannot delete that copy. Bracket literals ([2023]) and non-Divi shortcodes are left untouched.
+	 * Quoted attribute values are treated as opaque, so an inner "]" does not truncate a tag.
+	 *
+	 * NOTE: Pure text extraction on purpose. We must never run this through the_content/do_shortcode
+	 * on the front end - that is the render pass whose side effects break Divi's static CSS.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  string $content The raw shortcode content.
+	 * @return string          The extracted text.
+	 */
+	private function extractDivi5ShortcodeText( $content ) {
+		// Match a Divi shortcode tag, treating quoted attribute values as opaque so an inner "]"
+		// (e.g. title="See [PDF] guide") does not terminate the tag early.
+		$tagPattern = '/\[\/?et_pb_(?:[^\]"\']|"[^"]*"|\'[^\']*\')*\]/is';
+
+		// Replace each Divi tag with the visible copy from its opening-tag attributes and drop the tag
+		// itself; leave everything else - enclosed body text, bracket literals like [2023], and any
+		// non-Divi shortcodes - in place, in document order, for the downstream sanitizer.
+		$text = preg_replace_callback(
+			$tagPattern,
+			function ( $matches ) {
+				$tag = $matches[0];
+				if ( 0 === strpos( $tag, '[/' ) ) {
+					return ' ';
+				}
+
+				$parts = [];
+				if ( preg_match_all( '/\b(?:title|subhead|button_text)=(["\'])(.*?)\1/is', $tag, $attributes ) ) {
+					foreach ( $attributes[2] as $value ) {
+						$value = trim( $value );
+						if ( '' !== $value ) {
+							$parts[] = $value;
+						}
+					}
+				}
+
+				return [] === $parts ? ' ' : ' ' . implode( ' ', $parts ) . ' ';
+			},
+			(string) $content
+		);
+
+		return trim( (string) preg_replace( '/\s+/', ' ', (string) $text ) );
+	}
+
+	/**
+	 * Recursively collects `innerContent` attribute values from a Divi 5 block attribute tree.
+	 *
+	 * Values follow the shape `{attribute}.innerContent.{breakpoint}.value` where the value is either
+	 * an HTML/text string or an object with a `text` key (e.g. Blurb titles). Only the desktop
+	 * breakpoint is read since the other breakpoints repeat the same content responsively.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array $attrs The block attributes (sub)tree.
+	 * @param  array $parts The collected text parts, passed by reference.
+	 * @return void
+	 */
+	private function collectDivi5InnerContentText( $attrs, &$parts ) {
+		foreach ( $attrs as $key => $value ) {
+			if ( ! is_array( $value ) ) {
+				continue;
+			}
+
+			if ( 'innerContent' !== $key ) {
+				$this->collectDivi5InnerContentText( $value, $parts );
+				continue;
+			}
+
+			$desktopValue = $value['desktop']['value'] ?? null;
+			if ( is_array( $desktopValue ) ) {
+				$desktopValue = $desktopValue['text'] ?? null;
+			}
+
+			if ( ! is_string( $desktopValue ) ) {
+				continue;
+			}
+
+			$desktopValue = trim( $desktopValue );
+
+			// Dynamic content placeholders (e.g. "$variable({...})$") only resolve during a real render.
+			if ( '' === $desktopValue || 0 === strpos( $desktopValue, '$variable(' ) ) {
+				continue;
+			}
+
+			$parts[] = $desktopValue;
 		}
 	}
 

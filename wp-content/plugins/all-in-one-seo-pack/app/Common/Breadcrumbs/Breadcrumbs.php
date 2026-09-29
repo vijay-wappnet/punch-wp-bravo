@@ -283,14 +283,19 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 		/**
 		 * Gets the term crumb.
 		 *
-		 * @since 4.1.1
+		 * @since   4.1.1
+		 * @version 5.0.2 Return an empty crumb for non-WP_Term input so orphaned terms cannot fatal.
 		 *
 		 * @param  \WP_Term $term    The term object for reference.
 		 * @param  string   $subType The breadcrumb subType.
 		 * @return array             A crumb.
 		 */
 		public function getTermTaxonomyCrumb( $term, $subType = '' ) {
-			return $this->makeCrumb( $term->name, get_term_link( $term ), 'taxonomy', $term, $subType );
+			if ( ! is_a( $term, 'WP_Term' ) ) {
+				return [];
+			}
+
+			return $this->makeCrumb( $term->name, aioseo()->helpers->getTermLink( $term ), 'taxonomy', $term, $subType );
 		}
 
 		/**
@@ -364,7 +369,8 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 		/**
 		 * Gets an array of crumbs parents for the term.
 		 *
-		 * @since 4.1.1
+		 * @since   4.1.1
+		 * @version 5.0.2 Skip orphaned parent terms that no longer resolve to a WP_Term.
 		 *
 		 * @param  \WP_Term $term A WP_Term object.
 		 * @return array          An array of parent crumbs.
@@ -376,7 +382,11 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 			if ( ! empty( $termHierarchy ) ) {
 				foreach ( $termHierarchy as $parentTermId ) {
 					$parentTerm = aioseo()->helpers->getTerm( $parentTermId, $term->taxonomy );
-					$crumbs[]   = $this->getTermTaxonomyCrumb( $parentTerm, 'parent' );
+					if ( ! is_a( $parentTerm, 'WP_Term' ) ) {
+						continue;
+					}
+
+					$crumbs[] = $this->getTermTaxonomyCrumb( $parentTerm, 'parent' );
 				}
 			}
 
@@ -425,7 +435,8 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 		/**
 		 * Gets a post's taxonomy crumbs.
 		 *
-		 * @since 4.1.1
+		 * @since   4.1.1
+		 * @version 5.0.2 Skip terms that no longer resolve to a WP_Term.
 		 *
 		 * @param  int|\WP_Post $post     An ID or a WP_Post object.
 		 * @param  null         $taxonomy A taxonomy to use. If none is provided the first one with terms selected will be used.
@@ -446,8 +457,14 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 			$termHierarchy = $this->getPostTaxTermHierarchy( $post, $taxonomy );
 			if ( ! empty( $termHierarchy['terms'] ) ) {
 				foreach ( $termHierarchy['terms'] as $termId ) {
-					$term     = aioseo()->helpers->getTerm( $termId, $termHierarchy['taxonomy'] );
-					$crumbs[] = $this->makeCrumb( $term->name, get_term_link( $term, $termHierarchy['taxonomy'] ), 'taxonomy', $term, 'parent' );
+					// get_ancestors() walks parent pointers without checking the rows still exist,
+					// so an orphaned ancestor reaches us as an ID that no longer resolves.
+					$term = aioseo()->helpers->getTerm( $termId, $termHierarchy['taxonomy'] );
+					if ( ! is_a( $term, 'WP_Term' ) ) {
+						continue;
+					}
+
+					$crumbs[] = $this->makeCrumb( $term->name, aioseo()->helpers->getTermLink( $term, $termHierarchy['taxonomy'] ), 'taxonomy', $term, 'parent' );
 				}
 			}
 
@@ -515,7 +532,8 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 		/**
 		 * Gets a home page crumb.
 		 *
-		 * @since 4.1.1
+		 * @since   4.1.1
+		 * @version 5.0.2 Home crumb link is now trailing-slashed.
 		 *
 		 * @return array The home crumb.
 		 */
@@ -536,7 +554,8 @@ namespace AIOSEO\Plugin\Common\Breadcrumbs {
 				$label = __( 'Home', 'all-in-one-seo-pack' );
 			}
 
-			return $this->makeCrumb( $label, get_home_url(), 'homePage', aioseo()->helpers->getHomePage() );
+			// Google flags the origin-only home URL as an invalid URL in the schema output.
+			return $this->makeCrumb( $label, trailingslashit( get_home_url() ), 'homePage', aioseo()->helpers->getHomePage() );
 		}
 
 		/**

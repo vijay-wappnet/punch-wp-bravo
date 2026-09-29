@@ -15,7 +15,10 @@ class Query {
 	/**
 	 * Returns all eligble sitemap entries for a given post type.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Order default-priority posts by their resolved default value.
+	 * @version 5.0.2 Match excluded term IDs through term_taxonomy.
+	 * @version 5.0.2 Only exempt the front page from the robots filter while it is in effect.
 	 *
 	 * @param  mixed            $postTypes      The post type(s). Either a singular string or an array of strings.
 	 * @param  array            $additionalArgs Any additional arguments for the post query.
@@ -59,7 +62,11 @@ class Query {
 
 		// Order by highest priority first (highest priority at the top),
 		// then by post modified date (most recently updated at the top).
-		$orderBy = 'ap.priority DESC, p.post_modified_gmt DESC';
+		// Default-priority posts store NULL, so substitute the post type's resolved
+		// default priority; otherwise NULL sorts last and pushes them out of order.
+		$priorityColumn = is_array( $postTypes ) ? 'ap.priority' : $this->priorityOrderColumn( $includedPostTypes );
+
+		$orderBy = $priorityColumn . ' DESC, p.post_modified_gmt DESC';
 
 		// For llms sitemap type, prioritize posts with pillar_content = 1
 		if ( 'llms' === aioseo()->sitemap->type ) {
@@ -86,10 +93,15 @@ class Query {
 			->where( 'p.post_password', '' )
 			->whereIn( 'p.post_type', $postTypesArray );
 
-		$homePageId = (int) get_option( 'page_on_front' );
+		// The front page is only exempt from the robots filter while it is in effect. WordPress keeps
+		// page_on_front after the Customizer switches the homepage back to the latest posts, so a raw
+		// read exempts a plain page that merely used to be the front page.
+		$homePageId = (int) aioseo()->helpers->getHomePageId();
 
+		// Note the effective check: a post type that only inherits the site-wide noindex still needs
+		// the restrictive branch, or one explicitly indexed post pulls the whole type's posts back in.
 		if ( ! is_array( $postTypes ) ) {
-			if ( ! aioseo()->helpers->isPostTypeNoindexed( $includedPostTypes ) ) {
+			if ( ! aioseo()->sitemap->helpers->isPostTypeEffectivelyNoindexed( $includedPostTypes ) ) {
 				$query->whereRaw( "( `ap`.`robots_noindex` IS NULL OR `ap`.`robots_default` = 1 OR `ap`.`robots_noindex` = 0 OR post_id = $homePageId )" );
 			} else {
 				$query->whereRaw( "( `ap`.`robots_default` = 0 AND `ap`.`robots_noindex` = 0 OR post_id = $homePageId )" );
@@ -97,7 +109,7 @@ class Query {
 		} else {
 			$robotsMetaSql = [];
 			foreach ( $postTypes as $postType ) {
-				if ( ! aioseo()->helpers->isPostTypeNoindexed( $postType ) ) {
+				if ( ! aioseo()->sitemap->helpers->isPostTypeEffectivelyNoindexed( $postType ) ) {
 					$robotsMetaSql[] = "( `p`.`post_type` = '$postType' AND ( `ap`.`robots_noindex` IS NULL OR `ap`.`robots_default` = 1 OR `ap`.`robots_noindex` = 0 OR post_id = $homePageId ) )";
 				} else {
 					$robotsMetaSql[] = "( `p`.`post_type` = '$postType' AND ( `ap`.`robots_default` = 0 AND `ap`.`robots_noindex` = 0 OR post_id = $homePageId ) )";
@@ -116,12 +128,14 @@ class Query {
 		$excludedTerms = aioseo()->sitemap->helpers->excludedTerms();
 		if ( $excludedTerms ) {
 			$termRelationshipsTable = aioseo()->core->db->db->prefix . 'term_relationships';
+			$termTaxonomyTable      = aioseo()->core->db->db->prefix . 'term_taxonomy';
 			$query->whereRaw("
 				( `p`.`ID` NOT IN
 					(
 						SELECT `tr`.`object_id`
 						FROM `$termRelationshipsTable` as tr
-						WHERE `tr`.`term_taxonomy_id` IN ( $excludedTerms )
+						INNER JOIN `$termTaxonomyTable` as tt ON `tt`.`term_taxonomy_id` = `tr`.`term_taxonomy_id`
+						WHERE `tt`.`term_id` IN ( $excludedTerms )
 					)
 				)" );
 		}
@@ -192,6 +206,25 @@ class Query {
 		}
 
 		return $this->filterPosts( $posts );
+	}
+
+	/**
+	 * Returns the SQL expression for ordering posts by priority, substituting the post
+	 * type's resolved default priority for NULL so default-priority posts sort correctly.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  string $postType The post type.
+	 * @return string           The COALESCE expression wrapping `ap.priority`.
+	 */
+	public function priorityOrderColumn( $postType ) {
+		$defaultPriority = (float) aioseo()->sitemap->priority->priority( 'postTypes', false, $postType );
+
+		// The column is a single-precision FLOAT, so a stored 0.7 widens to 0.699999988...
+		// and would sort below an exact decimal substitute instead of tying with it. Casting
+		// the column to the same exact type as the substitute keeps equal priorities tied.
+		// %F is locale-independent (always a dot decimal separator).
+		return sprintf( 'COALESCE( CAST( ap.priority AS DECIMAL(10,6) ), %F )', $defaultPriority );
 	}
 
 	/**
@@ -323,7 +356,8 @@ class Query {
 	/**
 	 * Returns all eligible sitemap entries for a given taxonomy.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Compare excluded term IDs to term_id directly.
 	 *
 	 * @param  string           $taxonomy       The taxonomy.
 	 * @param  array            $additionalArgs Any additional arguments for the term query.
@@ -350,8 +384,7 @@ class Query {
 			}
 		}
 
-		$termRelationshipsTable = aioseo()->core->db->db->prefix . 'term_relationships';
-		$termTaxonomyTable      = aioseo()->core->db->db->prefix . 'term_taxonomy';
+		$termTaxonomyTable = aioseo()->core->db->db->prefix . 'term_taxonomy';
 
 		// Include all terms that have assigned posts or whose children have assigned posts.
 		$query = aioseo()->core->db
@@ -373,14 +406,7 @@ class Query {
 
 		$excludedTerms = aioseo()->sitemap->helpers->excludedTerms();
 		if ( $excludedTerms ) {
-			$query->whereRaw("
-				( `t`.`term_id` NOT IN
-					(
-						SELECT `tr`.`term_taxonomy_id`
-						FROM `$termRelationshipsTable` as tr
-						WHERE `tr`.`term_taxonomy_id` IN ( $excludedTerms )
-					)
-				)" );
+			$query->whereRaw( "( `t`.`term_id` NOT IN ( $excludedTerms ) )" );
 		}
 
 		if (

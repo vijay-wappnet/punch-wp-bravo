@@ -217,13 +217,33 @@ abstract class Base {
 	/**
 	 * Returns the processed page builder content.
 	 *
-	 * @since 4.5.2
+	 * @since   4.5.2
+	 * @version 5.0.2 Moved the raw content fallback to {@see getRawContent()}.
 	 *
 	 * @param  int    $postId  The post id.
 	 * @param  mixed  $content The raw content.
 	 * @return string          The processed content.
 	 */
 	public function processContent( $postId, $content = null ) {
+		$content = $this->getRawContent( $postId, $content );
+
+		if ( aioseo()->helpers->isAjaxCronRestRequest() && ! doing_filter( 'the_content' ) ) {
+			return apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Returns the given content, or the post's raw content when empty.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  int    $postId  The post ID.
+	 * @param  mixed  $content The raw content.
+	 * @return string          The raw content.
+	 */
+	protected function getRawContent( $postId, $content ) {
 		if ( empty( $content ) ) {
 			$post = get_post( $postId );
 			if ( is_a( $post, 'WP_Post' ) ) {
@@ -231,10 +251,6 @@ abstract class Base {
 			}
 		}
 
-		if ( aioseo()->helpers->isAjaxCronRestRequest() && ! doing_filter( 'the_content' ) ) {
-			return apply_filters( 'the_content', $content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-		}
-
-		return $content;
+		return (string) $content;
 	}
 }

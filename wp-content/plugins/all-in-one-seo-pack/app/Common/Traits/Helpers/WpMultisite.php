@@ -36,9 +36,11 @@ trait WpMultisite {
 	 * @return \WP_Site|null         The site.
 	 */
 	public function getSiteByBlogId( $blogId ) {
-		$sites = $this->getSites();
+		// A lookup by explicit ID must resolve any existing site, flagged or not.
+		$sites = $this->getSites( 'all', 0, null, 'all', null, 'DESC', true );
 		foreach ( $sites['sites'] as $site ) {
-			if ( $site->blog_id === $blogId ) {
+			// WP_Site::$blog_id is a numeric string, so cast both sides to match int input too.
+			if ( (int) $site->blog_id === (int) $blogId ) {
 				return $site;
 			}
 		}
@@ -67,32 +69,51 @@ trait WpMultisite {
 	/**
 	 * Get all sites in the multisite network.
 	 *
-	 * @since 4.2.5
+	 * @since   4.2.5
+	 * @version 5.0.2 Added $includeFlagged param; archived/spam/deleted sites excluded by default.
+	 * @version 5.0.2 Every site now carries parentDomain/parentPath; only aliases set a value.
 	 *
-	 * @param  int|string  $limit      The number of sites to get or 'all'.
-	 * @param  int         $offset     The offset to start at.
-	 * @param  null|string $searchTerm The search term to look for.
-	 * @param  null|string $filter     A filter to look up sites by.
-	 * @param  null|string $orderBy    The column to order results by. Defaults to null.
-	 * @param  string      $orderDir   The direction to order results by. Defaults to 'DESC'.
-	 * @return array                   An array of sites.
+	 * @param  int|string  $limit          The number of sites to get or 'all'.
+	 * @param  int         $offset         The offset to start at.
+	 * @param  null|string $searchTerm     The search term to look for.
+	 * @param  null|string $filter         A filter to look up sites by.
+	 * @param  null|string $orderBy        The column to order results by. Defaults to null.
+	 * @param  string      $orderDir       The direction to order results by. Defaults to 'DESC'.
+	 * @param  bool        $includeFlagged Whether to include archived, spam and deleted sites. Defaults to false.
+	 * @return array                       An array of sites.
 	 */
-	public function getSites( $limit = 'all', $offset = 0, $searchTerm = null, $filter = 'all', $orderBy = null, $orderDir = 'DESC' ) {
+	public function getSites( $limit = 'all', $offset = 0, $searchTerm = null, $filter = 'all', $orderBy = null, $orderDir = 'DESC', $includeFlagged = false ) {
 		// Don't filter by `public = 1` — that flag is toggled off when an admin enables the
 		// "Discourage search engines from indexing this site" option on the subsite, and
 		// previously caused those subsites to silently disappear from Network Admin →
 		// AIOSEO → Domain Activation. License activation should be independent of the
 		// subsite's search-engine indexing preference. See issue #7964.
-		$sites = get_sites( [
+		$args = [
 			'network_id' => get_current_network_id(),
 			'number'     => 0
-		] );
+		];
+
+		// WP core blocks non-super-admin access to archived, spam and deleted sites (see
+		// ms_site_check()), so site lists exclude them unless a caller needs every existing site.
+		if ( ! $includeFlagged ) {
+			$args['archived'] = 0;
+			$args['spam']     = 0;
+			$args['deleted']  = 0;
+		}
+
+		$sites = get_sites( $args );
 
 		$allSites = [];
 		foreach ( $sites as $site ) {
 			$clonedSite           = clone $site;
 			$clonedSite->adminUrl = get_admin_url( $site->blog_id );
 			$clonedSite->homeUrl  = get_home_url( $site->blog_id );
+
+			// Only aliases have a parent, but every site needs the properties: WP_Site doesn't
+			// declare them, and its __get() resolves undeclared properties to null, which the
+			// search below can't pass to stripos() on PHP 8.1+.
+			$clonedSite->parentDomain = '';
+			$clonedSite->parentPath   = '';
 
 			if ( $this->includeSite( $clonedSite, $filter ) ) {
 				$allSites[] = $clonedSite;

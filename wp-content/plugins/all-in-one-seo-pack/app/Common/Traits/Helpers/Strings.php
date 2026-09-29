@@ -413,6 +413,7 @@ trait Strings {
 	 *
 	 * @since   4.1.0
 	 * @version 4.9.8 Tolerate scalar tags and invalid JSON instead of throwing a TypeError.
+	 * @version 5.0.2 Delegates the tag walk to {@see jsonTagsToList()}.
 	 *
 	 * @param  string|array $tags The Array or JSON formatted data tags.
 	 * @return string             The comma separated values.
@@ -429,6 +430,24 @@ trait Strings {
 			$tags = $decoded;
 		}
 
+		return implode( ',', $this->jsonTagsToList( $tags ) );
+	}
+
+	/**
+	 * Returns the values of the given JSON formatted data tags as a list.
+	 *
+	 * NOTE: Tolerates scalar tags and tags without a value, which imports and direct writes produce.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  string|array $tags The Array or JSON formatted data tags.
+	 * @return string[]           The tag values.
+	 */
+	public function jsonTagsToList( $tags ) {
+		if ( is_string( $tags ) ) {
+			$tags = json_decode( $tags );
+		}
+
 		$values = [];
 		foreach ( (array) $tags as $k => $tag ) {
 			if ( is_object( $tag ) ) {
@@ -441,7 +460,7 @@ trait Strings {
 			}
 		}
 
-		return implode( ',', $values );
+		return $values;
 	}
 
 	/**

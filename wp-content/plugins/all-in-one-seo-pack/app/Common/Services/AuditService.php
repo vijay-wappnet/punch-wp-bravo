@@ -89,7 +89,8 @@ class AuditService {
 			return $homepage;
 		}
 
-		$sitemapEnabled    = (bool) ( aioseo()->options->sitemap->general->enable ?? false );
+		// No `??` on an option chain: Options::__isset() consumes the group key, so the read collapses to the fallback.
+		$sitemapEnabled    = (bool) aioseo()->options->sitemap->general->enable;
 		$robotsRulesCount  = is_array( aioseo()->options->tools->robots->rules ) ? count( aioseo()->options->tools->robots->rules ) : 0;
 		$publicPostTypes   = array_values( aioseo()->helpers->getPublicPostTypes( true ) );
 		$searchStatsActive = ! empty( aioseo()->searchStatistics ) && method_exists( aioseo()->searchStatistics, 'isConnected' ) && aioseo()->searchStatistics->isConnected();

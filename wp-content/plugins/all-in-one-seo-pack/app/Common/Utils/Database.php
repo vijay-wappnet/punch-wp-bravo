@@ -250,6 +250,15 @@ class Database {
 	private $shouldResetCache = false;
 
 	/**
+	 * Whether the last result set was served from the in-memory cache instead of the database.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @var bool
+	 */
+	private $servedFromCache = false;
+
+	/**
 	 * Constant for escape options.
 	 *
 	 * @since 4.0.0
@@ -1551,6 +1560,8 @@ class Database {
 		// reset() nulls out the statement below, so we have to grab it before that happens.
 		$statement = $this->statement;
 
+		$this->servedFromCache = false;
+
 		// Pull the result from the in-memory cache if everything checks out.
 		if (
 			! $this->shouldResetCache &&
@@ -1558,7 +1569,8 @@ class Database {
 			isset( $this->cache[ $cacheTableName ][ $queryHash ][ $return ] ) &&
 			empty( $this->join )
 		) {
-			$this->result = $this->cache[ $cacheTableName ][ $queryHash ][ $return ];
+			$this->result          = $this->cache[ $cacheTableName ][ $queryHash ][ $return ];
+			$this->servedFromCache = true;
 
 			return $this;
 		}
@@ -1726,13 +1738,27 @@ class Database {
 	}
 
 	/**
-	 * Return the $wpdb num_rows from the last query.
+	 * Return the number of rows in the last result set.
 	 *
-	 * @since 4.0.0
+	 * NOTE: On a cache hit this counts the result set we hold, so run( ..., 'row' ) reports 1 instead
+	 * of the row count of the query it came from. No caller reads the count after a 'row' query.
+	 *
+	 * @since   4.0.0
+	 * @version 5.0.2 Counts the held result set when it was served from the cache.
 	 *
 	 * @return int The count for the number of rows in the last query.
 	 */
 	public function numRows() {
+		// A cache hit returns without querying, so $wpdb->num_rows still describes whichever query ran
+		// last — count what we are actually holding instead.
+		if ( $this->servedFromCache ) {
+			if ( is_array( $this->result ) ) {
+				return count( $this->result );
+			}
+
+			return null === $this->result ? 0 : 1;
+		}
+
 		return $this->db->num_rows;
 	}
 
@@ -1786,9 +1812,10 @@ class Database {
 	 * @return mixed            Could be an array or object depending on the result set.
 	 */
 	public function execute( $sql, $results = false, $useCache = false ) {
-		$this->lastQuery = $sql;
-		$queryHash       = sha1( $sql );
-		$cacheTableName  = $this->getCacheTableName();
+		$this->lastQuery       = $sql;
+		$queryHash             = sha1( $sql );
+		$cacheTableName        = $this->getCacheTableName();
+		$this->servedFromCache = false;
 
 		// Pull the result from the in-memory cache if everything checks out.
 		if (
@@ -1797,7 +1824,8 @@ class Database {
 			isset( $this->cache[ $cacheTableName ][ $queryHash ] )
 		) {
 			if ( $results ) {
-				$this->result = $this->cache[ $cacheTableName ][ $queryHash ];
+				$this->result          = $this->cache[ $cacheTableName ][ $queryHash ];
+				$this->servedFromCache = true;
 			}
 
 			return $this;

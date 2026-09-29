@@ -217,7 +217,8 @@ class ScreenCallout {
 	 * @return string The slug, or empty if this isn't one of our screens.
 	 */
 	private function getScreenSlug() {
-		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore HM.Security.NonceVerification.Recommended
+		// phpcs:ignore HM.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Recommended
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		return 0 === strpos( $page, 'aioseo-' ) ? $page : '';
 	}

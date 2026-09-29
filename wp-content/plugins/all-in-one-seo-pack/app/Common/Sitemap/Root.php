@@ -316,7 +316,9 @@ class Root {
 	/**
 	 * Builds indexes for all eligible posts of a given post type.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Order default-priority posts by their resolved default value.
+	 * @version 5.0.2 Match excluded term IDs through term_taxonomy.
 	 *
 	 * @param  string $postType The post type.
 	 * @return array            The indexes.
@@ -338,9 +340,10 @@ class Root {
 		$excludedTermIds = aioseo()->sitemap->helpers->excludedTerms();
 		if ( ! empty( $excludedTermIds ) ) {
 			$excludedTermIds = explode( ', ', $excludedTermIds );
-			$excludedPostIds = aioseo()->core->db->start( 'term_relationships' )
-				->select( 'object_id' )
-				->whereIn( 'term_taxonomy_id', $excludedTermIds )
+			$excludedPostIds = aioseo()->core->db->start( 'term_relationships as tr' )
+				->select( 'tr.object_id' )
+				->join( 'term_taxonomy as tt', '`tt`.`term_taxonomy_id` = `tr`.`term_taxonomy_id`', 'INNER' )
+				->whereIn( 'tt.term_id', $excludedTermIds )
 				->run()
 				->result();
 
@@ -395,6 +398,10 @@ class Root {
 			$whereClause .= " OR `p`.`ID` = $blogPageId ";
 		}
 
+		// Keep this ordering in sync with the content query in Query::posts() so the index
+		// page boundaries match the posts that actually land on each sub-sitemap page.
+		$priorityColumn = aioseo()->sitemap->query->priorityOrderColumn( $postType );
+
 		$posts = aioseo()->core->db->execute(
 			aioseo()->core->db->db->prepare(
 				"SELECT ID, post_modified_gmt
@@ -409,7 +416,7 @@ class Root {
 							AND p.post_password = ''
 							AND (ap.robots_noindex IS NULL OR ap.robots_default = 1 OR ap.robots_noindex = 0)
 							{$whereClause}
-						ORDER BY ap.priority DESC, p.post_modified_gmt DESC
+						ORDER BY {$priorityColumn} DESC, p.post_modified_gmt DESC
 					) AS x
 					CROSS JOIN (SELECT @row := 0) AS vars
 					ORDER BY post_modified_gmt DESC
@@ -515,7 +522,8 @@ class Root {
 	 *
 	 * Acts as a helper function for buildIndexesPostTypes() and buildIndexesTaxonomies().
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Match term IDs through term_taxonomy for the lastmod lookup.
 	 *
 	 * @param  string $name    The name of the object parent.
 	 * @param  array  $entries The sitemap entries.
@@ -563,6 +571,7 @@ class Root {
 			$termIds = implode( "', '", $termIds );
 
 			$termRelationshipsTable = aioseo()->core->db->db->prefix . 'term_relationships';
+			$termTaxonomyTable      = aioseo()->core->db->db->prefix . 'term_taxonomy';
 
 			$lastModified = null;
 			if ( ! apply_filters( 'aioseo_sitemap_lastmod_disable', false ) ) {
@@ -574,7 +583,8 @@ class Root {
 						(
 							SELECT CONVERT(`tr`.`object_id`, unsigned)
 							FROM `$termRelationshipsTable` as tr
-							WHERE `tr`.`term_taxonomy_id` IN ( '$termIds' )
+							JOIN `$termTaxonomyTable` as tt ON `tr`.`term_taxonomy_id` = `tt`.`term_taxonomy_id`
+							WHERE `tt`.`term_id` IN ( '$termIds' )
 						)
 					)" )
 					->run()

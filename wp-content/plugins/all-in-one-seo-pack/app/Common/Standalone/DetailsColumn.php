@@ -255,6 +255,7 @@ class DetailsColumn {
 	 *
 	 * @since   4.0.0
 	 * @version 4.9.10 Strip site-global configuration for users who cannot manage AIOSEO.
+	 * @version 5.0.2 Resolves the batch scan gate through {@see isBatchScanEnabled()}.
 	 *
 	 * @return void
 	 */
@@ -266,26 +267,6 @@ class DetailsColumn {
 		$data['posts'] = [];
 		$data['terms'] = [];
 
-		// Batch scan configuration
-		// Only enable for post list pages (not media library), and only when TruSEO analysis is
-		// turned on — otherwise the list would run (and persist) analysis for a disabled feature.
-		// The Trash view lists only trashed posts, which aren't editable content, so skip it too.
-		// Eligibility rather than just the master switch: a post type the user excluded from TruSEO
-		// must not be scanned from its list either, or unscored rows get analysed and persisted behind
-		// the user's back. It also covers the never-analysable types (attachments, web stories).
-		$isBatchScanSupported = 'edit' === $screen->base &&
-			aioseo()->options->advanced->truSeo &&
-			! aioseo()->helpers->isTrashListView() &&
-			in_array( $postType, aioseo()->helpers->getTruSeoEligiblePostTypes(), true );
-
-		// Term lists back the same scan, gated on the taxonomy being TruSEO-eligible rather than on
-		// the post type, which a term screen doesn't have.
-		if ( 'edit-tags' === $screen->base ) {
-			$isBatchScanSupported = aioseo()->options->advanced->truSeo &&
-				! empty( $screen->taxonomy ) &&
-				in_array( $screen->taxonomy, aioseo()->helpers->getTruSeoEligibleTaxonomies(), true );
-		}
-
 		// Lets Quick Edit recompute the column's noindex badge after a save without a
 		// round trip: a post on defaults resolves the same way for its whole post type.
 		$data['postTypeIsNoindexed'] = $postType ? $this->isPostTypeNoindexed( $postType ) : false;
@@ -295,11 +276,98 @@ class DetailsColumn {
 		// doesn't say "posts" and a product list doesn't either.
 		$data['objectNouns'] = $this->getScreenObjectNouns( $screen, $postType );
 
-		$data['batchScanEnabled']     = apply_filters( 'aioseo_truseo_batch_scan_enabled', $isBatchScanSupported, $postType, $screen );
+		$data['batchScanEnabled']     = $this->isBatchScanEnabled();
 		$data['batchScanConcurrency'] = apply_filters( 'aioseo_truseo_batch_scan_concurrency', 3, $postType );
 		$data['batchScanStartDelay']  = apply_filters( 'aioseo_truseo_batch_scan_start_delay', 2000, $postType ); // milliseconds
 
 		aioseo()->core->assets->load( $this->scriptSlug, [], aioseo()->helpers->filterPrivilegedVueData( $data ) );
+	}
+
+	/**
+	 * Whether the list table's batch scan will run on the current screen and put a TruSEO score back.
+	 *
+	 * NOTE: The single source of truth for that question. Anything destructive that relies on the
+	 * scan to recompute what it clears must gate on this, or it strands the score.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return bool Whether the batch scan is enabled on the current screen.
+	 */
+	public function isBatchScanEnabled() {
+		$screen = aioseo()->helpers->getCurrentScreen();
+
+		// Off a list-table screen there is nothing to scan. Bail before the filter rather than
+		// handing callbacks a `false` screen and an empty post type, which they have never had to
+		// guard against.
+		if ( ! is_a( $screen, 'WP_Screen' ) ) {
+			return false;
+		}
+
+		$postType = ! empty( $screen->post_type ) ? $screen->post_type : '';
+
+		return (bool) apply_filters(
+			'aioseo_truseo_batch_scan_enabled',
+			$this->isBatchScanSupported( $screen, $postType ),
+			$postType,
+			$screen
+		);
+	}
+
+	/**
+	 * Whether this screen is one the batch scan supports, before the filter gets a say.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  \WP_Screen $screen   The current screen.
+	 * @param  string     $postType The current post type.
+	 * @return bool                 Whether the screen supports the batch scan.
+	 */
+	protected function isBatchScanSupported( $screen, $postType ) {
+		// The scan ships inside the Details column's own bundle, so whatever keeps the column from
+		// registering keeps the scan from ever starting — the capability and the include-list both.
+		if ( ! $this->isColumnRegistered( $screen ) ) {
+			return false;
+		}
+
+		// Otherwise the list would run (and persist) analysis for a disabled feature.
+		if ( ! aioseo()->options->advanced->truSeo ) {
+			return false;
+		}
+
+		// Term lists back the same scan, gated on the taxonomy being TruSEO-eligible rather than on
+		// the post type, which a term screen doesn't have.
+		if ( 'edit-tags' === $screen->base ) {
+			return ! empty( $screen->taxonomy ) &&
+				in_array( $screen->taxonomy, aioseo()->helpers->getTruSeoEligibleTaxonomies(), true );
+		}
+
+		// Only post list pages, not the media library. The Trash view lists only trashed posts,
+		// which aren't editable content, so skip it too.
+		// Eligibility rather than just the master switch: a post type the user excluded from TruSEO
+		// must not be scanned from its list either, or unscored rows get analysed and persisted behind
+		// the user's back. It also covers the never-analysable types (attachments, web stories).
+		return 'edit' === $screen->base &&
+			! aioseo()->helpers->isTrashListView() &&
+			in_array( $postType, aioseo()->helpers->getTruSeoEligiblePostTypes(), true );
+	}
+
+	/**
+	 * Whether the AIOSEO Details column is registered on the given screen.
+	 *
+	 * NOTE: Resolves the same decision {@see registerColumnHooks()} makes, so callers outside the
+	 * column can tell whether its scripts were ever enqueued.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  \WP_Screen $screen The current screen.
+	 * @return bool               Whether the column is registered.
+	 */
+	protected function isColumnRegistered( $screen ) {
+		if ( empty( $screen->base ) || empty( $screen->post_type ) ) {
+			return false;
+		}
+
+		return $this->shouldRegisterColumn( $screen->base, $screen->post_type );
 	}
 
 	/**

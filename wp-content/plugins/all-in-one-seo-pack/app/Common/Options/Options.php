@@ -48,7 +48,7 @@ class Options {
 			'imageModel'       => [ 'type' => 'string', 'default' => 'gemini-3.1-flash-image' ]
 		],
 		'breadcrumbs'      => [
-			'separator'             => [ 'type' => 'string', 'default' => '&raquo;' ],
+			'separator'             => [ 'type' => 'string', 'default' => '&raquo;', 'preserveHtml' => true ],
 			'homepageLink'          => [ 'type' => 'boolean', 'default' => true ],
 			'homepageLabel'         => [ 'type' => 'string', 'default' => 'Home' ],
 			'breadcrumbPrefix'      => [ 'type' => 'string', 'localized' => true, 'default' => '' ],
@@ -286,7 +286,7 @@ class Options {
 		],
 		'searchAppearance' => [
 			'global'   => [
-				'separator'       => [ 'type' => 'string', 'default' => '&#45;' ],
+				'separator'       => [ 'type' => 'string', 'default' => '&#45;', 'preserveHtml' => true ],
 				'siteTitle'       => [ 'type' => 'string', 'localized' => true, 'default' => '#site_title #separator_sa #tagline' ],
 				'metaDescription' => [ 'type' => 'string', 'localized' => true, 'default' => '#tagline' ],
 				'keywords'        => [ 'type' => 'string', 'localized' => true ],

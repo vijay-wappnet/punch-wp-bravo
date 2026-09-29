@@ -404,13 +404,16 @@ trait Url {
 	 * @since   4.0.0
 	 * @version 4.8.3 Moved from WpUri trait to Url trait.
 	 * @version 5.0.1 Root-relative paths that include the site URL path resolve against the host root.
+	 * @version 5.0.2 Added $baseUrl parameter.
 	 *
-	 * @param  string $url The URL.
-	 * @return string      The absolute URL.
+	 * @param  string $url     The URL.
+	 * @param  string $baseUrl The base URL to resolve relative paths against. Defaults to site_url().
+	 * @return string          The absolute URL.
 	 */
-	public function makeUrlAbsolute( $url ) {
+	public function makeUrlAbsolute( $url, $baseUrl = null ) {
 		if ( 0 !== strpos( $url, 'http' ) && '/' !== $url ) {
-			$scheme   = wp_parse_url( site_url(), PHP_URL_SCHEME );
+			$base     = $baseUrl ? $baseUrl : site_url();
+			$scheme   = wp_parse_url( $base, PHP_URL_SCHEME );
 			$cleanUrl = untrailingslashit( preg_replace( '#^https?://#i', '', trim( $url ) ) );
 			$sitePath = $this->getSiteUrlPath();
 			if ( $this->isDomainWithPaths( $cleanUrl ) ) {
@@ -418,13 +421,16 @@ trait Url {
 			} elseif ( 0 === strpos( $cleanUrl, '//' ) ) {
 				$url = $scheme . ':' . $cleanUrl;
 			} elseif (
+				! $baseUrl &&
 				$sitePath &&
 				( $cleanUrl === $sitePath || 0 === strpos( $cleanUrl, $sitePath . '/' ) )
 			) {
 				// The path already contains the site path; going through site_url() would duplicate it.
 				$url = substr( site_url(), 0, -strlen( $sitePath ) ) . $cleanUrl;
 			} else {
-				$url = site_url( $cleanUrl );
+				$url = $baseUrl
+					? untrailingslashit( $base ) . '/' . ltrim( $cleanUrl, '/' )
+					: site_url( $cleanUrl );
 			}
 		}
 

@@ -180,6 +180,7 @@ class Content {
 
 		$result['winning']['show_tru_seo'] = ! empty( array_filter( array_column( $result['winning']['items'], 'tru_seo' ) ) );
 
+		// Losing rows are ranked by a multi-signal decay score, so the clicks diff can still be positive.
 		foreach ( array_slice( $this->seoStatistics['pages']['topLosing']['rows'], 0, 3 ) as $row ) {
 			$postId                      = $row['objectId'] ?? 0;
 			$result['losing']['items'][] = [
@@ -188,7 +189,7 @@ class Content {
 				'tru_seo'    => aioseo()->helpers->isTruSeoEligible( $postId ) ? $this->parseSeoScore( $row['seoScore'] ?? 0 ) : [],
 				'clicks'     => $this->parseClicks( $row['clicks'] ),
 				'difference' => [
-					'clicks' => $this->parseDifference( $row['difference']['clicks'] ?? '' ),
+					'clicks' => $this->parseDifference( $row['difference']['clicks'] ?? '', false, true ),
 				]
 			];
 		}
@@ -407,12 +408,13 @@ class Content {
 			];
 		}
 
+		// Losing rows are ranked by a multi-signal decay score, so the clicks diff can still be positive.
 		foreach ( array_slice( $this->keywords['topLosing'], 0, 3 ) as $row ) {
 			$result['losing']['items'][] = [
 				'title'      => $row['keyword'],
 				'clicks'     => $this->parseClicks( $row['clicks'] ),
 				'difference' => [
-					'clicks' => $this->parseDifference( $row['difference']['clicks'] ?? '' ),
+					'clicks' => $this->parseDifference( $row['difference']['clicks'] ?? '', false, true ),
 				]
 			];
 		}
@@ -570,13 +572,15 @@ class Content {
 	/**
 	 * Parses a difference.
 	 *
-	 * @since 4.7.2
+	 * @since   4.7.2
+	 * @version 5.0.2 Added the $capPositive parameter.
 	 *
-	 * @param  int|string $number     The number to parse.
-	 * @param  bool       $percentage Whether to return the text result as a percentage.
-	 * @return array                  The parsed result.
+	 * @param  int|string $number      The number to parse.
+	 * @param  bool       $percentage  Whether to return the text result as a percentage.
+	 * @param  bool       $capPositive Whether to keep the neutral color for positive numbers.
+	 * @return array                   The parsed result.
 	 */
-	private function parseDifference( $number, $percentage = false ) {
+	private function parseDifference( $number, $percentage = false, $capPositive = false ) {
 		$parsed = [
 			'color' => '#a1a1a1',
 			'text'  => esc_html__( 'N/A', 'all-in-one-seo-pack' ),
@@ -592,7 +596,7 @@ class Content {
 			$parsed['text'] = $number . '%';
 		}
 
-		if ( $number > 0 ) {
+		if ( $number > 0 && ! $capPositive ) {
 			$parsed['color'] = '#00aa63';
 		} elseif ( $number < 0 ) {
 			$parsed['color'] = '#df2a4a';

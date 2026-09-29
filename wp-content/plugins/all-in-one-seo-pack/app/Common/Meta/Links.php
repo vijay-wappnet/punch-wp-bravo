@@ -133,7 +133,8 @@ class Links {
 	/**
 	 * This is a clone of _wp_link_page, except that we don't output HTML.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2-2026-09-22-19:31 Cast page_on_front to int so the static front page paginates at /page/N/.
 	 *
 	 * @param  integer $number The page number.
 	 * @return string          The URL.
@@ -148,7 +149,7 @@ class Links {
 		} else {
 			if ( ! get_option( 'permalink_structure' ) || in_array( $post->post_status, [ 'draft', 'pending' ], true ) ) {
 				$url = add_query_arg( 'page', $number, get_permalink() );
-			} elseif ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) === $post->ID ) {
+			} elseif ( 'page' === get_option( 'show_on_front' ) && (int) get_option( 'page_on_front' ) === $post->ID ) {
 				$url = trailingslashit( get_permalink() ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $number, 'single_paged' ); // phpcs:ignore Squiz.NamingConventions.ValidVariableName
 			} else {
 				$url = trailingslashit( get_permalink() ) . user_trailingslashit( $number, 'single_paged' );

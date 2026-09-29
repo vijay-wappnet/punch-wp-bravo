@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AIOSEO\Plugin\Common\Admin\Notices\Review as ReviewNotice;
 use AIOSEO\Plugin\Common\Models;
 use AIOSEO\Plugin\Common\Migration;
 
@@ -36,7 +37,8 @@ class Settings {
 	/**
 	 * Retrieves the plugin options.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Restore the current blog and refresh the options before returning.
 	 *
 	 * @param  \WP_REST_Request  $request The REST Request.
 	 * @return \WP_REST_Response          The response containing all plugin options.
@@ -60,8 +62,19 @@ class Settings {
 
 			aioseo()->helpers->switchToBlog( $siteId );
 
-			// Re-initialize the options for this site.
-			aioseo()->options->init();
+			try {
+				// Re-initialize the options for this site.
+				aioseo()->options->init();
+
+				$options = aioseo()->options->all();
+			} finally {
+				aioseo()->options->refreshAfterRestore();
+			}
+
+			return new \WP_REST_Response( [
+				'success' => true,
+				'options' => $options
+			], 200 );
 		}
 
 		return new \WP_REST_Response([
@@ -130,6 +143,40 @@ class Settings {
 		if ( $alert && array_key_exists( $alert, $alerts ) ) {
 			$alerts[ $alert ] = true;
 			aioseo()->settings->dismissedAlerts = $alerts;
+		}
+
+		return new \WP_REST_Response( [
+			'success' => true
+		], 200 );
+	}
+
+	/**
+	 * Dismisses or snoozes the post editor 5-star review CTA.
+	 *
+	 * NOTE: The state is stored in the same user meta as the admin review notice, so acting on
+	 * either prompt silences (or snoozes) both.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  \WP_REST_Request  $request The REST Request.
+	 * @return \WP_REST_Response          The response.
+	 */
+	public static function dismissReviewCta( $request ) {
+		$body = $request->get_json_params();
+
+		// Without the flag we can't tell a snooze from an opt-out, and guessing would silence the
+		// review prompts for good.
+		if ( ! isset( $body['delay'] ) ) {
+			return new \WP_REST_Response( [
+				'success' => false
+			], 400 );
+		}
+
+		// Snoozing brings the prompts back after a week; every other action opts the user out.
+		if ( $body['delay'] ) {
+			ReviewNotice::snooze();
+		} else {
+			update_user_meta( get_current_user_id(), ReviewNotice::DISMISSED_META_KEY, ReviewNotice::DISMISSED_OPTED_OUT );
 		}
 
 		return new \WP_REST_Response( [
@@ -647,7 +694,8 @@ class Settings {
 	/**
 	 * Export post data.
 	 *
-	 * @since 4.7.2
+	 * @since   4.7.2
+	 * @version 5.0.2 Restore the current blog before returning.
 	 *
 	 * @param  \WP_REST_Request  $request The REST Request.
 	 * @return \WP_REST_Response          The response.
@@ -727,6 +775,8 @@ class Settings {
 			}
 		} catch ( \Throwable $th ) {
 			$return = false;
+		} finally {
+			aioseo()->helpers->restoreCurrentBlog();
 		}
 
 		return new \WP_REST_Response( [

@@ -134,6 +134,7 @@ class Api {
 			'settings/toggle-card'                                   => [ 'callback' => [ 'Settings', 'toggleCard' ], 'access' => 'any' ],
 			'settings/toggle-radio'                                  => [ 'callback' => [ 'Settings', 'toggleRadio' ], 'access' => 'any' ],
 			'settings/dismiss-alert'                                 => [ 'callback' => [ 'Settings', 'dismissAlert' ], 'access' => 'any' ],
+			'settings/dismiss-review-cta'                            => [ 'callback' => [ 'Settings', 'dismissReviewCta' ], 'access' => 'any' ],
 			'settings/items-per-page'                                => [ 'callback' => [ 'Settings', 'changeItemsPerPage' ], 'access' => 'any' ],
 			'settings/semrush-country'                               => [ 'callback' => [ 'Settings', 'changeSemrushCountry' ], 'access' => 'any' ],
 			'settings/do-task'                                       => [ 'callback' => [ 'Settings', 'doTask' ], 'access' => 'aioseo_tools_settings' ],

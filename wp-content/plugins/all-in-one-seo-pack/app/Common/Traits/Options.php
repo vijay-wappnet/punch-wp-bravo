@@ -240,7 +240,8 @@ trait Options {
 	/**
 	 * Sets the option value and saves to the database.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Localized keywords go through {@see jsonTagsToCommaSeparatedList()}.
 	 *
 	 * @param  string $name  The name of the option.
 	 * @param  mixed  $value The value to set.
@@ -287,12 +288,7 @@ trait Options {
 			$localizedValue = $defaults[ $name ]['value'];
 
 			if ( 'keywords' === $name ) {
-				$keywords = json_decode( $localizedValue ) ? json_decode( $localizedValue ) : [];
-				foreach ( $keywords as $k => $keyword ) {
-					$keywords[ $k ] = $keyword->value;
-				}
-
-				$localizedValue = implode( ',', $keywords );
+				$localizedValue = aioseo()->helpers->jsonTagsToCommaSeparatedList( $localizedValue );
 			}
 
 			$this->localized[ $localizedKey ] = $localizedValue;
@@ -687,16 +683,18 @@ trait Options {
 	/**
 	 * Updates the options in the database.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Only fall back to the full defaults when none were passed; fixed param types.
 	 *
-	 * @param  string     $optionsName An optional option name to update.
-	 * @param  string     $defaults    The defaults to filter the options by.
-	 * @param  array|null $options     An optional options array.
+	 * @param  string|null $optionsName An optional option name to update.
+	 * @param  array|null  $defaults    The defaults to filter the options by.
+	 * @param  array|null  $options     An optional options array.
 	 * @return void
 	 */
 	public function update( $optionsName = null, $defaults = null, $options = null ) {
+		// For $defaults an empty array is a deliberate answer; promoting it to the full defaults overfills the row.
 		$optionsName = empty( $optionsName ) ? $this->optionsName : $optionsName;
-		$defaults    = empty( $defaults ) ? $this->defaults : $defaults;
+		$defaults    = null === $defaults ? $this->defaults : $defaults;
 
 		// First, we need to filter our options.
 		$options = $this->filterOptions( $defaults, $options );
@@ -720,11 +718,12 @@ trait Options {
 	/**
 	 * Updates the options in the database.
 	 *
-	 * @since 4.1.4
+	 * @since   4.1.4
+	 * @version 5.0.2 Only fall back to the full defaults when none were passed; fixed param types.
 	 *
-	 * @param  boolean $force       Whether or not to force an immediate save.
-	 * @param  string  $optionsName An optional option name to update.
-	 * @param  string  $defaults    The defaults to filter the options by.
+	 * @param  boolean     $force       Whether or not to force an immediate save.
+	 * @param  string|null $optionsName An optional option name to update.
+	 * @param  array|null  $defaults    The defaults to filter the options by.
 	 * @return void
 	 */
 	public function save( $force = false, $optionsName = null, $defaults = null ) {
@@ -732,8 +731,9 @@ trait Options {
 			return;
 		}
 
+		// See the note in update() on why $defaults isn't tested with empty().
 		$optionsName = empty( $optionsName ) ? $this->optionsName : $optionsName;
-		$defaults    = empty( $defaults ) ? $this->defaults : $defaults;
+		$defaults    = null === $defaults ? $this->defaults : $defaults;
 
 		$this->update( $optionsName );
 
@@ -906,7 +906,8 @@ trait Options {
 	 * Converts an associative array of values into a structure
 	 * that works with our defaults.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Localized keywords go through {@see jsonTagsToCommaSeparatedList()}.
 	 *
 	 * @param  array $defaults The defaults array we are currently working with.
 	 * @param  array $values   The values to adjust.
@@ -934,12 +935,7 @@ trait Options {
 					$localizedKey  .= $key;
 					$localizedValue = $newValue;
 					if ( 'keywords' === $key ) {
-						$keywords = json_decode( $localizedValue ) ? json_decode( $localizedValue ) : [];
-						foreach ( $keywords as $k => $keyword ) {
-							$keywords[ $k ] = $keyword->value;
-						}
-
-						$localizedValue = implode( ',', $keywords );
+						$localizedValue = aioseo()->helpers->jsonTagsToCommaSeparatedList( $localizedValue );
 					}
 
 					$this->localized[ $localizedKey ] = $localizedValue;
@@ -1043,6 +1039,21 @@ trait Options {
 		// Reset DB options to clear the cache.
 		aioseo()->core->optionsCache->resetDb();
 		$this->init();
+	}
+
+	/**
+	 * Restores the current blog, then re-reads this instance's options for it.
+	 *
+	 * NOTE: Other option names loaded while switched still answer for that blog.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return void
+	 */
+	public function refreshAfterRestore() {
+		aioseo()->helpers->restoreCurrentBlog();
+
+		$this->refresh();
 	}
 
 	/**

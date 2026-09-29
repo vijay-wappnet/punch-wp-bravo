@@ -291,6 +291,40 @@ trait WpContext {
 	}
 
 	/**
+	 * Returns the permalink for the given term.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  \WP_Term $term     The term object.
+	 * @param  string   $taxonomy The taxonomy.
+	 * @return string             The term link. Empty string if it can't be resolved.
+	 */
+	public function getTermLink( $term, $taxonomy = '' ) {
+		if ( ! is_a( $term, 'WP_Term' ) ) {
+			return '';
+		}
+
+		// For hierarchical permastructs get_term_link() reads ->slug off every ancestor
+		// without checking it resolved, so a term whose parent row was deleted emits a
+		// warning and leaves an empty segment in the URL. Drop those ancestors first.
+		$dropOrphanedAncestors = function ( $ancestors, $objectId, $objectType, $resourceType ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+			if ( 'taxonomy' !== $resourceType ) {
+				return $ancestors;
+			}
+
+			return array_values( array_filter( (array) $ancestors, function ( $ancestorId ) use ( $objectType ) {
+				return is_a( get_term( $ancestorId, $objectType ), 'WP_Term' );
+			} ) );
+		};
+
+		add_filter( 'get_ancestors', $dropOrphanedAncestors, 10, 4 );
+		$termLink = get_term_link( $term, $taxonomy );
+		remove_filter( 'get_ancestors', $dropOrphanedAncestors, 10 );
+
+		return is_wp_error( $termLink ) ? '' : (string) $termLink;
+	}
+
+	/**
 	 * Returns the current post ID.
 	 *
 	 * @since 4.3.1

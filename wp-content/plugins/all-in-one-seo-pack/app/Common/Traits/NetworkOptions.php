@@ -34,7 +34,8 @@ trait NetworkOptions {
 
 		$this->defaultsMerged = aioseo()->helpers->arrayReplaceRecursive( $this->defaults, $this->defaultsMerged );
 
-		$options = aioseo()->helpers->arrayReplaceRecursive(
+		// A stored group that is [] must keep its defaults; the helper would replace the whole group with [].
+		$options = array_replace_recursive(
 			$this->defaultsMerged,
 			$this->addValueToValuesArray( $this->defaultsMerged, $dbOptions )
 		);

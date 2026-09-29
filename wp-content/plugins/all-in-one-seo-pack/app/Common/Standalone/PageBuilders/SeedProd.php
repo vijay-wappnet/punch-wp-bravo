@@ -34,6 +34,23 @@ class SeedProd extends Base {
 	public $integrationSlug = 'seedprod';
 
 	/**
+	 * Check whether or not the plugin is active.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return bool Whether or not the plugin is active.
+	 */
+	public function isPluginActive() {
+		if ( parent::isPluginActive() ) {
+			return true;
+		}
+
+		// SeedProd's build stamps the major version into the Pro folder name, so the basename
+		// list goes stale. Both builds define these whatever folder they are installed under.
+		return defined( 'SEEDPROD_VERSION' ) || defined( 'SEEDPROD_PRO_VERSION' );
+	}
+
+	/**
 	 * Init the integration.
 	 *
 	 * @since 4.1.7
@@ -107,12 +124,17 @@ class SeedProd extends Base {
 	/**
 	 * Returns whether or not the given Post ID was built with SeedProd.
 	 *
-	 * @since 4.1.7
+	 * @since   4.1.7
+	 * @version 5.0.2 Return false when the SeedProd plugin is inactive, even if its post meta persists.
 	 *
 	 * @param  int $postId The Post ID.
 	 * @return boolean     Whether or not the Post was built with SeedProd.
 	 */
 	public function isBuiltWith( $postId ) {
+		if ( ! $this->isActive() ) {
+			return false;
+		}
+
 		$isSeedProd = get_post_meta( $postId, '_seedprod_page', true );
 		if ( ! empty( $isSeedProd ) ) {
 			return true;

@@ -47,7 +47,8 @@ class RobotsService {
 	/**
 	 * Lists AIOSEO's custom robots.txt rules.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 List only the addressable rules; {@see mapAddressableRules()}.
 	 *
 	 * @return array|\WP_Error
 	 */
@@ -57,7 +58,7 @@ class RobotsService {
 		}
 
 		return [
-			'rules' => array_values( array_map( [ $this, 'decodeRule' ], $this->getRawRules() ) )
+			'rules' => array_column( $this->mapAddressableRules( $this->getRawRules() ), 'rule' )
 		];
 	}
 
@@ -94,8 +95,12 @@ class RobotsService {
 		}
 
 		$validated['id'] = $this->generateRuleId();
-		$encoded         = wp_json_encode( $validated );
-		$rules[]         = $encoded;
+		$encoded         = $this->encodeRuleForStorage( $validated );
+		if ( is_wp_error( $encoded ) ) {
+			return $encoded;
+		}
+
+		$rules[] = $encoded;
 		$this->saveRawRules( $rules );
 
 		return [ 'rule' => $this->decodeRule( $encoded ) ];
@@ -104,7 +109,8 @@ class RobotsService {
 	/**
 	 * Updates an existing custom robots.txt rule, addressed by its hash ID.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Update every entry behind the ID; {@see findAddressableRule()}.
 	 *
 	 * @param  string $id   The rule hash ID (from listRules).
 	 * @param  array  $rule Accepted keys: user_agent, directive, field_value. Only present keys are updated.
@@ -115,14 +121,14 @@ class RobotsService {
 			return new \WP_Error( 'forbidden', __( 'You do not have permission to manage robots rules.', 'all-in-one-seo-pack' ), [ 'status' => 403 ] );
 		}
 
-		$id    = (string) $id;
-		$rules = $this->getRawRules();
-		$index = $this->findRuleIndex( $rules, $id );
-		if ( -1 === $index ) {
+		$id     = (string) $id;
+		$rules  = $this->getRawRules();
+		$target = $this->findAddressableRule( $rules, $id );
+		if ( ! $target ) {
 			return new \WP_Error( 'rule_not_found', __( 'Robots rule not found.', 'all-in-one-seo-pack' ), [ 'status' => 404 ] );
 		}
 
-		$current = json_decode( $rules[ $index ], true );
+		$current = json_decode( $rules[ $target['indexes'][0] ], true );
 		$merged  = is_array( $current ) ? $current : [];
 
 		if ( isset( $rule['user_agent'] ) ) {
@@ -145,16 +151,26 @@ class RobotsService {
 		}
 
 		$validated['id'] = $id;
-		$rules[ $index ] = wp_json_encode( $validated );
-		$this->saveRawRules( array_values( $rules ) );
+		$encoded         = $this->encodeRuleForStorage( $validated );
+		if ( is_wp_error( $encoded ) ) {
+			return $encoded;
+		}
 
-		return [ 'rule' => $this->decodeRule( $rules[ $index ] ) ];
+		// Rewrite every entry the ID resolves to — the rest would stay stored and served under the old value.
+		foreach ( $target['indexes'] as $index ) {
+			$rules[ $index ] = $encoded;
+		}
+
+		$this->saveRawRules( $rules );
+
+		return [ 'rule' => $this->decodeRule( $encoded ) ];
 	}
 
 	/**
 	 * Deletes a custom robots.txt rule by hash ID.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Delete every entry behind the ID; {@see findAddressableRule()}.
 	 *
 	 * @param  string $id The rule hash ID.
 	 * @return array|\WP_Error
@@ -164,15 +180,15 @@ class RobotsService {
 			return new \WP_Error( 'forbidden', __( 'You do not have permission to manage robots rules.', 'all-in-one-seo-pack' ), [ 'status' => 403 ] );
 		}
 
-		$id    = (string) $id;
-		$rules = $this->getRawRules();
-		$index = $this->findRuleIndex( $rules, $id );
-		if ( -1 === $index ) {
+		$id     = (string) $id;
+		$rules  = $this->getRawRules();
+		$target = $this->findAddressableRule( $rules, $id );
+		if ( ! $target ) {
 			return new \WP_Error( 'rule_not_found', __( 'Robots rule not found.', 'all-in-one-seo-pack' ), [ 'status' => 404 ] );
 		}
 
-		array_splice( $rules, $index, 1 );
-		$this->saveRawRules( $rules );
+		// Drop every entry the ID resolves to — a rule stored more than once keeps serving otherwise.
+		$this->saveRawRules( array_diff_key( $rules, array_flip( $target['indexes'] ) ) );
 
 		return [ 'deleted' => true ];
 	}
@@ -180,45 +196,48 @@ class RobotsService {
 	/**
 	 * Loads the raw rules array from options.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Normalize entries via {@see \AIOSEO\Plugin\Common\Tools\RobotsTxt::normalizeRules()}.
 	 *
 	 * @return array
 	 */
 	protected function getRawRules() {
-		$rules = aioseo()->options->tools->robots->rules;
-
-		return is_array( $rules ) ? $rules : [];
+		// Normalize at the single boundary every CRUD method reads through.
+		return aioseo()->robotsTxt->normalizeRules( aioseo()->options->tools->robots->rules );
 	}
 
 	/**
 	 * Saves the raw rules array back to options.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 De-duplicate via {@see \AIOSEO\Plugin\Common\Tools\RobotsTxt::uniqueRules()}.
 	 *
 	 * @param  array $rules The JSON-encoded rule strings to persist.
 	 * @return void
 	 */
 	protected function saveRawRules( $rules ) {
-		aioseo()->options->tools->robots->rules = array_values( array_unique( $rules ) );
+		// Not array_unique(): the same rule can be stored under two encodings, which only decoded comparison collapses.
+		aioseo()->options->tools->robots->rules = aioseo()->robotsTxt->uniqueRules( $rules );
 	}
 
 	/**
 	 * Decodes a stored rule into the agent-facing shape with a stable hash ID.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Cast only scalar field values; {@see castRuleValue()}.
 	 *
 	 * @param  string $encoded The JSON-encoded rule string.
 	 * @return array
 	 */
 	protected function decodeRule( $encoded ) {
-		$rule = json_decode( (string) $encoded, true );
+		$rule = aioseo()->robotsTxt->decodeStoredRule( $encoded );
 		$rule = is_array( $rule ) ? $rule : [];
 
-		$userAgent  = isset( $rule['userAgent'] ) ? (string) $rule['userAgent'] : '';
-		$directive  = isset( $rule['directive'] ) ? (string) $rule['directive'] : '';
-		$fieldValue = isset( $rule['fieldValue'] ) ? (string) $rule['fieldValue'] : '';
-		$id         = isset( $rule['id'] ) && '' !== $rule['id']
-			? (string) $rule['id']
+		$userAgent  = $this->castRuleValue( $rule, 'userAgent' );
+		$directive  = $this->castRuleValue( $rule, 'directive' );
+		$fieldValue = $this->castRuleValue( $rule, 'fieldValue' );
+		$id         = '' !== $this->castRuleValue( $rule, 'id' )
+			? $this->castRuleValue( $rule, 'id' )
 			: sha1( $userAgent . '|' . $directive . '|' . $fieldValue );
 
 		return [
@@ -227,6 +246,72 @@ class RobotsService {
 			'directive'   => $directive,
 			'field_value' => $fieldValue
 		];
+	}
+
+	/**
+	 * Casts a decoded rule field to the string the agent-facing shape exposes.
+	 *
+	 * NOTE: a malformed entry can hold an array where a value belongs; a plain cast warns on every read.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array  $rule The decoded rule.
+	 * @param  string $key  The field to read.
+	 * @return string       The field value, or an empty string if it isn't a usable value.
+	 */
+	protected function castRuleValue( $rule, $key ) {
+		return isset( $rule[ $key ] ) && is_scalar( $rule[ $key ] ) ? (string) $rule[ $key ] : '';
+	}
+
+	/**
+	 * Encodes a validated rule for storage.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array            $rule The validated rule.
+	 * @return string|\WP_Error       The canonical JSON string, or an error if it can't be encoded.
+	 */
+	protected function encodeRuleForStorage( $rule ) {
+		$encoded = aioseo()->robotsTxt->encodeRule( $rule );
+		if ( ! is_string( $encoded ) ) {
+			return new \WP_Error( 'rule_not_encodable', __( 'The robots rule could not be saved.', 'all-in-one-seo-pack' ), [ 'status' => 500 ] );
+		}
+
+		return $encoded;
+	}
+
+	/**
+	 * Maps the raw rules to the rules a caller can address, keyed by hash ID.
+	 *
+	 * NOTE: several entries can resolve to one ID; all of their indexes belong to that one addressable rule.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  array $rules The raw rules array.
+	 * @return array        Addressable rules keyed by hash ID, each as [ 'rule' => array, 'indexes' => int[] ].
+	 */
+	protected function mapAddressableRules( $rules ) {
+		$addressable = [];
+		foreach ( $rules as $index => $encoded ) {
+			$rule = $this->decodeRule( $encoded );
+			// Blank editor rows and non-rule JSON decode to empty rows that would all share one hash ID.
+			if ( '' === $rule['user_agent'] ) {
+				continue;
+			}
+
+			if ( isset( $addressable[ $rule['id'] ] ) ) {
+				$addressable[ $rule['id'] ]['indexes'][] = $index;
+
+				continue;
+			}
+
+			$addressable[ $rule['id'] ] = [
+				'rule'    => $rule,
+				'indexes' => [ $index ]
+			];
+		}
+
+		return $addressable;
 	}
 
 	/**
@@ -247,7 +332,11 @@ class RobotsService {
 	/**
 	 * Validates and normalises a rule payload before persistence.
 	 *
-	 * @since 4.9.8
+	 * NOTE: sanitizes before the emptiness checks. A value that sanitizes to empty must be rejected here,
+	 * because a stored rule with an empty user agent is not addressable ({@see mapAddressableRules()}).
+	 *
+	 * @since   4.9.8
+	 * @version 5.0.2 Sanitize the user agent and field value before validating them.
 	 *
 	 * @param  array $rule The raw rule input.
 	 * @return array|\WP_Error Normalised rule (userAgent/directive/fieldValue) on success.
@@ -255,9 +344,9 @@ class RobotsService {
 	protected function validateRule( $rule ) {
 		$rule = is_array( $rule ) ? $rule : [];
 
-		$userAgent  = isset( $rule['user_agent'] ) ? trim( (string) $rule['user_agent'] ) : '';
+		$userAgent  = isset( $rule['user_agent'] ) ? sanitize_text_field( (string) $rule['user_agent'] ) : '';
 		$directive  = isset( $rule['directive'] ) ? strtolower( trim( (string) $rule['directive'] ) ) : '';
-		$fieldValue = isset( $rule['field_value'] ) ? trim( (string) $rule['field_value'] ) : '';
+		$fieldValue = isset( $rule['field_value'] ) ? sanitize_text_field( (string) $rule['field_value'] ) : '';
 
 		if ( '' === $userAgent ) {
 			return new \WP_Error( 'invalid_user_agent', __( 'User agent cannot be empty.', 'all-in-one-seo-pack' ), [ 'status' => 400 ] );
@@ -275,29 +364,25 @@ class RobotsService {
 		}
 
 		return [
-			'userAgent'  => sanitize_text_field( $userAgent ),
+			'userAgent'  => $userAgent,
 			'directive'  => $directive,
-			'fieldValue' => sanitize_text_field( $fieldValue )
+			'fieldValue' => $fieldValue
 		];
 	}
 
 	/**
-	 * Finds the index of a rule by its hash ID.
+	 * Finds the addressable rule a hash ID refers to.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Renamed from findRuleIndex(); returns the rule with every index behind its ID.
 	 *
 	 * @param  array  $rules The raw rules array.
 	 * @param  string $id    The hash ID to find.
-	 * @return int Index, or -1 if not found.
+	 * @return array         The addressable rule, or an empty array if no rule has that ID.
 	 */
-	protected function findRuleIndex( $rules, $id ) {
-		foreach ( $rules as $index => $encoded ) {
-			$decoded = $this->decodeRule( $encoded );
-			if ( $decoded['id'] === $id ) {
-				return $index;
-			}
-		}
+	protected function findAddressableRule( $rules, $id ) {
+		$addressable = $this->mapAddressableRules( $rules );
 
-		return -1;
+		return isset( $addressable[ $id ] ) ? $addressable[ $id ] : [];
 	}
 }

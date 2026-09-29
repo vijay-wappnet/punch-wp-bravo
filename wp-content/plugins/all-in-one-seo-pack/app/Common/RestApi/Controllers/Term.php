@@ -82,7 +82,8 @@ class Term extends Base {
 	/**
 	 * Sets the given term as the queried object of the main query.
 	 *
-	 * @since 4.9.8
+	 * @since   4.9.8
+	 * @version 5.0.2 Bail when the term ID no longer resolves to a WP_Term.
 	 *
 	 * @param  array $termArr The term object.
 	 * @return void
@@ -93,6 +94,9 @@ class Term extends Base {
 		$this->originalQuery = clone $wp_query;
 
 		$term = aioseo()->helpers->getTerm( $termArr['id'] );
+		if ( ! is_a( $term, 'WP_Term' ) ) {
+			return;
+		}
 
 		$wp_query->get_queried_object_id = (int) $term->term_id;
 		$wp_query->queried_object        = $term;

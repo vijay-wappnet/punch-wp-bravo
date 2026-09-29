@@ -16804,7 +16804,7 @@ msgid "TruSEO Score"
 msgstr ""
 
 #: languages/aioseo-lite.php:10392
-msgid "TruSEO scoring can imrove your search engine rankings. To see TruSEO scores for your published posts, enable at least one post type by turning on \"Show in Search Results\" in the Search Appearance settings."
+msgid "TruSEO scoring can improve your search engine rankings. To see TruSEO scores for your published posts, enable at least one post type by turning on \"Show in Search Results\" in the Search Appearance settings."
 msgstr ""
 
 #: languages/aioseo-lite.php:10398

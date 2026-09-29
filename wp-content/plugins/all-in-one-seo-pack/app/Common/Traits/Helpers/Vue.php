@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AIOSEO\Plugin\Common\Admin\Notices\Review as ReviewNotice;
 use AIOSEO\Plugin\Common\Integrations\WpCode as WpCodeIntegration;
 use AIOSEO\Plugin\Common\Models;
 use AIOSEO\Plugin\Common\SpellChecker\Dictionary;
@@ -346,6 +347,44 @@ trait Vue {
 	}
 
 	/**
+	 * Determines whether the 5-star review CTA should be shown in the post editor.
+	 *
+	 * NOTE: Eligibility is shared with the admin review notice, so acting on either one silences
+	 * both. {@see \AIOSEO\Plugin\Common\Admin\Notices\Review::canPromptUser()}
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return bool Whether the review CTA should be shown.
+	 */
+	private function shouldShowReviewCta() {
+		if ( ! ReviewNotice::canPromptUser() ) {
+			return false;
+		}
+
+		$minimumOptimizedPosts = 10;
+
+		return $this->getOptimizedPostCount() >= $minimumOptimizedPosts;
+	}
+
+	/**
+	 * Returns the number of optimized posts, i.e. published posts that have a TruSEO score.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @return int The number of optimized posts.
+	 */
+	private function getOptimizedPostCount() {
+		// Reuse the dashboard overview so what counts as an optimized post is defined once, and so
+		// the count inherits its cache invalidation.
+		$count = 0;
+		foreach ( aioseo()->postSettings->getPostTypesOverview() as $overview ) {
+			$count += $overview['needsImprovement'] + $overview['okay'] + $overview['good'];
+		}
+
+		return $count;
+	}
+
+	/**
 	 * Set Vue multisite data.
 	 *
 	 * @since 4.4.9
@@ -416,6 +455,7 @@ trait Vue {
 			'isHomePage'                     => $postId === $staticHomePage,
 			'isWooCommercePageWithoutSchema' => $this->isWooCommercePageWithoutSchema( $postId ),
 			'seo_score'                      => (int) $post->seo_score,
+			'showReviewCta'                  => $this->shouldShowReviewCta(),
 			'pillar_content'                 => ( (int) $post->pillar_content ) === 0 ? false : true,
 			'canonicalUrl'                   => $post->canonical_url,
 			'default'                        => ( (int) $post->robots_default ) === 0 ? false : true,

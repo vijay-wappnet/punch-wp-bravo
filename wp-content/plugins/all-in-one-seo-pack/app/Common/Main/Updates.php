@@ -1246,7 +1246,8 @@ class Updates {
 	 * Update the custom robots.txt rules to the new format,
 	 * by replacing `rule` and `directoryPath` with `directive` and `fieldValue`, respectively.
 	 *
-	 * @since 4.4.2
+	 * @since   4.4.2
+	 * @version 5.0.2 Guard against non-string rule entries.
 	 *
 	 * @return void
 	 */
@@ -1261,8 +1262,12 @@ class Updates {
 
 		$newRules = [];
 		foreach ( $currentRules as $oldRule ) {
-			$parsedRule = json_decode( $oldRule, true );
-			if ( empty( $parsedRule['rule'] ) && empty( $parsedRule['directoryPath'] ) ) {
+			// A non-string entry would fatal json_decode() on PHP 8 and take the whole upgrade with it.
+			$parsedRule = aioseo()->robotsTxt->decodeStoredRule( $oldRule );
+			if (
+				! is_array( $parsedRule ) ||
+				( empty( $parsedRule['rule'] ) && empty( $parsedRule['directoryPath'] ) )
+			) {
 				continue;
 			}
 
@@ -1272,7 +1277,10 @@ class Updates {
 				'fieldValue' => array_key_exists( 'directoryPath', $parsedRule ) ? $parsedRule['directoryPath'] : '',
 			];
 
-			$newRules[] = wp_json_encode( $newRule );
+			$encoded = aioseo()->robotsTxt->encodeRule( $newRule );
+			if ( is_string( $encoded ) ) {
+				$newRules[] = $encoded;
+			}
 		}
 
 		if ( $newRules ) {

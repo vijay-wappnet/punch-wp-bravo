@@ -81,7 +81,8 @@ class Breadcrumb {
 	 *
 	 * In this case we need to compare the permalink structure with the permalink of the requested post and loop through all objects we're able to find.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Use getTermLink() so orphaned ancestors cannot break the URL.
 	 *
 	 * @param  \WP_Post $post The post object.
 	 * @return array          The breadcrumb trail.
@@ -137,7 +138,7 @@ class Breadcrumb {
 					$breadcrumb = [
 						'name'        => $term->name,
 						'description' => aioseo()->meta->description->getDescription(),
-						'url'         => get_term_link( $term ),
+						'url'         => aioseo()->helpers->getTermLink( $term ),
 						'type'        => 'CollectionPage'
 					];
 
@@ -195,7 +196,8 @@ class Breadcrumb {
 	/**
 	 * Returns the breadcrumb trail for the requested term.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Use getTermLink() so orphaned ancestors cannot break the URL.
 	 *
 	 * @param  \WP_Term $term The term object.
 	 * @return array          The breadcrumb trail.
@@ -212,7 +214,7 @@ class Breadcrumb {
 				[
 					'name'        => $term->name,
 					'description' => aioseo()->meta->description->getDescription(),
-					'url'         => get_term_link( $term, $term->taxonomy ),
+					'url'         => aioseo()->helpers->getTermLink( $term, $term->taxonomy ),
 					'type'        => 'CollectionPage'
 				]
 			);

@@ -85,7 +85,8 @@ trait WpUri {
 	/**
 	 * Gets the canonical URL for the current page/post.
 	 *
-	 * @since 4.0.0
+	 * @since   4.0.0
+	 * @version 5.0.2 Use getTermLink() so orphaned ancestors cannot break the URL.
 	 *
 	 * @return string $url The canonical URL.
 	 */
@@ -112,12 +113,7 @@ trait WpUri {
 
 		if ( is_category() || is_tag() || is_tax() ) {
 			$metaData     = aioseo()->meta->metaData->getMetaData( $queriedObject );
-			$url[ $hash ] = get_term_link( $queriedObject, $queriedObject->taxonomy ?? '' );
-
-			// If the term link is a WP_Error, set it to an empty string.
-			if ( ! is_string( $url[ $hash ] ) ) {
-				$url[ $hash ] = '';
-			}
+			$url[ $hash ] = aioseo()->helpers->getTermLink( $queriedObject, $queriedObject->taxonomy ?? '' );
 
 			// Add pagination to the URL. We need to do this here because get_term_link() doesn't handle pagination.
 			// We'll strip it further down if no pagination for canonical is enabled.
@@ -481,12 +477,13 @@ trait WpUri {
 	/**
 	 * Returns the home URL.
 	 *
-	 * @since 4.7.3
+	 * @since   4.7.3
+	 * @version 5.0.2 Changed visibility to public.
 	 *
 	 * @param  bool   $unfiltered Whether to get the unfiltered value.
 	 * @return string             The home URL.
 	 */
-	private function getHomeUrl( $unfiltered = false ) {
+	public function getHomeUrl( $unfiltered = false ) {
 		$homeUrl = home_url();
 		if ( $unfiltered ) {
 			// We want to get this value straight from the DB to prevent plugins like WPML from filtering it.
@@ -564,7 +561,8 @@ trait WpUri {
 	 * posts with paginated comment pages return the wrong canonical URL due to how WordPress sets the cpage var.
 	 * We can remove this once trac ticket 60806 is resolved.
 	 *
-	 * @since 4.6.9
+	 * @since   4.6.9
+	 * @version 5.0.2 Paginated static front page now uses the /page/N/ format instead of /N/.
 	 *
 	 * @param  \WP_Post|int|null $post The post object or ID.
 	 * @return string|false            The post's canonical URL, or false if the post is not published.
@@ -588,6 +586,11 @@ trait WpUri {
 			if ( $page >= 2 ) {
 				if ( ! get_option( 'permalink_structure' ) ) {
 					$canonicalUrl = add_query_arg( 'page', $page, $canonicalUrl );
+				} elseif ( (int) get_option( 'page_on_front' ) === $post->ID ) {
+					// The static front page paginates at /page/N/, not /N/, since its permalink is home_url('/').
+					global $wp_rewrite; // phpcs:ignore Squiz.NamingConventions.ValidVariableName
+					$pagedSegment = $wp_rewrite->pagination_base . '/' . $page; // phpcs:ignore Squiz.NamingConventions.ValidVariableName
+					$canonicalUrl = trailingslashit( $canonicalUrl ) . user_trailingslashit( $pagedSegment, 'paged' );
 				} else {
 					$canonicalUrl = trailingslashit( $canonicalUrl ) . user_trailingslashit( $page, 'single_paged' );
 				}

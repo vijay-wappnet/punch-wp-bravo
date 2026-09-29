@@ -28,6 +28,7 @@ class Frontend {
 	 *
 	 * @since   4.1.1
 	 * @version 4.9.10 Strip non-array entries from the filtered trail so downstream loops cannot fatal on PHP 8.
+	 * @version 5.0.2 Normalize non-scalar crumb links so downstream consumers cannot fatal.
 	 *
 	 * @return array
 	 */
@@ -35,7 +36,7 @@ class Frontend {
 		if ( ! empty( $this->breadcrumbs ) ) {
 			$trail = apply_filters( 'aioseo_breadcrumbs_trail', $this->breadcrumbs );
 
-			return is_array( $trail ) ? array_values( array_filter( $trail, 'is_array' ) ) : [];
+			return $this->normalizeTrail( $trail );
 		}
 
 		$reference = get_queried_object();
@@ -128,7 +129,31 @@ class Frontend {
 
 		$trail = apply_filters( 'aioseo_breadcrumbs_trail', aioseo()->breadcrumbs->buildBreadcrumbs( $type, $reference, $paged ) );
 
-		return is_array( $trail ) ? array_values( array_filter( $trail, 'is_array' ) ) : [];
+		return $this->normalizeTrail( $trail );
+	}
+
+	/**
+	 * Normalizes the breadcrumb trail after it has been filtered.
+	 *
+	 * @since 5.0.2
+	 *
+	 * @param  mixed $trail The filtered trail.
+	 * @return array        The normalized trail.
+	 */
+	private function normalizeTrail( $trail ) {
+		if ( ! is_array( $trail ) ) {
+			return [];
+		}
+
+		return array_map( function ( $crumb ) {
+			// A link must always be a string. get_term_link() and friends can hand back a
+			// WP_Error, which fatals as soon as a consumer casts the link to a string.
+			if ( isset( $crumb['link'] ) && ! is_scalar( $crumb['link'] ) ) {
+				$crumb['link'] = '';
+			}
+
+			return $crumb;
+		}, array_values( array_filter( $trail, 'is_array' ) ) );
 	}
 
 	/**

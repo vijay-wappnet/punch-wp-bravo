@@ -726,21 +726,15 @@ trait Wp {
 	 * @return string        The JSON output.
 	 */
 	public function wpJsonEncode( $data, $flags = 0 ) {
-		$originalPrecision          = false;
-		$originalSerializePrecision = false;
-		if ( version_compare( PHP_VERSION, '7.1', '>=' ) ) {
-			$originalPrecision          = ini_get( 'precision' );
-			$originalSerializePrecision = ini_get( 'serialize_precision' );
-			ini_set( 'precision', 17 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
-			ini_set( 'serialize_precision', -1 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
-		}
+		$originalPrecision          = ini_get( 'precision' );
+		$originalSerializePrecision = ini_get( 'serialize_precision' );
+		ini_set( 'precision', 17 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
+		ini_set( 'serialize_precision', -1 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
 
 		$json = wp_json_encode( $data, $flags );
 
-		if ( version_compare( PHP_VERSION, '7.1', '>=' ) ) {
-			ini_set( 'precision', $originalPrecision ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
-			ini_set( 'serialize_precision', $originalSerializePrecision ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
-		}
+		ini_set( 'precision', $originalPrecision ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
+		ini_set( 'serialize_precision', $originalSerializePrecision ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
 
 		return $json;
 	}
@@ -887,7 +881,8 @@ trait Wp {
 	/**
 	 * Parses blocks for a given post.
 	 *
-	 * @since 4.6.8
+	 * @since   4.6.8
+	 * @version 5.0.2 Parse via {@see Blocks::parseBlocksSafely()}; fixed the memoization overwriting itself.
 	 *
 	 * @param  \WP_Post|int $post          The post or post ID.
 	 * @param  bool         $flattenBlocks Whether to flatten the blocks.
@@ -903,13 +898,13 @@ trait Wp {
 			return $parsedBlocks[ $post->ID ];
 		}
 
-		$parsedBlocks = parse_blocks( $post->post_content );
+		$blocks = $this->parseBlocksSafely( $post->post_content );
 
 		if ( $flattenBlocks ) {
-			$parsedBlocks = $this->flattenBlocks( $parsedBlocks );
+			$blocks = $this->flattenBlocks( $blocks );
 		}
 
-		$parsedBlocks[ $post->ID ] = $parsedBlocks;
+		$parsedBlocks[ $post->ID ] = $blocks;
 
 		return $parsedBlocks[ $post->ID ];
 	}

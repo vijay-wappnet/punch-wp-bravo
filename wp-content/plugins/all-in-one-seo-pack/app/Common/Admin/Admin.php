@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AIOSEO\Plugin\Common\Admin\Notices\Review as ReviewNotice;
 use AIOSEO\Plugin\Common\Models;
 use AIOSEO\Plugin\Common\Migration;
 
@@ -998,7 +999,7 @@ class Admin {
 	 */
 	public function addFooterText() {
 		$linkText = esc_html__( 'Give us a 5-star rating!', 'all-in-one-seo-pack' );
-		$href     = 'https://aioseo.com/aioseo-wordpress-rating';
+		$href     = ReviewNotice::RATING_URL;
 
 		$link1 = sprintf(
 			'<a href="%1$s" target="_blank" title="%2$s">&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
