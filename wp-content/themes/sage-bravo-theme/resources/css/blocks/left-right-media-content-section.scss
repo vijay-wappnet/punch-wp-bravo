@@ -35,6 +35,9 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   // Content column is narrower than the media column, as in the design.
   // DOM order is content -> media; the modifiers only change `order`.
   .left-right-media-content-section__inner {
+    // The inner is a size container so `100cqw` (its width) can be used to
+    // work out the gap between the container and the viewport edge.
+    container-type: inline-size;
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: center;
@@ -57,6 +60,21 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   .left-right-media-content-section__column {
     min-width: 0;
+  }
+
+  // Desktop / tablet: the media column is fluid on its own side. It stays in
+  // the grid next to the content (which keeps the container alignment) and a
+  // negative margin stretches it out to the viewport edge.
+  // Bleed = distance from the container's edge to the viewport's edge.
+  @media (min-width: $screen-md-min) {
+    .left-right-media-content-section__column--media {
+      margin-right: calc((100cqw - 100vw) / 2);
+    }
+
+    &.left-right-media-content-section--media-left .left-right-media-content-section__column--media {
+      margin-right: 0;
+      margin-left: calc((100cqw - 100vw) / 2);
+    }
   }
 
   // Desktop / tablet: media on the left
@@ -187,6 +205,11 @@ $lrmcs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     display: block;
     max-width: 100%;
     height: auto;
+
+    // Desktop / tablet: fill the fluid column so the media meets the viewport edge
+    @media (min-width: $screen-md-min) {
+      width: 100%;
+    }
 
     @media (max-width: $screen-md-min-767) {
       margin: 0 auto;
