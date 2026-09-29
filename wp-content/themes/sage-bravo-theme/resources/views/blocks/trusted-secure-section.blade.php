@@ -22,36 +22,11 @@
         </ul>
       @endif
 
-      @if($heading_text || $description || count($buttons) > 0)
+      @if($heading_text)
         <div class="trusted-secure-section__content">
-
-          @if($heading_text)
-            <{{ $heading_level }} class="trusted-secure-section__heading">
-              {{ $heading_text }}
-            </{{ $heading_level }}>
-          @endif
-
-          @if($description)
-            <div class="trusted-secure-section__description">
-              {!! wp_kses_post($description) !!}
-            </div>
-          @endif
-
-          @if(count($buttons) > 0)
-            <div class="trusted-secure-section__buttons">
-              @foreach($buttons as $button)
-                <a href="{!! esc_url($button['url']) !!}"
-                  class="{{ trim('btn tss-btn ' . $button['class']) }}"
-                  @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
-                  @if($button['target'] === '_blank') rel="noopener noreferrer" @endif
-                  @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
-                  @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
-                  {{ $button['title'] }}
-                </a>
-              @endforeach
-            </div>
-          @endif
-
+          <{{ $heading_level }} class="trusted-secure-section__heading">
+            {{ $heading_text }}
+          </{{ $heading_level }}>
         </div>
       @endif
 

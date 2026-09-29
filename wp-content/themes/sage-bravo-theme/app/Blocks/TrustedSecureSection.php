@@ -28,8 +28,6 @@ class TrustedSecureSection
         // Get field values using ACF
         $heading_text = get_field('heading_text');
         $heading_level = get_field('heading_level') ?: 'h2';
-        $description = get_field('description');
-        $buttons = get_field('buttons');
         $trusted_icons = get_field('trusted_icons');
         $content_alignment = get_field('content_alignment') ?: 'left';
         $section_bg_color = get_field('section_bg_color');
@@ -68,8 +66,6 @@ class TrustedSecureSection
             'responsiveCss'     => $responsiveCss,
             'heading_text'      => $heading_text,
             'heading_level'     => $heading_level,
-            'description'       => $description,
-            'buttons'           => self::formatButtons($buttons),
             'icons'             => self::formatIcons($trusted_icons),
             'content_alignment' => $content_alignment,
             'section_style'     => $section_styles ? implode('; ', $section_styles) . ';' : '',
@@ -125,35 +121,5 @@ class TrustedSecureSection
         }
 
         return $icons;
-    }
-
-    /**
-     * Normalise the buttons repeater, skipping rows without a URL.
-     */
-    private static function formatButtons($rows): array
-    {
-        if (!is_array($rows)) {
-            return [];
-        }
-
-        $buttons = [];
-        foreach ($rows as $row) {
-            $link = $row['button_link'] ?? null;
-            $url = is_array($link) ? ($link['url'] ?? '') : (is_string($link) ? $link : '');
-            if (!$url) {
-                continue;
-            }
-
-            $buttons[] = [
-                'url'         => $url,
-                'title'       => (is_array($link) && !empty($link['title'])) ? $link['title'] : __('Learn more', 'sage'),
-                'target'      => is_array($link) ? ($link['target'] ?? '') : '',
-                'aria_label'  => trim($row['aria_label'] ?? ''),
-                'event_label' => trim($row['button_google_event_label'] ?? ''),
-                'class'       => trim($row['button_class'] ?? ''),
-            ];
-        }
-
-        return $buttons;
     }
 }

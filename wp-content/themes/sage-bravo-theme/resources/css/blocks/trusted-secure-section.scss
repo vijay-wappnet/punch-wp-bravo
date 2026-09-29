@@ -1,6 +1,5 @@
 @use "../common/fonts" as *;
 @use "../common/variables" as *;
-@use "../components/buttons" as *;
 
 .trusted-secure-section {
   position: relative;
@@ -100,10 +99,6 @@
     min-width: 0;
     text-align: left;
 
-    > :last-child {
-      margin-bottom: 0;
-    }
-
     @media (max-width: $screen-md-min-767) {
       text-align: center;
     }
@@ -118,68 +113,8 @@
   }
 
   .trusted-secure-section__heading {
-    margin-bottom: 15px;
+    margin-bottom: 0;
     color: inherit;
     overflow-wrap: break-word;
-  }
-
-  .trusted-secure-section__description {
-    margin-bottom: 20px;
-    font-family: $font-articulat-family;
-    font-weight: $font-articulat-regular-weight;
-    overflow-wrap: break-word;
-
-    p {
-      margin-bottom: 15px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    a {
-      color: inherit;
-      text-decoration: underline;
-    }
-
-    strong,
-    b {
-      font-weight: $font-articulat-demi-bold-weight;
-    }
-
-    ul,
-    ol {
-      padding-left: 30px;
-      margin-bottom: 15px;
-      text-align: left;
-    }
-  }
-
-  // -------------------------------------------------------- Buttons
-  .trusted-secure-section__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 15px;
-    margin-top: 20px;
-
-    @media (max-width: $screen-md-min-767) {
-      justify-content: center;
-    }
-
-    .tss-btn {
-      max-width: 100%;
-      width: auto;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  }
-
-  &--align-right .trusted-secure-section__buttons {
-    justify-content: flex-end;
-
-    @media (max-width: $screen-md-min-767) {
-      justify-content: center;
-    }
   }
 }
