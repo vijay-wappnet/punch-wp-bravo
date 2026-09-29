@@ -1,5 +1,8 @@
 <?php
 
+// punch-acf-compact-editor plugin is used to compact the ACF editor in the admin panel. This is useful for improving the user experience when editing content with ACF fields, especially when there are many fields or complex layouts. The plugin provides a more streamlined and organized interface for managing ACF fields, making it easier for users to navigate and edit content without being overwhelmed by too much information at once.
+add_theme_support('punch-acf-compact-editor');
+
 if (function_exists('acf_add_options_page')) {
     // Punch Theme General Settings
     $general_settings = array(
