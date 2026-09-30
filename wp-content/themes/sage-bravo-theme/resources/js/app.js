@@ -20,6 +20,8 @@ import './footer.js'; // Footer JS
 import './gsap-animations.js';
 import initTwoColumnsImageIconsWithCtaSection from './blocks/two-columns-image-icons-with-cta-section.js';
 import initLeftRightMediaContentSection from './blocks/left-right-media-content-section.js';
+import initTestimonialSliderSection from './blocks/testimonial-slider-section.js';
 
 document.addEventListener('DOMContentLoaded', initTwoColumnsImageIconsWithCtaSection);
 document.addEventListener('DOMContentLoaded', initLeftRightMediaContentSection);
+document.addEventListener('DOMContentLoaded', () => initTestimonialSliderSection());

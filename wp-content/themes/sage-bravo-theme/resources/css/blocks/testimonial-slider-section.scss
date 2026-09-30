@@ -1,0 +1,187 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// Slick core layout styles (track/list/slide). The slick theme CSS is not
+// used - the arrows are styled below and dots are disabled.
+@use "@accessible360/accessible-slick/slick/slick.min";
+
+$tss-arrow-size: 44px;
+$tss-transition: 350ms ease-in-out;
+
+.testimonial-slider-section {
+  position: relative;
+  color: $black-off-color;
+  text-align: center;
+  background-color: $white-off-light-grayish-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // Leaves room either side of the quote for the arrows on desktop
+  .testimonial-slider-section__inner {
+    position: relative;
+    max-width: 1024px;
+    margin: 0 auto;
+
+    &.has-slider {
+      padding: 0 calc(#{$tss-arrow-size} + 40px);
+
+      @media (max-width: $screen-md-min-767) {
+        padding: 0;
+      }
+    }
+  }
+
+  // Before slick runs (or if it never does), show only the first testimonial
+  .testimonial-slider-section__slider:not(.slick-initialized) > .testimonial-slider-section__slide:not(:first-child) {
+    display: none;
+  }
+
+  .slick-slide {
+    outline: none;
+  }
+
+  // ------------------------------------------------------------ Slide
+  .testimonial-slider-section__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonial-slider-section__blockquote {
+    margin: 0 0 28px;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 32px;
+    }
+  }
+
+  // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
+  .testimonial-slider-section__quote {
+    margin: 0;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    // font-size: 32px;
+    // line-height: 40px;
+    overflow-wrap: break-word;
+
+    &::before {
+      content: '\201C';
+    }
+
+    &::after {
+      content: '\201D';
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      // font-size: 30px;
+      // line-height: 38px;
+    }
+  }
+
+  .testimonial-slider-section__caption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .testimonial-slider-section__person {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  .testimonial-slider-section__logo {
+    display: block;
+    width: auto;
+    max-width: 180px;
+    height: auto;
+    max-height: 50px;
+    object-fit: contain;
+  }
+
+  // ----------------------------------------------------------- Arrows
+  // Desktop: pinned to the left/right edges, vertically centred on the slide.
+  // Mobile: a centred pair under the logo.
+  .testimonial-slider-section__arrows {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+
+    @media (max-width: $screen-md-min-767) {
+      position: static;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+  }
+
+  .testimonial-slider-section__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $tss-arrow-size;
+    height: $tss-arrow-size;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+
+    img {
+      display: block;
+      width: 22px;
+      height: auto;
+      transition: transform $tss-transition;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 2px;
+    }
+  }
+
+  // Same icon as the CTA buttons (points right); flipped for "previous"
+  .testimonial-slider-section__arrow--prev img {
+    transform: scaleX(-1);
+  }
+
+  // Nudge the arrow in its own direction on hover, like the CTA button icon
+  .testimonial-slider-section__arrow--next:hover img,
+  .testimonial-slider-section__arrow--next:focus-visible img {
+    transform: translateX(4px);
+  }
+
+  .testimonial-slider-section__arrow--prev:hover img,
+  .testimonial-slider-section__arrow--prev:focus-visible img {
+    transform: scaleX(-1) translateX(4px);
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-slider-section__arrow img {
+      transition: none;
+    }
+  }
+}

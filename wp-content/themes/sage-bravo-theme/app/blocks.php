@@ -165,6 +165,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Testimonial Slider Section Block
+        acf_register_block_type([
+            'name'                   => 'testimonial-slider-section',
+            'title'                  => __('Testimonial Slider Section', 'sage'),
+            'description'            => __('A slider of client testimonials, each with a quote, name/job title and company logo', 'sage'),
+            'render_callback'        => ['App\Blocks\TestimonialSliderSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'format-quote',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });
