@@ -1,5 +1,6 @@
 @use '../common/variables' as *;
 @use '../common/fonts' as *;
+@use '../components/buttons' as *;
 
 .site-header {
   position: fixed;
@@ -439,52 +440,9 @@
   color: $black-off-color;
 }
 
-// Mirrors .btn-red-fusion (video-banner-section) with inverted colours.
-// Arrow is a mask so it follows currentColor (white -> red-fusion on hover).
 .menu-right-btn {
-  min-width: 243px;
-  width: auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 10px;
-  border-radius: 0;
-  background-color: $black-off-color;
-  color: $white-color;
-  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
-
-  .menu-right-btn__icon {
-    display: inline-block;
-    width: 21px;
-    height: 15px;
-    background-color: currentColor;
-    -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
-    mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
-    transition: transform 350ms ease-in-out;
-  }
-
-  &:hover,
-  &:focus-visible {
-    background-color: $white-off-color;
-    color: $red-fusion-color;
-
-    .menu-right-btn__icon {
-      transform: translateX(0.5em);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-
-    .menu-right-btn__icon {
-      transition: none;
-    }
-
-    &:hover .menu-right-btn__icon,
-    &:focus-visible .menu-right-btn__icon {
-      transform: none;
-    }
-  }
+  // Shared with the CTA Banner Section (see components/_buttons.scss)
+  @include dark-arrow-btn('.menu-right-btn__icon');
 }
 
 .menu-footer {

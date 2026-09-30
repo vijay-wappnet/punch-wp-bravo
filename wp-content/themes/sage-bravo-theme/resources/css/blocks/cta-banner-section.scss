@@ -1,0 +1,85 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.cta-banner-section {
+  position: relative;
+  overflow: hidden;
+  color: $black-off-color;
+  text-align: center;
+  // Default when no ACF background color is set - same as the menu's .menu-right
+  background-color: $red-fusion-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // Same procedural hover dots as the fullscreen menu. The positioning is
+  // repeated here because header.scss isn't loaded in the editor canvas.
+  .dot-grid-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .cta-banner-section__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    @media (max-width: $screen-lg-min) {
+      gap: 30px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // Styled by class so every heading_level (h1-h6 / p) looks the same
+  .cta-banner-section__heading {
+    max-width: 900px;
+    margin: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 40px;
+    line-height: 48px;
+    color: $black-off-color;
+
+    @media (max-width: $screen-lg-min) {
+      font-size: 32px;
+      line-height: 38px;
+    }
+  }
+
+  .cta-banner-section__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    @media (max-width: $screen-lg-min) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  // Same design as the fullscreen menu's .menu-right-btn
+  .ctabs-btn {
+    @include dark-arrow-btn('.cta-banner-section__btn-icon');
+    border-radius: 5px;
+
+    @media (max-width: $screen-lg-min) {
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      padding: 18px;
+
+      .cta-banner-section__btn-icon {
+        display: none;
+      }
+    }
+  }
+}
