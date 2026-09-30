@@ -7,6 +7,7 @@
 @use "blocks/floating-content-card-section";
 @use "blocks/trusted-secure-section";
 @use "blocks/left-right-media-content-section";
+@use "blocks/three-columns-card-grid-section";
 
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),
@@ -25,7 +26,8 @@
   .wp-block-acf-two-columns-image-icons-with-cta-section,
   .wp-block-acf-floating-content-card-section,
   .wp-block-acf-trusted-secure-section,
-  .wp-block-acf-left-right-media-content-section {
+  .wp-block-acf-left-right-media-content-section,
+  .wp-block-acf-three-columns-card-grid-section {
     max-width: none;
     overflow: hidden;
   }

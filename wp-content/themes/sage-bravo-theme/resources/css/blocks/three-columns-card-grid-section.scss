@@ -1,0 +1,194 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// Matches the prototype's transition (ease-out, 300ms)
+$tccgs-ease: ease-out;
+$tccgs-duration: 300ms;
+
+.three-columns-card-grid-section {
+  position: relative;
+  color: $black-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      // padding-left: 20px;
+      // padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------------ Grid
+  .three-columns-card-grid-section__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 33px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (max-width: $screen-lg-min) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 33px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 33px;
+    }
+  }
+
+  .three-columns-card-grid-section__item {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  // ------------------------------------------------------------ Card
+  // Matches the design prototype: the image fills the whole card and never
+  // moves. A white panel sits over the bottom of the image; on hover it grows
+  // upwards (heading slides up, description fades in, "+" fades out).
+  // The card is a size container so type and spacing scale with its width
+  // (`cqw`), keeping the same proportions as the design at every size.
+  .three-columns-card-grid-section__card {
+    position: relative;
+    container-type: inline-size;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: $white-off-light-grayish-color;
+    outline: none;
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 3px;
+    }
+  }
+
+  // ----------------------------------------------------------- Media
+  .three-columns-card-grid-section__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .three-columns-card-grid-section__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  // ----------------------------------------------------------- Panel
+  // Anchored to the bottom, so extra height from the description pushes the
+  // top edge (and the heading) upwards.
+  .three-columns-card-grid-section__content {
+    // Shared sizes, also used to pin the "+" to the resting heading line
+    --tccgs-pad-y: 7cqw;
+    --tccgs-heading-size: clamp(18px, 7.2cqw, 32px);
+    --tccgs-heading-lh: 1.2;
+    --tccgs-icon-size: clamp(16px, 6.5cqw, 26px);
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    padding: var(--tccgs-pad-y) 6.5cqw;
+    background-color: $white-color;
+  }
+
+  .three-columns-card-grid-section__header {
+    // Keeps the heading clear of the "+"
+    padding-right: calc(var(--tccgs-icon-size) + 4cqw);
+  }
+
+  .three-columns-card-grid-section__heading {
+    margin: 0;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-demi-bold-weight;
+    font-size: var(--tccgs-heading-size);
+    line-height: var(--tccgs-heading-lh);
+    overflow-wrap: break-word;
+  }
+
+  // Plus icon, drawn with two thin bars so it follows the text color.
+  // Pinned to the panel's bottom (level with the resting heading), so it
+  // fades out in place instead of moving up with the heading.
+  .three-columns-card-grid-section__icon {
+    position: absolute;
+    right: 6.5cqw;
+    bottom: calc(var(--tccgs-pad-y) + (var(--tccgs-heading-size) * var(--tccgs-heading-lh) - var(--tccgs-icon-size)) / 2);
+    width: var(--tccgs-icon-size);
+    aspect-ratio: 1;
+    transition: opacity $tccgs-duration $tccgs-ease;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background-color: $black-off-color;
+      transform: translateY(-50%);
+    }
+
+    &::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+
+  // Description collapses via grid rows (0fr -> 1fr) so the panel animates to
+  // its natural height without a fixed max-height.
+  .three-columns-card-grid-section__description-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $tccgs-duration $tccgs-ease;
+  }
+
+  .three-columns-card-grid-section__description {
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: clamp(16px, 7cqw, 30px);
+    line-height: 1.2;
+    opacity: 0;
+    transition:
+      opacity $tccgs-duration $tccgs-ease,
+      padding-top $tccgs-duration $tccgs-ease;
+  }
+
+  // ----------------------------------------------------- Hover state
+  // Hover (pointer) and focus (keyboard / tap) share the same open state.
+  .three-columns-card-grid-section__card.has-description:hover,
+  .three-columns-card-grid-section__card.has-description:focus-within {
+    .three-columns-card-grid-section__icon {
+      opacity: 0;
+    }
+
+    .three-columns-card-grid-section__description-wrap {
+      grid-template-rows: 1fr;
+    }
+
+    .three-columns-card-grid-section__description {
+      padding-top: 3cqw;
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .three-columns-card-grid-section__icon,
+    .three-columns-card-grid-section__description-wrap,
+    .three-columns-card-grid-section__description {
+      transition: none;
+    }
+  }
+}

@@ -143,6 +143,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Three Columns Card Grid Section Block
+        acf_register_block_type([
+            'name'                   => 'three-columns-card-grid-section',
+            'title'                  => __('Three Columns Card Grid Section', 'sage'),
+            'description'            => __('A three-column grid of image cards; hovering a card reveals its description', 'sage'),
+            'render_callback'        => ['App\Blocks\ThreeColumnsCardGridSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'grid-view',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });
