@@ -1,0 +1,148 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+$faqas-duration: 300ms;
+$faqas-ease: ease;
+
+.faqs-accordion-section {
+  position: relative;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .faqs-accordion-section__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  // ------------------------------------------------------------ Card
+  .faqs-accordion-section__item {
+    background-color: $white-color;
+    border-radius: 5px;
+  }
+
+  // Reset the heading wrapper so it doesn't pick up global heading styles
+  .faqs-accordion-section__heading {
+    margin: 0;
+    font: inherit;
+  }
+
+  .faqs-accordion-section__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    margin: 0;
+    padding: 24px 25px;
+    border: 0;
+    background: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid $black-off-color;
+      outline-offset: -2px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+    }
+  }
+
+  .faqs-accordion-section__question-text {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 24px;
+    line-height: 30px;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 24px;
+      line-height: 30px;
+    }
+  }
+
+  // Right-pointing arrow when closed, flipped to point left when open
+  .faqs-accordion-section__icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: auto;
+    transition: transform $faqas-duration $faqas-ease;
+
+    @media (max-width: $screen-md-min-767) {
+      width: 15px;
+    }
+  }
+
+  // ------------------------------------------------------------ Answer
+  // JS sets the open max-height from the content height. content-box keeps
+  // the padding out of max-height so the two animate independently.
+  .faqs-accordion-section__answer {
+    box-sizing: content-box;
+    max-height: 0;
+    padding: 0 25px;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height $faqas-duration $faqas-ease, opacity $faqas-duration $faqas-ease, padding $faqas-duration $faqas-ease;
+
+    @media (max-width: $screen-md-min-767) {
+      padding: 0 20px;
+    }
+  }
+
+  // The divider sits inside the answer so it collapses with it
+  .faqs-accordion-section__answer-content {
+    padding-top: 24px;
+    border-top: 1px solid $white-off-light-grayish-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 22px;
+    line-height: 25px;
+
+    p {
+      margin: 0;
+
+      + p {
+        margin-top: 12px;
+      }
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      p + p {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ Open state
+  .faqs-accordion-section__item.is-open {
+    .faqs-accordion-section__answer {
+      max-height: none; // overridden inline by the JS while animating
+      padding-bottom: 30px;
+      opacity: 1;
+
+      @media (max-width: $screen-md-min-767) {
+        padding-bottom: 24px;
+      }
+    }
+
+    .faqs-accordion-section__icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faqs-accordion-section__answer,
+    .faqs-accordion-section__icon {
+      transition: none;
+    }
+  }
+}
