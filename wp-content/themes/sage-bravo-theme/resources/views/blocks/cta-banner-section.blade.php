@@ -4,6 +4,7 @@
 {{-- Dot grid: same hover effect as the fullscreen menu's .menu-right (resources/js/dot-grid.js, initialised on every .js-dot-grid) --}}
 <section id="{{ $blockId }}"
   class="cta-banner-section js-dot-grid"
+  data-dot-style="varied"
   @if($section_style) style="{!! esc_attr($section_style) !!}" @endif>
   <canvas class="dot-grid-canvas" aria-hidden="true"></canvas>
 

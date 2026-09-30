@@ -29,10 +29,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 50px;
 
     @media (max-width: $screen-lg-min) {
-      gap: 30px;
+      gap: 40px;
       padding-left: 20px;
       padding-right: 20px;
     }
@@ -47,11 +47,6 @@
     font-size: 40px;
     line-height: 48px;
     color: $black-off-color;
-
-    @media (max-width: $screen-lg-min) {
-      font-size: 32px;
-      line-height: 38px;
-    }
   }
 
   .cta-banner-section__buttons {
@@ -66,16 +61,18 @@
     }
   }
 
-  // Same design as the fullscreen menu's .menu-right-btn
+  // Same design as the fullscreen menu's .menu-right-btn, at the standard
+  // .btn width (171px) and with the .btn rounded corners
   .ctabs-btn {
     @include dark-arrow-btn('.cta-banner-section__btn-icon');
+    min-width: 171px;
     border-radius: 5px;
 
     @media (max-width: $screen-lg-min) {
       justify-content: center;
       width: 100%;
       min-width: 0;
-      padding: 18px;
+      padding: 16px;
 
       .cta-banner-section__btn-icon {
         display: none;

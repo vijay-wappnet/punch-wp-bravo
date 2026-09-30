@@ -15,8 +15,14 @@ export default function initDotGrid(container) {
   // pointer (cursor lerp), a separate "strength" envelope ramps up fast on
   // fresh movement but decays slowly once idle, and the falloff is a curve
   // (not linear) so only dots close to the cursor really swell.
+  // Opt-in per section: data-dot-style="varied" gives slightly larger dots
+  // and a resting grid with a scatter of brighter dots (CTA Banner Section).
+  // Without it every dot rests at the same size and opacity (fullscreen
+  // menu, video banner).
+  const varied = container.dataset.dotStyle === 'varied';
+
   const baseCellSize = 33.36;
-  const baseRadiusRatio = 0.12;
+  const baseRadiusRatio = varied ? 0.15 : 0.12;
   const maxRadiusRatio = 0.45;
   const influenceCells = 4;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -34,6 +40,37 @@ export default function initDotGrid(container) {
   let frame = null;
   let idleDrawn = false;
 
+  // Same breakpoint as the block's mobile layout ($screen-lg-min)
+  const mobileQuery = window.matchMedia('(max-width: 992px)');
+
+  // Stable pseudo-random number (0-1) from two integers, so the bright dots
+  // keep their place across redraws and resizes instead of flickering.
+  function hash(a, b) {
+    const n = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453;
+    return n - Math.floor(n);
+  }
+
+  // Resting opacity for the "varied" style, measured from the design:
+  // - The grid fades out linearly towards the centre so the dots disappear
+  //   behind the content: horizontally on desktop (edges ~0.25), vertically
+  //   on mobile (top/bottom ~0.3; the rows sit slightly in from the edge).
+  // - ~5% of dots are ~2.4x brighter, in short vertical runs of 4 dots down
+  //   a column (each column's runs start at a different row).
+  function restingOpacity(column, row, x, y) {
+    const mobile = mobileQuery.matches;
+    const edgeOpacity = mobile ? 0.32 : 0.25;
+    const fade = mobile
+      ? Math.abs(y - height / 2) / (height / 2)
+      : Math.abs(x - width / 2) / (width / 2);
+
+    const runLength = 4;
+    const seed = column + 17;
+    const run = Math.floor((row + Math.floor(hash(seed, 0.5) * runLength)) / runLength);
+    const brightness = hash(seed, run + 31) < 0.05 ? 2.4 : 1;
+
+    return edgeOpacity * brightness * Math.min(fade, 1);
+  }
+
   function draw() {
     // clearRect runs under the dpr scale transform below, so it must be
     // given CSS-space extents (width/height) - not canvas.width/height,
@@ -48,7 +85,7 @@ export default function initDotGrid(container) {
         const x = column * cellSize + 10;
         const y = (row + 0.5) * cellSize;
         let radius = cellSize * baseRadiusRatio;
-        let opacity = 0.28;
+        let opacity = varied ? restingOpacity(column, row, x, y) : 0.28;
 
         if (cursor && strength > 0.001) {
           const distance = Math.hypot((x - cursor.x) / cellSize, (y - cursor.y) / cellSize);
@@ -69,7 +106,7 @@ export default function initDotGrid(container) {
         const py = Math.round(y * dpr) / dpr;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(opacity, 1)})`;
         ctx.arc(px, py, radius, 0, Math.PI * 2);
         ctx.fill();
       }
