@@ -439,25 +439,51 @@
   color: $black-off-color;
 }
 
+// Mirrors .btn-red-fusion (video-banner-section) with inverted colours.
+// Arrow is a mask so it follows currentColor (white -> red-fusion on hover).
 .menu-right-btn {
-  width: 243px;
+  min-width: 243px;
+  width: auto;
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
-  border-radius: 0px;
+  border-radius: 0;
   background-color: $black-off-color;
   color: $white-color;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
 
-  &::after {
-    content: '\2192';
+  .menu-right-btn__icon {
+    display: inline-block;
+    width: 21px;
+    height: 15px;
+    background-color: currentColor;
+    -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    transition: transform 350ms ease-in-out;
   }
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: $white-off-color;
-    color: $black-off-color;
+    color: $red-fusion-color;
+
+    .menu-right-btn__icon {
+      transform: translateX(0.5em);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    .menu-right-btn__icon {
+      transition: none;
+    }
+
+    &:hover .menu-right-btn__icon,
+    &:focus-visible .menu-right-btn__icon {
+      transform: none;
+    }
   }
 }
 
