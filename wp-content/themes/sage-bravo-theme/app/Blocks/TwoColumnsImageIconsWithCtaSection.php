@@ -60,7 +60,7 @@ class TwoColumnsImageIconsWithCtaSection
         }
 
         // Render the Blade template with data using view helper
-        echo view('blocks.2-columns-image-icons-with-cta-section', [
+        echo view('blocks.two-columns-image-icons-with-cta-section', [
             'blockId'                   => $blockId,
             'responsiveCss'             => $responsiveCss,
             'heading_text'              => $heading_text,

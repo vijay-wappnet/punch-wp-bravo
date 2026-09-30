@@ -54,8 +54,6 @@ add_action('init', function () {
         ]);
 
         // Register the Two Columns Image Icons with CTA Section Block
-        // (block names must start with a letter, so the "2-columns" file names
-        // map to a "two-columns" block name)
         acf_register_block_type([
             'name'                   => 'two-columns-image-icons-with-cta-section',
             'title'                  => __('Two Columns Image Icons with CTA Section', 'sage'),
