@@ -16,7 +16,7 @@
       <div class="latest-article-list-section__actions">
         @if($button)
           <a href="{!! esc_url($button['url']) !!}"
-            class="{!! esc_attr($button['class']) !!}"
+            class="btn {!! esc_attr($button['class']) !!}"
             @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
             @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif

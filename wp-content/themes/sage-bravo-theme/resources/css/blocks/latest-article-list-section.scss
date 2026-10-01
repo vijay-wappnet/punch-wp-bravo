@@ -124,13 +124,13 @@ $lals-image-transition: 0.4s ease;
   }
 
   // ----------------------------------------------------------- Arrows
-  // Only needed while the list is a scroll row (below lg)
+  // Only needed while the list is a scroll row (mobile, 767px and below)
   .latest-article-list-section__arrows {
     display: none;
     align-items: center;
     gap: 4px;
 
-    @media (max-width: ($screen-lg-min - 1)) {
+    @media (max-width: $screen-md-min-767) {
       display: flex;
     }
   }
@@ -180,7 +180,7 @@ $lals-image-transition: 0.4s ease;
   }
 
   // ------------------------------------------------------------- List
-  // Desktop: 3-column grid
+  // Desktop/tablet: 3-column grid
   .latest-article-list-section__list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -189,12 +189,12 @@ $lals-image-transition: 0.4s ease;
     padding: 0;
     list-style: none;
 
-    // Tablet/mobile: horizontal scroll-snap row, the next card peeking in.
+    // Mobile: horizontal scroll-snap row, the next card peeking in.
     // The row bleeds to the right edge of the screen; the section's
     // overflow: hidden stops it widening the page.
-    @media (max-width: ($screen-lg-min - 1)) {
+    @media (max-width: $screen-md-min-767) {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       margin-right: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
       padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
       overflow-x: auto;
@@ -207,10 +207,6 @@ $lals-image-transition: 0.4s ease;
         display: none;
       }
     }
-
-    @media (max-width: $screen-md-min-767) {
-      gap: 16px;
-    }
   }
 
   .latest-article-list-section__item {
@@ -218,7 +214,7 @@ $lals-image-transition: 0.4s ease;
     min-width: 0;
     margin: 0;
 
-    @media (max-width: ($screen-lg-min - 1)) {
+    @media (max-width: $screen-md-min-767) {
       flex: 0 0 44%;
       scroll-snap-align: start;
     }
@@ -282,8 +278,8 @@ $lals-image-transition: 0.4s ease;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-light-weight;
-    font-size: 22px;
-    line-height: 38px;
+    font-size: 24px;
+    line-height: 40px;
     overflow-wrap: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -310,11 +306,12 @@ $lals-image-transition: 0.4s ease;
     margin-top: auto;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-medium-weight;
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 18px;
+    line-height: 30px;
 
     @media (max-width: $screen-md-min-767) {
-      font-size: 15px;
+      font-size: 22px;
+      line-height: 30px;
     }
   }
 

@@ -20,6 +20,9 @@ export default function initDotGrid(container) {
   // Without it every dot rests at the same size and opacity (fullscreen
   // menu, video banner).
   const varied = container.dataset.dotStyle === 'varied';
+  // data-dot-color="dark" draws the dots in the dark text colour for light
+  // section backgrounds (Product Showcase Slider); the default is white.
+  const dotRgb = container.dataset.dotColor === 'dark' ? '46, 46, 46' : '255, 255, 255';
 
   const baseCellSize = 33.36;
   const baseRadiusRatio = varied ? 0.15 : 0.12;
@@ -39,6 +42,8 @@ export default function initDotGrid(container) {
   let lastMoveAt = 0;
   let frame = null;
   let idleDrawn = false;
+  let edgeOpacityOverride = null;
+  let fadeOverride = null;
 
   // Same breakpoint as the block's mobile layout ($screen-lg-min)
   const mobileQuery = window.matchMedia('(max-width: 992px)');
@@ -58,10 +63,21 @@ export default function initDotGrid(container) {
   //   a column (each column's runs start at a different row).
   function restingOpacity(column, row, x, y) {
     const mobile = mobileQuery.matches;
-    const edgeOpacity = mobile ? 0.32 : 0.25;
-    const fade = mobile
-      ? Math.abs(y - height / 2) / (height / 2)
-      : Math.abs(x - width / 2) / (width / 2);
+    // A section can override these from CSS (--dot-grid-edge-opacity and
+    // --dot-grid-fade: "horizontal" | "top"), e.g. the Product Showcase Slider.
+    const edgeOpacity = edgeOpacityOverride ?? (mobile ? 0.32 : 0.25);
+    let fade;
+    if (fadeOverride === 'top') {
+      // Strongest at the top, fading to nothing at the bottom of the grid
+      fade = 1 - y / height;
+    } else if (fadeOverride === 'horizontal') {
+      fade = Math.abs(x - width / 2) / (width / 2);
+    } else {
+      fade = mobile
+        ? Math.abs(y - height / 2) / (height / 2)
+        : Math.abs(x - width / 2) / (width / 2);
+    }
+    fade = Math.max(fade, 0);
 
     const runLength = 4;
     const seed = column + 17;
@@ -106,7 +122,7 @@ export default function initDotGrid(container) {
         const py = Math.round(y * dpr) / dpr;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(opacity, 1)})`;
+        ctx.fillStyle = `rgba(${dotRgb}, ${Math.min(opacity, 1)})`;
         ctx.arc(px, py, radius, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -116,7 +132,15 @@ export default function initDotGrid(container) {
   function resize() {
     const rect = container.getBoundingClientRect();
     width = rect.width;
-    height = rect.height;
+    // Optional per-section CSS variable (0-1): how much of the section's
+    // height the grid covers, from the top. Defaults to all of it.
+    const coverage = parseFloat(getComputedStyle(container).getPropertyValue('--dot-grid-coverage'));
+    height = rect.height * (coverage > 0 && coverage < 1 ? coverage : 1);
+
+    const styles = getComputedStyle(container);
+    const edgeOpacity = parseFloat(styles.getPropertyValue('--dot-grid-edge-opacity'));
+    edgeOpacityOverride = edgeOpacity > 0 ? edgeOpacity : null;
+    fadeOverride = styles.getPropertyValue('--dot-grid-fade').trim() || null;
     cellSize = baseCellSize;
     columns = Math.ceil(width / cellSize) + 1;
     rows = Math.ceil(height / cellSize) + 1;

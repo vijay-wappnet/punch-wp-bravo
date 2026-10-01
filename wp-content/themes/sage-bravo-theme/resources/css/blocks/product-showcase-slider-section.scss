@@ -1,0 +1,205 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// Slick core layout styles (track/list/slide). The slick theme CSS is not
+// used - the dots are styled below.
+@use "@accessible360/accessible-slick/slick/slick.min";
+
+$pss-dot-size: 14px;
+$pss-dot-gap: 9px;
+$pss-transition: 350ms ease-in-out;
+
+.product-showcase-slider-section {
+  position: relative;
+  overflow: hidden;
+  color: $black-off-color;
+  text-align: center;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // Same procedural hover dots as the CTA banner, drawn dark on this light
+  // background. The positioning is repeated here because header.scss isn't
+  // loaded in the editor canvas.
+  .dot-grid-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  // dot-grid.js reads these (design values, measured from the screenshots):
+  // - coverage: the dots only fill the top part of the section (behind the
+  //   heading and the upper part of the product image) and stop well above
+  //   the pagination dots.
+  // - edge-opacity: very faint dots (a few ~2.4x brighter, in vertical runs).
+  // - fade: desktop - strongest at the left/right edges, none in the middle;
+  //   mobile - strongest at the top, fading out going down.
+  --dot-grid-coverage: 0.67;
+  --dot-grid-edge-opacity: 0.1;
+  --dot-grid-fade: horizontal;
+
+  @media (max-width: $screen-md-min-767) {
+    --dot-grid-coverage: 0.5;
+    --dot-grid-edge-opacity: 0.12;
+    --dot-grid-fade: top;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  // content_alignment applies to the heading; the product image stays centred
+  &--align-left {
+    text-align: left;
+  }
+
+  &--align-center {
+    text-align: center;
+  }
+
+  &--align-right {
+    text-align: right;
+  }
+
+  .product-showcase-slider-section__inner {
+    position: relative;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  // Before slick runs (or if it never does), show only the first item
+  .product-showcase-slider-section__slider:not(.slick-initialized) > .product-showcase-slider-section__slide:not(:first-child) {
+    display: none;
+  }
+
+  .slick-slide {
+    outline: none;
+  }
+
+  // ------------------------------------------------------------ Slide
+  .product-showcase-slider-section__item {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    padding: 0 8px;
+
+    @media (max-width: $screen-md-min-767) {
+      gap: 32px;
+    }
+  }
+
+  // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
+  .product-showcase-slider-section__heading {
+    max-width: 560px;
+    margin: 0 auto;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 36px;
+    line-height: 44px;
+    overflow-wrap: break-word;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 30px;
+      line-height: 38px;
+    }
+  }
+
+  &--align-left .product-showcase-slider-section__heading {
+    margin-left: 0;
+  }
+
+  &--align-right .product-showcase-slider-section__heading {
+    margin-right: 0;
+  }
+
+  .product-showcase-slider-section__media {
+    display: flex;
+    justify-content: center;
+  }
+
+  .product-showcase-slider-section__image {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  // ------------------------------------------------------------- Dots
+  .product-showcase-slider-section__dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .product-showcase-slider-section__dots-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $pss-dot-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  // Round dot: grey at rest, red-fusion for the current slide
+  .product-showcase-slider-section__dot {
+    display: block;
+    width: $pss-dot-size;
+    height: $pss-dot-size;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: $white-off-light-grayish-color;
+    cursor: pointer;
+    transition: background-color $pss-transition;
+
+    &:hover {
+      background-color: $gray-grayish-orange-color;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 3px;
+    }
+  }
+
+  .slick-active .product-showcase-slider-section__dot {
+    background-color: $red-fusion-color;
+  }
+
+  .product-showcase-slider-section__empty {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-showcase-slider-section__dot {
+      transition: none;
+    }
+  }
+}

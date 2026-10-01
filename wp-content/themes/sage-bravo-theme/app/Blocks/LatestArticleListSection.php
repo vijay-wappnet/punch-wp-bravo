@@ -178,7 +178,7 @@ class LatestArticleListSection
             'rel'         => $target === '_blank' ? 'noopener noreferrer' : '',
             'aria_label'  => trim($group['aria_label'] ?? ''),
             'event_label' => trim($group['button_google_event_label'] ?? ''),
-            'class'       => implode(' ', array_merge(['latest-article-list-section__btn'], $extra_classes)),
+            'class'       => implode(' ', array_merge(['lals-btn'], $extra_classes)),
         ];
     }
 }

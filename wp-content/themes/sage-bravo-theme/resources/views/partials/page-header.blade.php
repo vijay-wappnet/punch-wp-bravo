@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>{!! $title !!}</h1>
+  {{-- <h1>{!! $title !!}</h1> --}}
 
   @if(get_the_ID() == 2)
     <div class="test-bg" style="background-color: #EFE3D2; padding: 50px;">
