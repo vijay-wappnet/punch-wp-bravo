@@ -1,0 +1,307 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// How far the overlay cards settle in (px). Kept small on purpose.
+$iafs-overlay-shift: 16px;
+$iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+.insight-analytics-feature-section {
+  position: relative;
+  // The cards hang over the image's edges; clip (not hidden) so they can never
+  // add a horizontal scrollbar, without creating a scroll container
+  overflow-x: clip;
+  padding: min(6vw, 80px) 0 min(5vw, 70px);
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 11vw 0 10vw;
+  }
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 6vw;
+      padding-right: 6vw;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // Three tracks (column, gap, column), measured from the desktop design: the
+  // image is 38 parts, the gap 8 and the text 28. DOM order is image -> content;
+  // the modifier classes only move them between the tracks.
+  .iafs__inner {
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(0, 38fr) minmax(0, 8fr) minmax(0, 28fr);
+
+    @media (max-width: $screen-md-min-767) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8vw;
+    }
+  }
+
+  .iafs__column {
+    min-width: 0;
+  }
+
+  // Desktop / tablet: image_alignment_left_side
+  &--image-left {
+    .iafs__column--image {
+      grid-column: 1;
+    }
+
+    .iafs__column--content {
+      grid-column: 3;
+    }
+  }
+
+  &--image-right {
+    .iafs__inner {
+      grid-template-columns: minmax(0, 28fr) minmax(0, 8fr) minmax(0, 38fr);
+    }
+
+    .iafs__column--content {
+      grid-column: 1;
+    }
+
+    .iafs__column--image {
+      grid-column: 3;
+    }
+  }
+
+  // Mobile: one column; mobile_image_position sets the order
+  @media (max-width: $screen-md-min-767) {
+    .iafs__column--image,
+    .iafs__column--content {
+      grid-column: 1;
+    }
+
+    &--mobile-image-top .iafs__column--image,
+    &--mobile-image-bottom .iafs__column--content {
+      order: 1;
+    }
+
+    &--mobile-image-top .iafs__column--content,
+    &--mobile-image-bottom .iafs__column--image {
+      order: 2;
+    }
+  }
+
+  // ------------------------------------------------------------ Image
+  // The wrapper is the size container for the cards: everything about them is
+  // in % / cqw of the image, so they keep the same place and proportions
+  // (measured from the design) at any image width.
+  .iafs__media {
+    position: relative;
+    container-type: inline-size;
+
+    @media (max-width: $screen-md-min-767) {
+      width: 55.2vw;
+      margin: 0 auto;
+    }
+  }
+
+  // Natural proportions: never cropped or stretched
+  .iafs__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  // -------------------------------------------------------- Overlays
+  .iafs__overlay {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 3.2cqw;
+    height: 20.2cqw;
+    padding: 0 9cqw;
+    box-sizing: border-box;
+    border-radius: 999px;
+    background-color: $white-color;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 6.4cqw;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  // left: upper-left, hanging off the image's left edge
+  .iafs__overlay--left {
+    top: 6.6%;
+    left: -15.7%;
+  }
+
+  // right: lower-right, hanging off the image's right edge
+  .iafs__overlay--right {
+    right: -12.5%;
+    bottom: 8%;
+  }
+
+  // The icon keeps its own proportions
+  .iafs__overlay-icon {
+    display: block;
+    flex-shrink: 0;
+    width: auto;
+    max-width: 9cqw;
+    height: 7.7cqw;
+    object-fit: contain;
+  }
+
+  .iafs__overlay-title {
+    font-size: inherit;
+  }
+
+  // Once the script is ready each card starts a few px toward the image and
+  // settles out to its place when the section scrolls into view. Without the
+  // script the cards are simply in their final place.
+  &.is-animatable {
+    .iafs__overlay {
+      opacity: 0;
+      transition: opacity 0.9s $iafs-ease-out, transform 0.9s $iafs-ease-out;
+    }
+
+    .iafs__overlay--left {
+      transform: translateX($iafs-overlay-shift);
+    }
+
+    .iafs__overlay--right {
+      transform: translateX(-$iafs-overlay-shift);
+      transition-delay: 0.15s;
+    }
+
+    &.is-visible .iafs__overlay {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  // ---------------------------------------------------------- Content
+  .iafs__content {
+    text-align: left;
+  }
+
+  .iafs__heading {
+    margin: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: min(2.7vw, 40px);
+    line-height: 1.3;
+    color: $black-off-color;
+
+    @media (max-width: $screen-lg-min) {
+      font-size: max(2.7vw, 22px);
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: clamp(26px, 6.9vw, 34px);
+    }
+  }
+
+  .iafs__buttons {
+    display: flex;
+    margin-top: min(3.2vw, 48px);
+
+    .iafs-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .iafs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 8vw;
+
+      // Full-width CTA on mobile, as in the design
+      .iafs-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  // content_alignment (desktop / tablet): text, and the CTA with it
+  &--align-left {
+    .iafs__content {
+      text-align: left;
+    }
+
+    .iafs__buttons {
+      justify-content: flex-start;
+    }
+  }
+
+  &--align-center {
+    .iafs__content {
+      text-align: center;
+    }
+
+    .iafs__buttons {
+      justify-content: center;
+    }
+  }
+
+  &--align-right {
+    .iafs__content {
+      text-align: right;
+    }
+
+    .iafs__buttons {
+      justify-content: flex-end;
+    }
+  }
+
+  // content_alignment_mobile: independent of the desktop setting
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-align-left {
+      .iafs__content {
+        text-align: left;
+      }
+
+      .iafs__buttons {
+        justify-content: flex-start;
+      }
+    }
+
+    &--mobile-align-center {
+      .iafs__content {
+        text-align: center;
+      }
+
+      .iafs__buttons {
+        justify-content: center;
+      }
+    }
+
+    &--mobile-align-right {
+      .iafs__content {
+        text-align: right;
+      }
+
+      .iafs__buttons {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &.is-animatable .iafs__overlay {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
