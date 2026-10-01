@@ -28,5 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.className = 'footer-newsletter-submit';
     submit.parentNode.insertBefore(wrapper, submit);
     wrapper.appendChild(submit);
+
+    // CF7 injects <span class="wpcf7-spinner"> right after the submit; pull it
+    // into the wrapper so it can sit inside the button instead of beside it.
+    const spinner = wrapper.nextElementSibling;
+    if (spinner && spinner.classList.contains('wpcf7-spinner')) {
+      wrapper.appendChild(spinner);
+    }
   });
 });

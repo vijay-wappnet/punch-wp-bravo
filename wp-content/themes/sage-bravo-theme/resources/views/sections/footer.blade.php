@@ -56,11 +56,11 @@
       <div class="footer-newsletter-inner">
         <div class="footer-newsletter-copy">
           @if ($newsletter_title)
-            <h2 class="footer-newsletter-title footer-newsletter-title-desktop">{{ $newsletter_title }}</h2>
+            <h4 class="footer-newsletter-title footer-newsletter-title-desktop">{{ $newsletter_title }}</h4>
           @endif
 
           @if ($newsletter_title_mobile)
-            <h2 class="footer-newsletter-title footer-newsletter-title-mobile">{{ $newsletter_title_mobile }}</h2>
+            <h4 class="footer-newsletter-title footer-newsletter-title-mobile">{{ $newsletter_title_mobile }}</h4>
           @endif
 
           @if ($newsletter_description)
