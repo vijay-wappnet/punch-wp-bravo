@@ -229,6 +229,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Tech Ecosystem Connections Block
+        acf_register_block_type([
+            'name'                   => 'tech-ecosystem-connections-section',
+            'title'                  => __('Tech Ecosystem Connections Section', 'sage'),
+            'description'            => __('A logo card in the centre with four items around it, joined by animated dashed and solid lines', 'sage'),
+            'render_callback'        => ['App\Blocks\TechEcosystemConnectionsSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'networking',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',

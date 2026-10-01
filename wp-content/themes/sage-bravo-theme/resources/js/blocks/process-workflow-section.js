@@ -37,14 +37,18 @@ export default function initProcessWorkflowSection(root = document) {
     groups.forEach((group) => {
       gsap.set(group.querySelectorAll('.js-pws-line'), { strokeDasharray: 1, strokeDashoffset: 1 });
     });
-    gsap.set(icons, { opacity: 0, x: -24, scale: 0.85 });
+    // The icon's own box is centred with the CSS `translate` property, which GSAP
+    // would mangle, so the image inside is what moves
+    const iconImages = Array.from(icons).map((icon) => icon.querySelector('img') || icon);
+    gsap.set(iconImages, { opacity: 0, x: -24, scale: 0.85 });
     gsap.set(labels, { opacity: 0 });
 
     const timeline = gsap.timeline({ paused: true, delay: 0.2 });
 
     groups.forEach((group, index) => {
       const step = index + 1;
-      const icon = byStep(icons, 'pws__step-icon', step);
+      const iconBox = byStep(icons, 'pws__step-icon', step);
+      const icon = iconBox ? (iconBox.querySelector('img') || iconBox) : null;
       const label = byStep(labels, 'pws__step-label', step);
 
       // Each line is a little longer than the one before, so give it a little longer

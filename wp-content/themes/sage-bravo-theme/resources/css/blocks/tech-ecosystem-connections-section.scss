@@ -1,0 +1,405 @@
+@use "sass:math";
+@use "sass:list";
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// The ecosystem drawing scales with its box. Everything inside is positioned
+// in % of that box (and sized in cqw = % of its width) from the numbers
+// measured on the design references, so the proportions hold at any width.
+// The SVG paths in the Blade view use the same coordinates.
+@function pct($value, $base) {
+  @return math.div($value, $base) * 100%;
+}
+
+@function cq($value, $base) {
+  @return math.div($value, $base) * 100cqw;
+}
+
+// $w / $h: the drawing's size. Positions are the item/card centres.
+@mixin tec-layout($w, $h, $card, $top, $right, $bottom, $left, $circle, $pill-h, $side-w, $bottom-w, $font, $logo-cols, $logo-pad-x, $logo-pad-y, $logo-gap-x, $logo-gap-y, $logo-align) {
+  .tec__visual {
+    aspect-ratio: math.div($w, $h);
+  }
+
+  .tec__card {
+    left: pct(list.nth($card, 1), $w);
+    top: pct(list.nth($card, 2), $h);
+    width: pct(list.nth($card, 3), $w);
+    height: pct(list.nth($card, 4), $h);
+    // Centred with negative margins (in cqw, so the same measure works for
+    // both axes) rather than with transform/translate, which GSAP animates
+    margin-left: -(cq(math.div(list.nth($card, 3), 2), $w));
+    margin-top: -(cq(math.div(list.nth($card, 4), 2), $w));
+  }
+
+  .tec__logos {
+    grid-template-columns: repeat($logo-cols, minmax(0, 1fr));
+    padding: cq($logo-pad-y, $w) cq($logo-pad-x, $w);
+    gap: cq($logo-gap-y, $w) cq($logo-gap-x, $w);
+  }
+
+  .tec__logo img {
+    object-position: $logo-align center;
+  }
+
+  .tec__item--top {
+    left: pct(list.nth($top, 1), $w);
+    top: pct(list.nth($top, 2), $h);
+    width: cq($circle, $w);
+    height: cq($circle, $w);
+    margin-left: -(cq(math.div($circle, 2), $w));
+    margin-top: -(cq(math.div($circle, 2), $w));
+  }
+
+  .tec__item--right {
+    left: pct(list.nth($right, 1), $w);
+    top: pct(list.nth($right, 2), $h);
+    width: cq($side-w, $w);
+    height: cq($pill-h, $w);
+    margin-left: -(cq(math.div($side-w, 2), $w));
+    margin-top: -(cq(math.div($pill-h, 2), $w));
+  }
+
+  .tec__item--bottom {
+    left: pct(list.nth($bottom, 1), $w);
+    top: pct(list.nth($bottom, 2), $h);
+    width: cq($bottom-w, $w);
+    height: cq($pill-h, $w);
+    margin-left: -(cq(math.div($bottom-w, 2), $w));
+    margin-top: -(cq(math.div($pill-h, 2), $w));
+  }
+
+  .tec__item--left {
+    left: pct(list.nth($left, 1), $w);
+    top: pct(list.nth($left, 2), $h);
+    width: cq($side-w, $w);
+    height: cq($pill-h, $w);
+    margin-left: -(cq(math.div($side-w, 2), $w));
+    margin-top: -(cq(math.div($pill-h, 2), $w));
+  }
+
+  .tec__item-title {
+    font-size: cq($font, $w);
+  }
+}
+
+.tech-ecosystem-connections-section {
+  position: relative;
+  overflow-x: clip;
+  // Everything is sized from the screen width, as in the design (heading at
+  // 6.7%, drawing from 13.7% down, 6% below it), and stops growing at the
+  // 1511px design width.
+  padding: min(5vw, 75px) 0 min(6vw, 90px);
+  color: $white-color;
+  // Default when no ACF background color is set
+  background-color: $gray-granite-color;
+
+  // ------------------------------------------------ Background image
+  // Separate layer so the filter only affects the image, not the drawing.
+  // Same treatment as the Floating Content Card Section: any colour image is
+  // shown as the faded, warm monochrome from the design.
+  .tech-ecosystem-connections-section__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+    pointer-events: none;
+  }
+
+  // Background overlays from the design: 20% black, plus a black-to-clear
+  // gradient set to Multiply (darker at the top, clear at the bottom). Above
+  // the filtered image layer, below the content.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0)), rgba(0, 0, 0, 0.2);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 48px 0 56px;
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ----------------------------------------------------------- Heading
+  .tec__heading {
+    margin: 0 0 min(5.3vw, 80px);
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    color: $white-color;
+    text-align: center;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 40px;
+    }
+  }
+
+  // In the design the centred heading sits about 1.5% of the width left of
+  // the drawing's centre
+  &--align-center .tec__heading {
+
+    @media (max-width: $screen-md-min-767) {
+      padding-right: 0;
+    }
+  }
+
+  &--align-left .tec__heading {
+    text-align: left;
+  }
+
+  &--align-center .tec__heading {
+    text-align: center;
+  }
+
+  &--align-right .tec__heading {
+    text-align: right;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-align-left .tec__heading {
+      text-align: left;
+    }
+
+    &--mobile-align-center .tec__heading {
+      text-align: center;
+    }
+
+    &--mobile-align-right .tec__heading {
+      text-align: right;
+    }
+  }
+
+  // ----------------------------------------------------------- Drawing
+  // The drawing (with the pills that hang over its edges) is 77.7% of the
+  // screen width in the design, up to its 1511px width
+  .tec__visual-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tec__visual {
+    position: relative;
+    width: min(77.7vw, 1174px);
+    margin: 0 auto;
+    container-type: inline-size;
+
+    @media (max-width: $screen-md-min-767) {
+      width: calc(100% - 40px);
+    }
+  }
+
+  .tec__lines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .tec__lines--mobile {
+    display: none;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    .tec__lines--desktop {
+      display: none;
+    }
+
+    .tec__lines--mobile {
+      display: block;
+    }
+  }
+
+  .tec__dashed {
+    stroke: $white-color;
+    stroke-width: 2;
+    stroke-dasharray: 4 5;
+  }
+
+  // The mask that reveals the dashed line: a solid, wider stroke drawn on top
+  .tec__dashed-reveal {
+    stroke: #fff;
+    stroke-width: 8;
+    fill: none;
+  }
+
+  .tec__solid {
+    stroke: $white-color;
+    stroke-width: 2;
+  }
+
+  // ----------------------------------------------------------- Centre card
+  .tec__card {
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: $white-color;
+  }
+
+  .tec__logos {
+    display: grid;
+    grid-auto-rows: minmax(0, 1fr);
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+  }
+
+  .tec__logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  // ----------------------------------------------------------- Items
+  // The same markup for every position; the position class sets where the
+  // item sits, how big it is and what it looks like.
+  .tec__item {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    box-sizing: border-box;
+    border-radius: 999px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-medium-weight;
+    line-height: 1;
+    white-space: nowrap;
+    background-color: $gray-granite-color;
+    color: $white-color;
+  }
+
+  .tec__item-title {
+    font-weight: $font-articulat-medium-weight;
+  }
+
+  .tec__item--left,
+  .tec__item--right {
+    background-color: #6b6560;
+  }
+
+  .tec__item--bottom {
+    background-color: $red-fusion-color;
+    color: $black-off-color;
+  }
+
+  // Top: white circle with the user icon only
+  .tec__item--top {
+    background-color: $white-color;
+    color: $black-off-color;
+  }
+
+  .tec__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .tec__item-pill-icon {
+    display: block;
+    width: 1.1em;
+    height: 1.1em;
+    object-fit: contain;
+  }
+
+  // Desktop / tablet: measured from the 1100px design
+  @include tec-layout(
+    $w: 855,
+    $h: 378,
+    $card: (427, 187, 433, 132),
+    $top: (427, 36),
+    $right: (772, 191),
+    $bottom: (427, 342),
+    $left: (83, 191),
+    $circle: 70,
+    $pill-h: 70,
+    $side-w: 165,
+    $bottom-w: 164,
+    $font: 24,
+    $logo-cols: 2,
+    $logo-pad-x: 24,
+    $logo-pad-y: 20,
+    $logo-gap-x: 24,
+    $logo-gap-y: 8,
+    $logo-align: left
+  );
+
+  // Mobile: its own composition (narrow, tall centre card, logos stacked),
+  // measured from the 524px design
+  @media (max-width: $screen-md-min-767) {
+    @include tec-layout(
+      $w: 524,
+      $h: 443,
+      $card: (251.5, 218.5, 201, 215),
+      $top: (262, 36),
+      $right: (452, 219),
+      $bottom: (262, 408),
+      $left: (73, 219),
+      $circle: 70,
+      $pill-h: 68,
+      $side-w: 132,
+      $bottom-w: 163,
+      $font: 20,
+      $logo-cols: 1,
+      $logo-pad-x: 16,
+      $logo-pad-y: 14,
+      $logo-gap-x: 0,
+      $logo-gap-y: 6,
+      $logo-align: center
+    );
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
