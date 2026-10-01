@@ -30,64 +30,14 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   // --------------------------------------------------------- Layout
-  // Three tracks (column, gap, column), measured from the desktop design: the
-  // image is 38 parts, the gap 8 and the text 28. DOM order is image -> content;
-  // the modifier classes only move them between the tracks.
-  .iafs__inner {
-    display: grid;
-    align-items: center;
-    grid-template-columns: minmax(0, 38fr) minmax(0, 8fr) minmax(0, 28fr);
-
+  // Bootstrap row / col (see the Blade view): image col-md-6, a one-column gap
+  // and the text col-md-4 (measured from the desktop design), centred as a
+  // group. Both columns are full width on mobile and stacked; the order
+  // classes (order-1/2, order-md-1/2) do the left/right and top/bottom
+  // switching, so there is only one copy of the markup.
+  .iafs__row {
     @media (max-width: $screen-md-min-767) {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 8vw;
-    }
-  }
-
-  .iafs__column {
-    min-width: 0;
-  }
-
-  // Desktop / tablet: image_alignment_left_side
-  &--image-left {
-    .iafs__column--image {
-      grid-column: 1;
-    }
-
-    .iafs__column--content {
-      grid-column: 3;
-    }
-  }
-
-  &--image-right {
-    .iafs__inner {
-      grid-template-columns: minmax(0, 28fr) minmax(0, 8fr) minmax(0, 38fr);
-    }
-
-    .iafs__column--content {
-      grid-column: 1;
-    }
-
-    .iafs__column--image {
-      grid-column: 3;
-    }
-  }
-
-  // Mobile: one column; mobile_image_position sets the order
-  @media (max-width: $screen-md-min-767) {
-    .iafs__column--image,
-    .iafs__column--content {
-      grid-column: 1;
-    }
-
-    &--mobile-image-top .iafs__column--image,
-    &--mobile-image-bottom .iafs__column--content {
-      order: 1;
-    }
-
-    &--mobile-image-top .iafs__column--content,
-    &--mobile-image-bottom .iafs__column--image {
-      order: 2;
+      row-gap: 8vw;
     }
   }
 
@@ -98,10 +48,12 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   .iafs__media {
     position: relative;
     container-type: inline-size;
+    // The block's own CSS caps the max-width so the image is never taller than
+    // 575px (410px on mobile) - see InsightAnalyticsFeatureSection::imageSizeCss
+    margin: 0 auto;
 
     @media (max-width: $screen-md-min-767) {
       width: 55.2vw;
-      margin: 0 auto;
     }
   }
 
@@ -133,15 +85,21 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     white-space: nowrap;
   }
 
-  // left: upper-left, hanging off the image's left edge
+  // position: the side the card hangs off the image
   .iafs__overlay--left {
-    top: 6.6%;
     left: -15.7%;
   }
 
-  // right: lower-right, hanging off the image's right edge
   .iafs__overlay--right {
     right: -12.5%;
+  }
+
+  // The first card sits near the top of the image, the second near the bottom
+  .iafs__overlay--top {
+    top: 6.6%;
+  }
+
+  .iafs__overlay--bottom {
     bottom: 8%;
   }
 

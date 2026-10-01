@@ -20,9 +20,20 @@ class InsightAnalyticsFeatureSection
     private const MOBILE_POSITIONS = ['top', 'bottom'];
 
     /**
-     * The two sides an overlay card can float on, in the order they are output.
+     * The sides an overlay card can float on.
      */
     private const OVERLAY_SIDES = ['left', 'right'];
+
+    /**
+     * The design has two overlay cards.
+     */
+    private const MAX_OVERLAYS = 2;
+
+    /**
+     * Tallest the image gets (px): desktop / tablet and mobile, from the designs.
+     */
+    private const IMAGE_MAX_HEIGHT = 575;
+    private const IMAGE_MAX_HEIGHT_MOBILE = 410;
 
     /**
      * Render the Insight & Analytics Feature Section block
@@ -75,7 +86,7 @@ class InsightAnalyticsFeatureSection
         $blockId = 'iafs-' . ($block['id'] ?? uniqid());
 
         // Generate responsive CSS for margin and padding
-        $responsiveCss = custom_acf_dimensions($margin, $padding, $blockId);
+        $responsiveCss = custom_acf_dimensions($margin, $padding, $blockId) . self::imageSizeCss($blockId, $image);
 
         // Inline styles are limited to the background color and image
         $section_styles = [];
@@ -104,6 +115,30 @@ class InsightAnalyticsFeatureSection
             'section_style'            => $section_styles ? implode('; ', $section_styles) . ';' : '',
             'is_preview'               => $is_preview,
         ]);
+    }
+
+    /**
+     * Caps the image's height without cropping or stretching it: its width is
+     * limited to (max height x its own width/height ratio), so with height:auto
+     * it can never be taller than the cap. The overlay cards are sized from this
+     * same wrapper, so they follow the image.
+     */
+    private static function imageSizeCss(string $blockId, ?array $image): string
+    {
+        $width = (float) ($image['width'] ?? 0);
+        $height = (float) ($image['height'] ?? 0);
+        if ($width <= 0 || $height <= 0) {
+            return '';
+        }
+
+        $ratio = $width / $height;
+
+        return sprintf(
+            '#%1$s .iafs__media{max-width:%2$spx}@media (max-width:767px){#%1$s .iafs__media{max-width:min(55.2vw,%3$spx)}}',
+            $blockId,
+            round(self::IMAGE_MAX_HEIGHT * $ratio, 2),
+            round(self::IMAGE_MAX_HEIGHT_MOBILE * $ratio, 2)
+        );
     }
 
     /**
@@ -159,8 +194,9 @@ class InsightAnalyticsFeatureSection
     }
 
     /**
-     * Normalise the overlay_items repeater: one card per side (the first one
-     * set for it), left then right.
+     * Normalise the overlay_items repeater: the first two cards. The position
+     * field is the side a card floats on; vertically the first card sits at the
+     * top of the image and the second near the bottom, as in the design.
      */
     private static function formatOverlays($rows): array
     {
@@ -168,33 +204,31 @@ class InsightAnalyticsFeatureSection
             return [];
         }
 
-        $bySide = [];
+        $overlays = [];
         foreach ($rows as $row) {
-            $side = $row['position'] ?? 'left';
-            if (!in_array($side, self::OVERLAY_SIDES, true) || isset($bySide[$side])) {
-                continue;
-            }
-
             $title = trim((string) ($row['title'] ?? ''));
             $icon = self::formatImage($row['icon'] ?? null);
             if (!$title && !$icon) {
                 continue;
             }
 
+            $side = $row['position'] ?? 'left';
+            if (!in_array($side, self::OVERLAY_SIDES, true)) {
+                $side = 'left';
+            }
+
             $color = self::formatColor($row['background_color'] ?? '');
 
-            $bySide[$side] = [
+            $overlays[] = [
                 'side'  => $side,
+                'edge'  => $overlays ? 'bottom' : 'top',
                 'title' => $title,
                 'icon'  => $icon,
                 'style' => $color ? 'background-color: ' . $color . ';' : '',
             ];
-        }
 
-        $overlays = [];
-        foreach (self::OVERLAY_SIDES as $side) {
-            if (isset($bySide[$side])) {
-                $overlays[] = $bySide[$side];
+            if (count($overlays) === self::MAX_OVERLAYS) {
+                break;
             }
         }
 

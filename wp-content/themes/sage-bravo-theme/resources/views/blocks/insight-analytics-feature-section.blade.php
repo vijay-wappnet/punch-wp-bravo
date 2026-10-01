@@ -2,6 +2,12 @@
 use Illuminate\Support\Facades\Vite;
 
 $hasContent = $heading_text || $button;
+
+// Column order: on mobile mobile_image_position decides, from md up image_alignment_left_side does
+$mobileImageOrder = $mobile_image_position === 'top' ? 1 : 2;
+$mobileContentOrder = 3 - $mobileImageOrder;
+$desktopImageOrder = $image_left ? 1 : 2;
+$desktopContentOrder = 3 - $desktopImageOrder;
 @endphp
 
 @if(!empty($responsiveCss))
@@ -9,15 +15,15 @@ $hasContent = $heading_text || $button;
 @endif
 {{-- Overlay animation: resources/js/blocks/insight-analytics-feature-section.js (the cards are simply shown in place without JS or with reduced motion) --}}
 <section id="{{ $blockId }}"
-  class="insight-analytics-feature-section insight-analytics-feature-section--image-{{ $image_left ? 'left' : 'right' }} insight-analytics-feature-section--mobile-image-{{ $mobile_image_position }} insight-analytics-feature-section--align-{{ $content_alignment }} insight-analytics-feature-section--mobile-align-{{ $content_alignment_mobile }} js-iafs"
+  class="insight-analytics-feature-section insight-analytics-feature-section--align-{{ $content_alignment }} insight-analytics-feature-section--mobile-align-{{ $content_alignment_mobile }} js-iafs"
   @if($section_style) style="{!! esc_attr($section_style) !!}" @endif>
 
   <div class="container">
-    <div class="iafs__inner">
+    <div class="row align-items-center justify-content-center gx-0 iafs__row">
 
-      {{-- Image column. Column order (desktop and mobile) is set in CSS from the modifier classes. --}}
+      {{-- Image column. The order classes move it (desktop and mobile); the markup is only written once. --}}
       @if($image)
-        <div class="iafs__column iafs__column--image">
+        <div class="col-12 col-md-6 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} iafs__column iafs__column--image">
           {{-- The overlay cards are positioned against this wrapper, so they stay attached to the image wherever it sits --}}
           <div class="iafs__media">
             <img src="{!! esc_url($image['url']) !!}"
@@ -29,7 +35,7 @@ $hasContent = $heading_text || $button;
               class="iafs__image">
 
             @foreach($overlays as $overlay)
-              <div class="iafs__overlay iafs__overlay--{{ $overlay['side'] }} js-iafs-overlay"
+              <div class="iafs__overlay iafs__overlay--{{ $overlay['side'] }} iafs__overlay--{{ $overlay['edge'] }} js-iafs-overlay"
                 @if($overlay['style']) style="{!! esc_attr($overlay['style']) !!}" @endif>
                 @if($overlay['icon'])
                   <img src="{!! esc_url($overlay['icon']['url']) !!}"
@@ -50,7 +56,7 @@ $hasContent = $heading_text || $button;
 
       {{-- Content column --}}
       @if($hasContent)
-        <div class="iafs__column iafs__column--content">
+        <div class="col-12 col-md-4 offset-md-1 order-{{ $mobileContentOrder }} order-md-{{ $desktopContentOrder }} iafs__column iafs__column--content">
           <div class="iafs__content">
 
             @if($heading_text)
