@@ -22,7 +22,7 @@
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
             @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
             <span>{{ $button['title'] }}</span>
-            <span class="latest-article-list-section__btn-icon" aria-hidden="true"></span>
+            <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
           </a>
         @endif
 

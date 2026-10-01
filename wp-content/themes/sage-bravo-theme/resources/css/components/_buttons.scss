@@ -71,6 +71,62 @@
   }
 }
 
+// Transparent CTA with a thin border and a sliding right-arrow icon
+// (Latest Article List Section "See all Articles").
+// Fills black-off on hover; the arrow is a mask so it follows currentColor.
+// Markup: <a class="btn btn-trans-border-arrow"><span>Text</span>
+//         <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span></a>
+.btn-trans-border-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $gray-grayish-orange-color;
+  border-radius: 3px;
+  background-color: transparent;
+  color: $black-off-color;
+  transition: background-color 350ms ease-in-out, border-color 350ms ease-in-out, color 350ms ease-in-out;
+
+  .btn-trans-border-arrow__icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 19px;
+    height: 13px;
+    background-color: currentColor;
+    -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    transition: transform 350ms ease-in-out;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: $black-off-color;
+    background-color: $black-off-color;
+    color: $white-color;
+
+    .btn-trans-border-arrow__icon {
+      transform: translateX(4px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $red-fusion-color;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    .btn-trans-border-arrow__icon {
+      transition: none;
+    }
+
+    &:hover .btn-trans-border-arrow__icon,
+    &:focus-visible .btn-trans-border-arrow__icon {
+      transform: none;
+    }
+  }
+}
+
 
 @mixin dark-arrow-btn($icon) {
   min-width: 243px;

@@ -1,5 +1,6 @@
 @use "../common/fonts" as *;
 @use "../common/variables" as *;
+@use "../components/buttons" as *;
 
 $lals-gap: 30px;
 $lals-transition: 350ms ease-in-out;
@@ -29,7 +30,10 @@ $lals-image-transition: 0.4s ease;
     gap: 16px 24px;
     margin-bottom: 52px;
 
+    // Mobile: heading, button and arrows stay on one row (no wrapping,
+    // which pushed the button onto its own line, far to the right)
     @media (max-width: $screen-md-min-767) {
+      flex-wrap: nowrap;
       gap: 12px;
       margin-bottom: 24px;
     }
@@ -46,6 +50,8 @@ $lals-image-transition: 0.4s ease;
     overflow-wrap: break-word;
 
     @media (max-width: $screen-md-min-767) {
+      flex: 1 1 auto;
+      min-width: 0;
       font-size: 30px;
       line-height: 36px;
     }
@@ -58,53 +64,30 @@ $lals-image-transition: 0.4s ease;
     margin-left: auto;
 
     @media (max-width: $screen-md-min-767) {
-      gap: 10px;
+      flex-shrink: 0;
+      gap: 8px;
     }
   }
 
-  // ------------------------------------------- "See all Articles" button
-  // Outlined; fills black-off on hover while the arrow slides right
-  .latest-article-list-section__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    padding: 7px 14px;
-    border: 1px solid $gray-grayish-orange-color;
-    border-radius: 3px;
-    background-color: transparent;
-    color: $black-off-color;
-    font-family: $font-articulat-family;
-    font-weight: $font-articulat-regular-weight;
-    font-size: 16px;
-    line-height: 22px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color $lals-transition, border-color $lals-transition, color $lals-transition;
-
-    &:hover,
-    &:focus-visible {
-      border-color: $black-off-color;
-      background-color: $black-off-color;
-      color: $white-color;
-
-      .latest-article-list-section__btn-icon {
-        transform: translateX(4px);
-      }
-    }
-
-    &:focus-visible {
-      outline: 2px solid $red-fusion-color;
-      outline-offset: 2px;
-    }
-
+  // "See all Articles" uses the shared .btn-trans-border-arrow (components/_buttons.scss).
+  // Mobile: sized to its text instead of the fixed .btn width / 22px font,
+  // and shown without its arrow as in the design.
+  .btn-trans-border-arrow {
     @media (max-width: $screen-md-min-767) {
-      padding: 8px 18px;
-      font-size: 15px;
+      width: auto;
+      padding: 7px 14px;
+      font-size: 15px !important; // beats the .btn mobile font-size, also !important
+      line-height: 20px;
     }
   }
 
-  // Arrow is a mask so it follows currentColor
-  .latest-article-list-section__btn-icon,
+  .btn-trans-border-arrow__icon {
+    @media (max-width: $screen-md-min-767) {
+      display: none;
+    }
+  }
+
+  // "Read More" arrow; a mask so it follows currentColor
   .latest-article-list-section__read-more-icon {
     display: inline-block;
     flex-shrink: 0;
@@ -114,13 +97,6 @@ $lals-image-transition: 0.4s ease;
     -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
     mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
     transition: transform $lals-transition;
-  }
-
-  // The mobile design shows the button without its arrow
-  .latest-article-list-section__btn-icon {
-    @media (max-width: $screen-md-min-767) {
-      display: none;
-    }
   }
 
   // ----------------------------------------------------------- Arrows
@@ -286,8 +262,8 @@ $lals-image-transition: 0.4s ease;
     line-clamp: 2;
 
     @media (max-width: $screen-lg-min) {
-      font-size: 18px;
-      line-height: 30px;
+      font-size: 24px;
+      line-height: 40px;
     }
 
     @media (max-width: $screen-md-min-767) {
@@ -342,8 +318,6 @@ $lals-image-transition: 0.4s ease;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .latest-article-list-section__btn,
-    .latest-article-list-section__btn-icon,
     .latest-article-list-section__read-more-icon,
     .latest-article-list-section__arrow img {
       transition: none;
