@@ -11,6 +11,7 @@
 @use "blocks/testimonial-slider-section";
 @use "blocks/cta-banner-section";
 @use "blocks/faqs-accordion-section";
+@use "blocks/latest-article-list-section";
 
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),
@@ -33,7 +34,8 @@
   .wp-block-acf-three-columns-card-grid-section,
   .wp-block-acf-testimonial-slider-section,
   .wp-block-acf-cta-banner-section,
-  .wp-block-acf-faqs-accordion-section {
+  .wp-block-acf-faqs-accordion-section,
+  .wp-block-acf-latest-article-list-section {
     max-width: none;
     overflow: hidden;
   }

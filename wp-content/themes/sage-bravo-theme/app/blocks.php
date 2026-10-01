@@ -229,6 +229,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Latest Article List Section Block
+        acf_register_block_type([
+            'name'                   => 'latest-article-list-section',
+            'title'                  => __('Latest Article List Section', 'sage'),
+            'description'            => __('The latest articles as image cards: a 3-column grid on desktop, a swipeable row on mobile', 'sage'),
+            'render_callback'        => ['App\Blocks\LatestArticleListSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'format-image',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });

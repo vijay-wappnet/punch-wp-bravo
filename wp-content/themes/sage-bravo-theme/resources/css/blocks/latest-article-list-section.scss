@@ -1,0 +1,364 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+$lals-gap: 30px;
+$lals-transition: 350ms ease-in-out;
+$lals-image-transition: 0.4s ease;
+
+.latest-article-list-section {
+  position: relative;
+  padding: 80px 0;
+  overflow: hidden;
+  color: $black-off-color;
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 50px 0;
+  }
+
+  // ----------------------------------------------------------- Header
+  // Heading left; button (and the arrows on tablet/mobile) right
+  .latest-article-list-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin-bottom: 52px;
+
+    @media (max-width: $screen-md-min-767) {
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+  }
+
+  // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
+  .latest-article-list-section__heading {
+    margin: 0;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 40px;
+    line-height: 48px;
+    overflow-wrap: break-word;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+
+  .latest-article-list-section__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+
+    @media (max-width: $screen-md-min-767) {
+      gap: 10px;
+    }
+  }
+
+  // ------------------------------------------- "See all Articles" button
+  // Outlined; fills black-off on hover while the arrow slides right
+  .latest-article-list-section__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 14px;
+    border: 1px solid $gray-grayish-orange-color;
+    border-radius: 3px;
+    background-color: transparent;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 16px;
+    line-height: 22px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color $lals-transition, border-color $lals-transition, color $lals-transition;
+
+    &:hover,
+    &:focus-visible {
+      border-color: $black-off-color;
+      background-color: $black-off-color;
+      color: $white-color;
+
+      .latest-article-list-section__btn-icon {
+        transform: translateX(4px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 2px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      padding: 8px 18px;
+      font-size: 15px;
+    }
+  }
+
+  // Arrow is a mask so it follows currentColor
+  .latest-article-list-section__btn-icon,
+  .latest-article-list-section__read-more-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 19px;
+    height: 13px;
+    background-color: currentColor;
+    -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
+    transition: transform $lals-transition;
+  }
+
+  // The mobile design shows the button without its arrow
+  .latest-article-list-section__btn-icon {
+    @media (max-width: $screen-md-min-767) {
+      display: none;
+    }
+  }
+
+  // ----------------------------------------------------------- Arrows
+  // Only needed while the list is a scroll row (below lg)
+  .latest-article-list-section__arrows {
+    display: none;
+    align-items: center;
+    gap: 4px;
+
+    @media (max-width: ($screen-lg-min - 1)) {
+      display: flex;
+    }
+  }
+
+  .latest-article-list-section__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    transition: opacity $lals-transition;
+
+    img {
+      display: block;
+      width: 18px;
+      height: auto;
+      transition: transform $lals-transition;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 2px;
+    }
+  }
+
+  // Same icon as the CTA buttons (points right); flipped for "previous"
+  .latest-article-list-section__arrow--prev img {
+    transform: scaleX(-1);
+  }
+
+  .latest-article-list-section__arrow--next:not(:disabled):hover img {
+    transform: translateX(3px);
+  }
+
+  .latest-article-list-section__arrow--prev:not(:disabled):hover img {
+    transform: scaleX(-1) translateX(3px);
+  }
+
+  // ------------------------------------------------------------- List
+  // Desktop: 3-column grid
+  .latest-article-list-section__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $lals-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // Tablet/mobile: horizontal scroll-snap row, the next card peeking in.
+    // The row bleeds to the right edge of the screen; the section's
+    // overflow: hidden stops it widening the page.
+    @media (max-width: ($screen-lg-min - 1)) {
+      display: flex;
+      gap: 20px;
+      margin-right: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
+      padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      gap: 16px;
+    }
+  }
+
+  .latest-article-list-section__item {
+    display: flex;
+    min-width: 0;
+    margin: 0;
+
+    @media (max-width: ($screen-lg-min - 1)) {
+      flex: 0 0 44%;
+      scroll-snap-align: start;
+    }
+
+    @media (max-width: ($screen-sm-min - 1)) {
+      flex-basis: 64%;
+    }
+  }
+
+  // ------------------------------------------------------------- Card
+  // One link around the whole card
+  .latest-article-list-section__card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: $black-off-color;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+  }
+
+  .latest-article-list-section__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: $white-off-light-grayish-color;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 14px;
+    }
+  }
+
+  // Default: the same faded warm monochrome as the Floating Content Card
+  // Section background. Hover: original colours, slight zoom.
+  .latest-article-list-section__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+    transform: scale(1);
+    transition: transform $lals-image-transition, filter $lals-image-transition;
+  }
+
+  .latest-article-list-section__placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .latest-article-list-section__title {
+    display: -webkit-box;
+    margin: 0 0 16px;
+    overflow: hidden;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 22px;
+    line-height: 38px;
+    overflow-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
+    @media (max-width: $screen-lg-min) {
+      font-size: 18px;
+      line-height: 30px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 28px;
+    }
+  }
+
+  // Pushed to the bottom so the links line up when a title is one line
+  .latest-article-list-section__read-more {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 14px;
+    margin-top: auto;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-medium-weight;
+    font-size: 16px;
+    line-height: 22px;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 15px;
+    }
+  }
+
+  // ----------------------------------------------------- Card hover
+  .latest-article-list-section__card:hover,
+  .latest-article-list-section__card:focus-visible {
+    .latest-article-list-section__image {
+      filter: none;
+      transform: scale(1.05);
+    }
+
+    .latest-article-list-section__read-more-icon {
+      transform: translateX(6px);
+    }
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .latest-article-list-section__btn,
+    .latest-article-list-section__btn-icon,
+    .latest-article-list-section__read-more-icon,
+    .latest-article-list-section__arrow img {
+      transition: none;
+    }
+
+    .latest-article-list-section__image {
+      transition: filter $lals-image-transition;
+    }
+
+    .latest-article-list-section__card:hover .latest-article-list-section__image,
+    .latest-article-list-section__card:focus-visible .latest-article-list-section__image {
+      transform: none;
+    }
+  }
+}
