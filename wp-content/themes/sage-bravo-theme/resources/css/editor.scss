@@ -10,6 +10,7 @@
 @use "blocks/three-columns-card-grid-section";
 @use "blocks/testimonial-slider-section";
 @use "blocks/product-showcase-slider-section";
+@use "blocks/process-workflow-section";
 @use "blocks/cta-banner-section";
 @use "blocks/faqs-accordion-section";
 @use "blocks/latest-article-list-section";
@@ -35,6 +36,7 @@
   .wp-block-acf-three-columns-card-grid-section,
   .wp-block-acf-testimonial-slider-section,
   .wp-block-acf-product-showcase-slider-section,
+  .wp-block-acf-process-workflow-section,
   .wp-block-acf-cta-banner-section,
   .wp-block-acf-faqs-accordion-section,
   .wp-block-acf-latest-article-list-section {

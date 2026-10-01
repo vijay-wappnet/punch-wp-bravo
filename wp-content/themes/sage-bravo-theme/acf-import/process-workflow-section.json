@@ -1,0 +1,446 @@
+[
+    {
+        "key": "group_process_workflow_section",
+        "title": "Process Workflow Section",
+        "fields": [
+            {
+                "key": "field_pws_workflow_items",
+                "label": "Workflow Items",
+                "name": "workflow_items",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Add Workflow Item",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_pws_step_title",
+                        "label": "Step Title",
+                        "name": "step_title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_pws_workflow_items"
+                    },
+                    {
+                        "key": "field_pws_step_icon",
+                        "label": "Step Icon",
+                        "name": "step_icon",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "library": "all",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": "",
+                        "preview_size": "medium",
+                        "parent_repeater": "field_pws_workflow_items"
+                    }
+                ]
+            },
+            {
+                "key": "field_pws_heading_text",
+                "label": "Heading Text",
+                "name": "heading_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_pws_heading_level",
+                "label": "Heading Level",
+                "name": "heading_level",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "h1": "H1",
+                    "h2": "H2",
+                    "h3": "H3",
+                    "h4": "H4",
+                    "h5": "H5",
+                    "h6": "H6",
+                    "p": "Paragraph"
+                },
+                "default_value": "h2",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_pws_description",
+                "label": "Description",
+                "name": "description",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
+            },
+            {
+                "key": "field_pws_button",
+                "label": "Button",
+                "name": "button",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_pws_button_link",
+                        "label": "Button Link",
+                        "name": "button_link",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array"
+                    },
+                    {
+                        "key": "field_pws_aria_label",
+                        "label": "Aria Label",
+                        "name": "aria_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_pws_button_google_event_label",
+                        "label": "Button Google Event Label",
+                        "name": "button_google_event_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "Used for Google Analytic event tracking.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_pws_button_class",
+                        "label": "Button Class",
+                        "name": "button_class",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "<b>Please add a button with one of the following classes only:</b>\n\nbtn-red-fusion, btn-trans-border-arrow",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_pws_image_alignment_left_side",
+                "label": "Image Alignment Left Side",
+                "name": "image_alignment_left_side",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_pws_content_alignment",
+                "label": "Content Alignment",
+                "name": "content_alignment",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "left": "Left",
+                    "right": "Right",
+                    "center": "Center"
+                },
+                "default_value": "left",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "vertical",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_pws_content_alignment_mobile",
+                "label": "Content Alignment Mobile",
+                "name": "content_alignment_mobile",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "left": "Left",
+                    "center": "Center",
+                    "right": "Right"
+                },
+                "default_value": "left",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "vertical",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_pws_mobile_workflow_position",
+                "label": "Mobile Workflow Position",
+                "name": "mobile_workflow_position",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "top": "Top",
+                    "bottom": "Bottom"
+                },
+                "default_value": "bottom",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "vertical",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_pws_section_bg_color",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 0,
+                "return_format": "string",
+                "allow_in_bindings": 1,
+                "show_custom_palette": 0,
+                "show_color_wheel": 1,
+                "custom_palette_source": "",
+                "palette_colors": ""
+            },
+            {
+                "key": "field_pws_section_bg_image",
+                "label": "Section Background Image",
+                "name": "section_bg_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "preview_size": "medium",
+                "allow_in_bindings": 0
+            },
+            {
+                "key": "field_pws_margin",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_pws_padding",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf/process-workflow-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]

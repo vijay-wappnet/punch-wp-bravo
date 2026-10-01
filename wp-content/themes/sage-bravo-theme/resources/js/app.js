@@ -22,6 +22,7 @@ import initTwoColumnsImageIconsWithCtaSection from './blocks/two-columns-image-i
 import initLeftRightMediaContentSection from './blocks/left-right-media-content-section.js';
 import initTestimonialSliderSection from './blocks/testimonial-slider-section.js';
 import initProductShowcaseSliderSection from './blocks/product-showcase-slider-section.js';
+import initProcessWorkflowSection from './blocks/process-workflow-section.js';
 import initFaqsAccordionSection from './blocks/faqs-accordion-section.js';
 import initLatestArticleListSection from './blocks/latest-article-list-section.js';
 
@@ -29,5 +30,6 @@ document.addEventListener('DOMContentLoaded', initTwoColumnsImageIconsWithCtaSec
 document.addEventListener('DOMContentLoaded', initLeftRightMediaContentSection);
 document.addEventListener('DOMContentLoaded', () => initTestimonialSliderSection());
 document.addEventListener('DOMContentLoaded', () => initProductShowcaseSliderSection());
+document.addEventListener('DOMContentLoaded', () => initProcessWorkflowSection());
 document.addEventListener('DOMContentLoaded', () => initFaqsAccordionSection());
 document.addEventListener('DOMContentLoaded', () => initLatestArticleListSection());

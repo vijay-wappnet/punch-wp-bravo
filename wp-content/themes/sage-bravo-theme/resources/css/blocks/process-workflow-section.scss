@@ -1,0 +1,251 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+.process-workflow-section {
+  position: relative;
+  padding: 80px 0;
+  // Clip (not hidden) so the icons' slide-in offset never causes a horizontal
+  // scrollbar, without creating a new scroll container.
+  overflow-x: clip;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-light-grayish-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min) {
+    padding: 60px 0;
+  }
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // DOM order is workflow -> content; the modifier classes only change `order`.
+  .process-workflow-section__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 40px 80px;
+
+    @media (max-width: $screen-xl-min) {
+      gap: 40px 50px;
+    }
+
+    @media (max-width: $screen-lg-min) {
+      gap: 40px 30px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .process-workflow-section__column {
+    min-width: 0;
+  }
+
+  // Desktop / tablet: image_alignment_left_side
+  &--workflow-right .process-workflow-section__column--workflow {
+    order: 2;
+  }
+
+  &--workflow-right .process-workflow-section__column--content {
+    order: 1;
+  }
+
+  // Mobile: mobile_workflow_position overrides the desktop order
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-top .process-workflow-section__column--workflow,
+    &--mobile-bottom .process-workflow-section__column--content {
+      order: 1;
+    }
+
+    &--mobile-top .process-workflow-section__column--content,
+    &--mobile-bottom .process-workflow-section__column--workflow {
+      order: 2;
+    }
+  }
+
+  // ----------------------------------------------------- Workflow
+  // The drawing scales with its box: the SVG holds the lines, the labels and
+  // icons are positioned over it in % (see ProcessWorkflowSection::workflowCss).
+  .pws__workflow-visual {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+
+  .pws__lines {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: $black-off-color;
+    stroke-width: 1.2;
+    stroke-linecap: butt;
+  }
+
+  .pws__line {
+    fill: none;
+  }
+
+  .pws__step-label {
+    position: absolute;
+    // `translate` is separate from `transform`, so GSAP can animate the label
+    // without losing this centring
+    translate: -50% -100%;
+    white-space: nowrap;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: clamp(14px, 5.2cqw, 24px);
+    line-height: 1.2;
+    color: $black-off-color;
+  }
+
+  // The uploaded icon already carries its own colour; this is only a round box
+  .pws__step-icon {
+    position: absolute;
+    translate: -50% -50%;
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 50%;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  // ---------------------------------------------------------- Content
+  .process-workflow-section__content {
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: left;
+
+    @media (max-width: $screen-md-min-767) {
+      max-width: none;
+    }
+  }
+
+  .process-workflow-section__heading {
+    margin: 0 0 20px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    color: $black-off-color;
+  }
+
+  .process-workflow-section__description {
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .process-workflow-section__buttons {
+    display: flex;
+    margin-top: 40px;
+
+    .pws-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .pws-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 30px;
+
+      // Full-width CTA on mobile, as in the design
+      .pws-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  // content_alignment (desktop / tablet): text, and the CTA with it
+  &--align-left {
+    .process-workflow-section__content {
+      margin-left: 0;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .process-workflow-section__buttons {
+      justify-content: flex-start;
+    }
+  }
+
+  &--align-center {
+    .process-workflow-section__content {
+      text-align: center;
+    }
+
+    .process-workflow-section__buttons {
+      justify-content: center;
+    }
+  }
+
+  &--align-right {
+    .process-workflow-section__content {
+      margin-left: auto;
+      margin-right: 0;
+      text-align: right;
+    }
+
+    .process-workflow-section__buttons {
+      justify-content: flex-end;
+    }
+  }
+
+  // content_alignment_mobile: text alignment only on mobile
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-align-left .process-workflow-section__content {
+      text-align: left;
+    }
+
+    &--mobile-align-center .process-workflow-section__content {
+      text-align: center;
+    }
+
+    &--mobile-align-right .process-workflow-section__content {
+      text-align: right;
+    }
+
+    &--mobile-align-left .process-workflow-section__buttons {
+      justify-content: flex-start;
+    }
+
+    &--mobile-align-center .process-workflow-section__buttons {
+      justify-content: center;
+    }
+
+    &--mobile-align-right .process-workflow-section__buttons {
+      justify-content: flex-end;
+    }
+
+    .process-workflow-section__content {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
