@@ -15,15 +15,15 @@ $desktopContentOrder = 3 - $desktopImageOrder;
 @endif
 {{-- Diagram build animation: resources/js/blocks/predictive-insights-diagram-section.js (the finished diagram is shown without JS or with reduced motion) --}}
 <section id="{{ $blockId }}"
-  class="predictive-insights-diagram-section predictive-insights-diagram-section--align-{{ $content_alignment }} predictive-insights-diagram-section--mobile-align-{{ $content_alignment_mobile }} js-pid"
+  class="predictive-insights-diagram-section predictive-insights-diagram-section--image-{{ $image_left ? 'left' : 'right' }} predictive-insights-diagram-section--align-{{ $content_alignment }} predictive-insights-diagram-section--mobile-align-{{ $content_alignment_mobile }} js-pid"
   @if($section_style) style="{!! esc_attr($section_style) !!}" @endif>
 
-  <div class="container">
-    <div class="row align-items-center justify-content-center gx-0 pid__row">
+  <div class="container-fluid">
+    <div class="row align-items-center gx-0 pid__row">
 
       {{-- Image + diagram column. The order classes move it (desktop and mobile); the markup is only written once. --}}
       @if($image)
-        <div class="col-12 col-md-6 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} pid__column pid__column--image">
+        <div class="col-12 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} pid__column pid__column--image">
           {{-- Everything in the diagram is positioned against this wrapper, so it stays attached to the image wherever it sits --}}
           <div class="pid__media js-pid-media">
             <img src="{!! esc_url($image['url']) !!}"
@@ -70,7 +70,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
 
       {{-- Content column --}}
       @if($hasContent)
-        <div class="col-12 col-md-4 offset-md-1 order-{{ $mobileContentOrder }} order-md-{{ $desktopContentOrder }} pid__column pid__column--content">
+        <div class="col-12 order-{{ $mobileContentOrder }} order-md-{{ $desktopContentOrder }} pid__column pid__column--content">
           <div class="pid__content">
 
             @if($heading_text)

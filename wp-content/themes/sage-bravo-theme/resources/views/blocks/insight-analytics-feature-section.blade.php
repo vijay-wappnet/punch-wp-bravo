@@ -15,15 +15,15 @@ $desktopContentOrder = 3 - $desktopImageOrder;
 @endif
 {{-- Overlay animation: resources/js/blocks/insight-analytics-feature-section.js (the cards are simply shown in place without JS or with reduced motion) --}}
 <section id="{{ $blockId }}"
-  class="insight-analytics-feature-section insight-analytics-feature-section--align-{{ $content_alignment }} insight-analytics-feature-section--mobile-align-{{ $content_alignment_mobile }} js-iafs"
+  class="insight-analytics-feature-section insight-analytics-feature-section--image-{{ $image_left ? 'left' : 'right' }} insight-analytics-feature-section--align-{{ $content_alignment }} insight-analytics-feature-section--mobile-align-{{ $content_alignment_mobile }} js-iafs"
   @if($section_style) style="{!! esc_attr($section_style) !!}" @endif>
 
-  <div class="container">
-    <div class="row align-items-center justify-content-center gx-0 iafs__row">
+  <div class="container-fluid">
+    <div class="row align-items-center gx-0 iafs__row">
 
       {{-- Image column. The order classes move it (desktop and mobile); the markup is only written once. --}}
       @if($image)
-        <div class="col-12 col-md-6 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} iafs__column iafs__column--image">
+        <div class="col-12 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} iafs__column iafs__column--image">
           {{-- The overlay cards are positioned against this wrapper, so they stay attached to the image wherever it sits --}}
           <div class="iafs__media">
             <img src="{!! esc_url($image['url']) !!}"
@@ -56,7 +56,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
 
       {{-- Content column --}}
       @if($hasContent)
-        <div class="col-12 col-md-4 offset-md-1 order-{{ $mobileContentOrder }} order-md-{{ $desktopContentOrder }} iafs__column iafs__column--content">
+        <div class="col-12 order-{{ $mobileContentOrder }} order-md-{{ $desktopContentOrder }} iafs__column iafs__column--content">
           <div class="iafs__content">
 
             @if($heading_text)

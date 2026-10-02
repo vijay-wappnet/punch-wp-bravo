@@ -46,7 +46,17 @@ $pid-items: (
     padding: 7vw 0 10vw;
   }
 
-  > .container {
+  // The column positions below are % of the design's 1511px width: the row
+  // spans the screen up to that width, then stays 1511px and centred, so on a
+  // very wide screen (or zoomed out) the layout keeps the design's proportions
+  // instead of spreading out around a fixed-size image
+  > .container-fluid {
+    max-width: 1511px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+
     @media (max-width: $screen-md-min-767) {
       padding-left: 6vw;
       padding-right: 6vw;
@@ -54,13 +64,50 @@ $pid-items: (
   }
 
   // --------------------------------------------------------- Layout
-  // Bootstrap row / col (see the Blade view): text col-md-4, a one-column gap
-  // and the image col-md-6, centred as a group. The order classes
+  // Bootstrap row / col (see the Blade view). The order classes
   // (order-1/2, order-md-1/2) do the left/right and top/bottom switching, so
   // there is only one copy of the markup.
   .pid__row {
     @media (max-width: $screen-md-min-767) {
       row-gap: 8vw;
+    }
+  }
+
+  // Desktop / tablet column positions and widths, measured from the design
+  // (% of the screen width, the row spans the whole screen). Both blocks share
+  // them, so their images and text line up the same way:
+  //   image on the left : image 17.2% -> 56.1%, text from 63.5%
+  //   image on the right: text from 11.1%,      image 47.6% -> 86.5%
+  @media (min-width: $screen-md-min) {
+    .pid__column--image {
+      flex: 0 0 auto;
+      width: 38.9%;
+    }
+
+    .pid__column--content {
+      flex: 0 0 auto;
+      width: 26%;
+    }
+
+    &--image-left {
+      .pid__column--image {
+        margin-left: 17.2%;
+      }
+
+      .pid__column--content {
+        margin-left: 7.4%;
+      }
+    }
+
+    &--image-right {
+      .pid__column--content {
+        margin-left: 11.1%;
+        width: 28%;
+      }
+
+      .pid__column--image {
+        margin-left: 8.5%;
+      }
     }
   }
 

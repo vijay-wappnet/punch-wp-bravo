@@ -42,7 +42,17 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     padding: 11vw 0 10vw;
   }
 
-  > .container {
+  // The column positions below are % of the design's 1511px width: the row
+  // spans the screen up to that width, then stays 1511px and centred, so on a
+  // very wide screen (or zoomed out) the layout keeps the design's proportions
+  // instead of spreading out around a fixed-size image
+  > .container-fluid {
+    max-width: 1511px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+
     @media (max-width: $screen-md-min-767) {
       padding-left: 6vw;
       padding-right: 6vw;
@@ -50,14 +60,50 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   // --------------------------------------------------------- Layout
-  // Bootstrap row / col (see the Blade view): image col-md-6, a one-column gap
-  // and the text col-md-4 (measured from the desktop design), centred as a
-  // group. Both columns are full width on mobile and stacked; the order
-  // classes (order-1/2, order-md-1/2) do the left/right and top/bottom
-  // switching, so there is only one copy of the markup.
+  // Bootstrap row / col (see the Blade view). The order classes
+  // (order-1/2, order-md-1/2) do the left/right and top/bottom switching, so
+  // there is only one copy of the markup.
   .iafs__row {
     @media (max-width: $screen-md-min-767) {
       row-gap: 8vw;
+    }
+  }
+
+  // Desktop / tablet column positions and widths, measured from the design
+  // (% of the screen width, the row spans the whole screen). Both blocks share
+  // them, so their images and text line up the same way:
+  //   image on the left : image 17.2% -> 56.1%, text from 63.5%
+  //   image on the right: text from 11.1%,      image 47.6% -> 86.5%
+  @media (min-width: $screen-md-min) {
+    .iafs__column--image {
+      flex: 0 0 auto;
+      width: 38.9%;
+    }
+
+    .iafs__column--content {
+      flex: 0 0 auto;
+      width: 26%;
+    }
+
+    &--image-left {
+      .iafs__column--image {
+        margin-left: 17.2%;
+      }
+
+      .iafs__column--content {
+        margin-left: 7.4%;
+      }
+    }
+
+    &--image-right {
+      .iafs__column--content {
+        margin-left: 11.1%;
+        width: 28%;
+      }
+
+      .iafs__column--image {
+        margin-left: 8.5%;
+      }
     }
   }
 
