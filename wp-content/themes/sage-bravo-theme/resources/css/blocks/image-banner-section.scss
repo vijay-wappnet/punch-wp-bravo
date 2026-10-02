@@ -1,0 +1,49 @@
+@use "../common/variables" as *;
+
+.image-banner-section {
+  position: relative;
+  padding: 60px 0;
+  // Optional full-width background (colour and/or image) from the ACF fields
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 40px 0;
+  }
+
+  // Only a section background image was set: the section is still shown, with
+  // room for the background even if there is no padding
+  &--background-only {
+    min-height: 240px;
+
+    @media (max-width: $screen-md-min-767) {
+      min-height: 160px;
+    }
+  }
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // The whole banner image, in its own proportions: never cropped or stretched
+  .image-banner {
+    width: 100%;
+  }
+
+  .image-banner__image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  // banner_image_filter = yes: the same faded, warm monochrome used on the
+  // Floating Content Card Section's background. Only the image is filtered.
+  .image-banner__image--filtered {
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+  }
+}

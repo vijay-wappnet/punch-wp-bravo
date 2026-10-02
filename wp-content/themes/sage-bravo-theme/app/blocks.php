@@ -339,6 +339,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Image Banner Section Block
+        acf_register_block_type([
+            'name'                   => 'image-banner-section',
+            'title'                  => __('Image Banner Section', 'sage'),
+            'description'            => __('A wide banner image inside the container, with an optional rounded corner, image filter and full-width section background', 'sage'),
+            'render_callback'        => ['App\Blocks\ImageBannerSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'format-image',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',

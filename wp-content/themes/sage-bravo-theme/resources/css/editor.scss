@@ -16,6 +16,7 @@
 @use "blocks/predictive-insights-diagram-section";
 @use "blocks/pricing-plans-section";
 @use "blocks/agency-pricing-plans-section";
+@use "blocks/image-banner-section";
 @use "blocks/cta-banner-section";
 @use "blocks/faqs-accordion-section";
 @use "blocks/latest-article-list-section";
@@ -47,6 +48,7 @@
   .wp-block-acf-predictive-insights-diagram-section,
   .wp-block-acf-pricing-plans-section,
   .wp-block-acf-agency-pricing-plans-section,
+  .wp-block-acf-image-banner-section,
   .wp-block-acf-cta-banner-section,
   .wp-block-acf-faqs-accordion-section,
   .wp-block-acf-latest-article-list-section {
