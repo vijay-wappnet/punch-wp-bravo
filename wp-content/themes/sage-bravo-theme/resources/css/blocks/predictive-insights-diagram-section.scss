@@ -34,17 +34,12 @@ $pid-items: (
   // The icons hang over the image's edges; clip (not hidden) so they can never
   // add a horizontal scrollbar, without creating a scroll container
   overflow-x: clip;
-  padding: min(5vw, 70px) 0;
   color: $black-off-color;
   // Default when no ACF background color is set
   background-color: $white-off-color;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
-  @media (max-width: $screen-md-min-767) {
-    padding: 7vw 0 10vw;
-  }
 
   // The column positions below are % of the design's 1511px width: the row
   // spans the screen up to that width, then stays 1511px and centred, so on a

@@ -30,7 +30,6 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   // The cards hang over the image's edges; clip (not hidden) so they can never
   // add a horizontal scrollbar, without creating a scroll container
   overflow-x: clip;
-  padding: min(6vw, 80px) 0 min(5vw, 70px);
   color: $black-off-color;
   // Default when no ACF background color is set
   background-color: $white-off-color;
@@ -38,9 +37,6 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   background-repeat: no-repeat;
   background-size: cover;
 
-  @media (max-width: $screen-md-min-767) {
-    padding: 11vw 0 10vw;
-  }
 
   // The column positions below are % of the design's 1511px width: the row
   // spans the screen up to that width, then stays 1511px and centred, so on a

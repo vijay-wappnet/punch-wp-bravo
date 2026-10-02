@@ -1,0 +1,242 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+.pricing-plans-section {
+  position: relative;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------------- Card
+  // Bootstrap's row / col do the columns; each card fills its column
+  // (h-100 equivalent) so the cards match in height.
+  .pps__row > .col {
+    display: flex;
+  }
+
+  .pps__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+    // Default when no card_background_color is set
+    background-color: $white-color;
+    border-radius: 10px;
+
+    @media (max-width: $screen-md-min-767) {
+      padding: 24px 20px;
+    }
+  }
+
+  // "Most Popular" sits on the card's top-right corner, so it stays with its
+  // own card (not the section) when the cards stack
+  .pps__tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 14px;
+    border-radius: 0 10px 0 0;
+    // Default when no popular_tag_bg_color is set
+    background-color: $white-off-light-grayish-color;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 15px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  // Keeps a long plan name from running under the tag
+  &.pricing-plans-section--align-left .pps__card--popular .pps__name {
+    padding-right: 7.5rem;
+  }
+
+  // ------------------------------------------------------------- Head
+  .pps__name {
+    margin: 0 0 18px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 28px;
+    line-height: 1.2;
+    color: $black-off-color;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 24px;
+    }
+  }
+
+  .pps__price {
+    margin: 0 0 18px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 22px;
+    line-height: 1.3;
+    color: $gray-granite-color;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 20px;
+    }
+  }
+
+  .pps__description {
+    margin: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 17px;
+    line-height: 1.4;
+    color: $black-off-color;
+  }
+
+  // ------------------------------------------------------------ Features
+  // The line is the same grey as the Pro card, so it only shows on a lighter card
+  .pps__features {
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 24px 0 0;
+    margin-top: 24px;
+    border-top: 1px solid $white-off-light-grayish-color;
+    list-style: none;
+  }
+
+  .pps__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 9px;
+    padding: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 16px;
+    line-height: 1.4;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Aligned to the first line of the text, whatever the text's line height
+  .pps__check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: calc((1.4em - 20px) / 2);
+  }
+
+  .pps__check-circle {
+    fill: $red-fusion-color;
+  }
+
+  .pps__check-mark {
+    fill: none;
+    stroke: $black-off-color;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pps__feature-text {
+    min-width: 0;
+  }
+
+  // ------------------------------------------------------------- Button
+  // Stays at the bottom of the card, so the buttons line up across cards
+  .pps__buttons {
+    display: flex;
+    margin-top: auto;
+    padding-top: 32px;
+
+    .pps-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .pps-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+
+  // The feature list grows to fill the card; without one the button still
+  // goes to the bottom
+  .pps__head + .pps__buttons {
+    margin-top: auto;
+  }
+
+  // ---------------------------------------------------------- Alignment
+  // content_alignment (desktop / tablet): the text and the CTA of each card
+  &--align-left {
+    .pps__head {
+      text-align: left;
+    }
+
+    .pps__buttons {
+      justify-content: flex-start;
+    }
+  }
+
+  &--align-center {
+    .pps__head {
+      text-align: center;
+    }
+
+    .pps__buttons {
+      justify-content: center;
+    }
+  }
+
+  &--align-right {
+    .pps__head {
+      text-align: right;
+    }
+
+    .pps__buttons {
+      justify-content: flex-end;
+    }
+  }
+
+  // content_alignment_mobile: independent of the desktop setting
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-align-left {
+      .pps__head {
+        text-align: left;
+      }
+
+      .pps__buttons {
+        justify-content: flex-start;
+      }
+    }
+
+    &--mobile-align-center {
+      .pps__head {
+        text-align: center;
+      }
+
+      .pps__buttons {
+        justify-content: center;
+      }
+    }
+
+    &--mobile-align-right {
+      .pps__head {
+        text-align: right;
+      }
+
+      .pps__buttons {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
