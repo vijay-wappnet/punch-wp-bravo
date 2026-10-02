@@ -1,0 +1,130 @@
+@use "sass:math";
+@use "sass:list";
+@use "../common/variables" as *;
+
+// The diagram is placed in % of its box, from the numbers measured on the
+// design (the diagram drawn 775 x 250; the mobile design has the same
+// proportions, so one set of numbers serves both). Each uploaded icon is
+// centred on its point and sized as a share of the box width.
+$dpw-w: 775;
+$dpw-h: 250;
+
+@function dpw-x($value) {
+  @return math.div($value, $dpw-w) * 100%;
+}
+
+@function dpw-y($value) {
+  @return math.div($value, $dpw-h) * 100%;
+}
+
+// The repeater order places the icons (left to right, in the order they build
+// in): 1 Data pill, 2 logo circle, 3 top circle, 4 bottom circle, 5 arrow
+// circle, 6 Action pill.
+//                  centre x, centre y, width
+$dpw-items: (
+  1: (77, 126, 140),
+  2: (248, 126, 76),
+  3: (349, 42, 75),
+  4: (349, 208, 75),
+  5: (470, 126, 76),
+  6: (697, 126, 141),
+);
+
+.data-processing-workflow-section {
+  position: relative;
+  // Clip (not hidden) so nothing can add a horizontal scrollbar, without
+  // creating a scroll container
+  overflow-x: clip;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // ----------------------------------------------------------- Diagram
+  // Desktop: about 80% of the screen (the design's diagram is 77% of its
+  // frame), up to 1200px. Mobile: nearly the full width.
+  .dpw__diagram {
+    position: relative;
+    width: min(80vw, 1200px);
+    margin: 0 auto;
+    aspect-ratio: #{$dpw-w} / #{$dpw-h};
+
+    @media (max-width: $screen-md-min-767) {
+      width: 88vw;
+    }
+  }
+
+  // ------------------------------------------------------ Connections
+  // Behind the icons
+  .dpw__lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .dpw__line {
+    fill: none;
+    stroke: $black-off-color;
+    stroke-width: 1;
+  }
+
+  .dpw__line--dashed {
+    stroke-dasharray: 4 4;
+  }
+
+  // The mask that reveals a line: a wider solid stroke drawn on top of it
+  .dpw__line-reveal {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 8;
+  }
+
+  // ------------------------------------------------------------ Icons
+  // The uploaded icons are complete visuals: no background, border, radius or
+  // shadow is added here, only position, size and (in the script) animation.
+  .dpw__item {
+    position: absolute;
+    z-index: 2;
+    // Centred on its point; the script only animates the image inside, so
+    // this stays put
+    translate: -50% -50%;
+    display: block;
+    line-height: 0;
+  }
+
+  .dpw__item-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @each $index, $item in $dpw-items {
+    .dpw__item--#{$index} {
+      left: dpw-x(list.nth($item, 1));
+      top: dpw-y(list.nth($item, 2));
+      width: dpw-x(list.nth($item, 3));
+    }
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}

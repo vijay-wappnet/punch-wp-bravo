@@ -27,6 +27,7 @@ import initTechEcosystemConnectionsSection from './blocks/tech-ecosystem-connect
 import initInsightAnalyticsFeatureSection from './blocks/insight-analytics-feature-section.js';
 import initPredictiveInsightsDiagramSection from './blocks/predictive-insights-diagram-section.js';
 import initMetricsCounterSection from './blocks/metrics-counter-section.js';
+import initDataProcessingWorkflowSection from './blocks/data-processing-workflow-section.js';
 import initFaqsAccordionSection from './blocks/faqs-accordion-section.js';
 import initLatestArticleListSection from './blocks/latest-article-list-section.js';
 
@@ -39,5 +40,6 @@ document.addEventListener('DOMContentLoaded', () => initTechEcosystemConnections
 document.addEventListener('DOMContentLoaded', () => initInsightAnalyticsFeatureSection());
 document.addEventListener('DOMContentLoaded', () => initPredictiveInsightsDiagramSection());
 document.addEventListener('DOMContentLoaded', () => initMetricsCounterSection());
+document.addEventListener('DOMContentLoaded', () => initDataProcessingWorkflowSection());
 document.addEventListener('DOMContentLoaded', () => initFaqsAccordionSection());
 document.addEventListener('DOMContentLoaded', () => initLatestArticleListSection());

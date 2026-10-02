@@ -53,8 +53,23 @@ $mcs-negative: $red-fusion-color;
     font-size: 79px;
     line-height: 40px;
     color: $black-off-color;
+    margin-bottom: 40px;
     // Digits keep a fixed width, so the number doesn't jitter while it counts
     font-variant-numeric: tabular-nums;
+
+    @media (max-width: $screen-xl-min) {
+      font-size: 60px;
+      line-height: 40px;
+    }
+    @media (max-width: $screen-lg-min) {
+      font-size: 42px;
+      line-height: 40px;
+    }
+    @media (max-width: $screen-md-min-767) {
+      font-size: 36px;
+      line-height: 26px;
+      margin-bottom: 20px;
+    }
   }
 
   .metric-prefix,
