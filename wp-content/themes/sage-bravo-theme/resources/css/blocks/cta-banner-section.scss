@@ -38,6 +38,14 @@
     }
   }
 
+  // Heading and description together, so the button can sit beside them
+  .cta-banner-section__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+  }
+
   // Styled by class so every heading_level (h1-h6 / p) looks the same
   .cta-banner-section__heading {
     max-width: 900px;
@@ -47,6 +55,154 @@
     font-size: 40px;
     line-height: 48px;
     color: $black-off-color;
+  }
+
+  .cta-banner-section__description {
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    font-size: 18px;
+    line-height: 1.45;
+    color: $black-off-color;
+
+    p {
+      margin: 0 0 0.6em;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: $screen-lg-min) {
+      font-size: 20px;
+    }
+  }
+
+  // ------------------------------------------------ Content alignment
+  // content_alignment (desktop / tablet): the text, and where it sits in the
+  // banner when the button is below it. Defaults to centre, as before.
+  &--align-left {
+    text-align: left;
+
+    .cta-banner-section__inner {
+      align-items: flex-start;
+    }
+  }
+
+  &--align-center {
+    text-align: center;
+  }
+
+  &--align-right {
+    text-align: right;
+
+    .cta-banner-section__inner {
+      align-items: flex-end;
+    }
+  }
+
+  // ------------------------------------------------ Button beside the text
+  // button_alignment left / right (desktop / tablet): a row, with the button
+  // before or after the heading and description. Without it the button stays
+  // below them.
+  @media (min-width: $screen-lg-min + 1) {
+    &--button-left,
+    &--button-right {
+      .cta-banner-section__inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .cta-banner-section__content {
+        flex: 1 1 auto;
+        max-width: none;
+      }
+
+      .cta-banner-section__heading {
+        font-size: 34px;
+        line-height: 42px;
+      }
+
+      .cta-banner-section__buttons {
+        flex: 0 0 auto;
+      }
+    }
+
+    &--button-left .cta-banner-section__buttons {
+      order: -1;
+    }
+  }
+
+  // ----------------------------------------------------------- Mobile
+  @media (max-width: $screen-lg-min) {
+    // content_alignment_mobile: independent of the desktop setting
+    &--mobile-align-left {
+      text-align: left;
+
+      .cta-banner-section__inner {
+        align-items: flex-start;
+      }
+    }
+
+    &--mobile-align-center {
+      text-align: center;
+
+      .cta-banner-section__inner {
+        align-items: center;
+      }
+    }
+
+    &--mobile-align-right {
+      text-align: right;
+
+      .cta-banner-section__inner {
+        align-items: flex-end;
+      }
+    }
+
+    // button_alignment_mobile: above or below the text
+    &--mobile-button-top .cta-banner-section__buttons {
+      order: -1;
+    }
+
+    .cta-banner-section__content {
+      width: 100%;
+    }
+  }
+
+  // ------------------------------------------------ Dot grid alignment
+  // Where the dots are strongest (read by resources/js/dot-grid.js). Without
+  // a choice the dots keep their default: both edges, fading behind the content.
+  @media (min-width: $screen-lg-min + 1) {
+    &--dots-left {
+      --dot-grid-fade: left;
+    }
+
+    &--dots-right {
+      --dot-grid-fade: right;
+    }
+
+    &--dots-center {
+      --dot-grid-fade: horizontal;
+    }
+  }
+
+  @media (max-width: $screen-lg-min) {
+    &--dots-mobile-top {
+      --dot-grid-fade: top;
+    }
+
+    &--dots-mobile-middle {
+      --dot-grid-fade: middle;
+    }
+
+    &--dots-mobile-bottom {
+      --dot-grid-fade: bottom;
+    }
   }
 
   .cta-banner-section__buttons {

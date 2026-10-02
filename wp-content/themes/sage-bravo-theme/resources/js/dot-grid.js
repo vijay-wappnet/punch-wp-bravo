@@ -64,12 +64,23 @@ export default function initDotGrid(container) {
   function restingOpacity(column, row, x, y) {
     const mobile = mobileQuery.matches;
     // A section can override these from CSS (--dot-grid-edge-opacity and
-    // --dot-grid-fade: "horizontal" | "top"), e.g. the Product Showcase Slider.
+    // --dot-grid-fade: "horizontal" | "left" | "right" | "top" | "middle" | "bottom"), e.g. the
+    // Product Showcase Slider and the CTA Banner Section.
     const edgeOpacity = edgeOpacityOverride ?? (mobile ? 0.32 : 0.25);
     let fade;
     if (fadeOverride === 'top') {
       // Strongest at the top, fading to nothing at the bottom of the grid
       fade = 1 - y / height;
+    } else if (fadeOverride === 'bottom') {
+      fade = y / height;
+    } else if (fadeOverride === 'middle') {
+      // Strongest in the vertical middle, fading to the top and bottom
+      fade = 1 - Math.abs(y - height / 2) / (height / 2);
+    } else if (fadeOverride === 'left') {
+      // Strongest at the left, fading to nothing at the right (CTA Banner Section)
+      fade = 1 - x / width;
+    } else if (fadeOverride === 'right') {
+      fade = x / width;
     } else if (fadeOverride === 'horizontal') {
       fade = Math.abs(x - width / 2) / (width / 2);
     } else {

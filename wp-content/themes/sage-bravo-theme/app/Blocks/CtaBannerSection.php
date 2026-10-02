@@ -10,6 +10,14 @@ class CtaBannerSection
     private const HEADING_LEVELS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
 
     /**
+     * Allowed values for the alignment fields.
+     */
+    private const ALIGNMENTS = ['left', 'center', 'right'];
+    private const BUTTON_SIDES = ['left', 'right'];
+    private const MOBILE_BUTTON_POSITIONS = ['top', 'bottom'];
+    private const DOT_MOBILE_ALIGNMENTS = ['top', 'middle', 'bottom'];
+
+    /**
      * Render the CTA Banner Section block
      *
      * @param array $block The block settings and attributes
@@ -23,16 +31,36 @@ class CtaBannerSection
         // Get field values using ACF
         $heading_text = trim((string) get_field('heading_text'));
         $heading_level = get_field('heading_level');
+        $description = get_field('description');
         $buttons = self::formatButtons(get_field('buttons'));
+        $button_alignment = get_field('button_alignment');
+        $button_alignment_mobile = get_field('button_alignment_mobile');
+        $content_alignment = get_field('content_alignment');
+        $content_alignment_mobile = get_field('content_alignment_mobile');
+        $dot_alignment = get_field('dot_grid_canvas_alignment');
+        $dot_alignment_mobile = get_field('dot_grid_canvas_alignment_mobile');
         $section_bg_color = get_field('section_bg_color');
         $section_bg_image = get_field('section_bg_image');
         $margin = get_field('margin');
         $padding = get_field('padding');
 
-        // Nothing to show on the front end without a heading or a button
-        if (!$heading_text && !$buttons) {
+        $description = is_string($description) ? trim($description) : '';
+
+        // Blocks saved before these fields existed have no value for them, so they
+        // keep the original look: centred, the button below, dots at both edges.
+        // An empty button_alignment means "below"; an empty mobile dot alignment
+        // means the default (both edges).
+        $button_alignment = in_array($button_alignment, self::BUTTON_SIDES, true) ? $button_alignment : 'below';
+        $button_alignment_mobile = in_array($button_alignment_mobile, self::MOBILE_BUTTON_POSITIONS, true) ? $button_alignment_mobile : 'bottom';
+        $content_alignment = in_array($content_alignment, self::ALIGNMENTS, true) ? $content_alignment : 'center';
+        $content_alignment_mobile = in_array($content_alignment_mobile, self::ALIGNMENTS, true) ? $content_alignment_mobile : 'center';
+        $dot_alignment = in_array($dot_alignment, self::ALIGNMENTS, true) ? $dot_alignment : 'center';
+        $dot_alignment_mobile = in_array($dot_alignment_mobile, self::DOT_MOBILE_ALIGNMENTS, true) ? $dot_alignment_mobile : 'edges';
+
+        // Nothing to show on the front end without a heading, description or a button
+        if (!$heading_text && !$description && !$buttons) {
             if ($is_preview) {
-                echo '<p style="padding: 20px; text-align: center;">' . esc_html__('CTA Banner Section: add a heading or a button.', 'sage') . '</p>';
+                echo '<p style="padding: 20px; text-align: center;">' . esc_html__('CTA Banner Section: add a heading, a description or a button.', 'sage') . '</p>';
             }
             return;
         }
@@ -64,7 +92,14 @@ class CtaBannerSection
             'responsiveCss' => $responsiveCss,
             'heading_text'  => $heading_text,
             'heading_level' => $heading_level,
+            'description'   => $description,
             'buttons'       => $buttons,
+            'button_alignment'         => $button_alignment,
+            'button_alignment_mobile'  => $button_alignment_mobile,
+            'content_alignment'        => $content_alignment,
+            'content_alignment_mobile' => $content_alignment_mobile,
+            'dot_alignment'            => $dot_alignment,
+            'dot_alignment_mobile'     => $dot_alignment_mobile,
             'section_style' => $section_styles ? implode('; ', $section_styles) . ';' : '',
             'is_preview'    => $is_preview,
         ]);
