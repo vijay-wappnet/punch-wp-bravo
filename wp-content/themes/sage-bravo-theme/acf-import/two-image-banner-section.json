@@ -1,0 +1,208 @@
+[
+    {
+        "key": "group_two_image_banner_section",
+        "title": "Two Image Banner Section",
+        "fields": [
+            {
+                "key": "field_tibs_banner_images",
+                "label": "Banner Images",
+                "name": "banner_images",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "Up to two images, side by side on desktop and stacked on mobile.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 2,
+                "collapsed": "",
+                "button_label": "Add Banner Image",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_tibs_banner_image",
+                        "label": "Banner Image",
+                        "name": "banner_image",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "library": "all",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": "",
+                        "preview_size": "medium",
+                        "parent_repeater": "field_tibs_banner_images"
+                    }
+                ]
+            },
+            {
+                "key": "field_tibs_banner_border_radius",
+                "label": "Banner Border Radius",
+                "name": "banner_border_radius",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "Corner radius of the banner images, in px.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "min": 0,
+                "max": "",
+                "step": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "px"
+            },
+            {
+                "key": "field_tibs_banner_image_filter",
+                "label": "Banner Image Filter",
+                "name": "banner_image_filter",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "no": "No",
+                    "yes": "Yes"
+                },
+                "default_value": "no",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_tibs_section_bg_color",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 0,
+                "return_format": "string",
+                "allow_in_bindings": 1,
+                "show_custom_palette": 0,
+                "show_color_wheel": 1,
+                "custom_palette_source": "",
+                "palette_colors": ""
+            },
+            {
+                "key": "field_tibs_section_bg_image",
+                "label": "Section Background Image",
+                "name": "section_bg_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "preview_size": "medium",
+                "allow_in_bindings": 0
+            },
+            {
+                "key": "field_tibs_margin",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_tibs_padding",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf/two-image-banner-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]
