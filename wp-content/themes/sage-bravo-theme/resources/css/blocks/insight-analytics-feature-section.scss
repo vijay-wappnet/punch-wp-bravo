@@ -81,13 +81,17 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     }
   }
 
-  // Never cropped or stretched: it fills the box at the design proportion
+  // Fills the whole 575 x 640 box and is never stretched (an image with other
+  // proportions is cropped to it). It has to fill the box for the rounded
+  // corners to show: border-radius rounds the <img> box, and with
+  // object-fit: contain the picture is smaller than that box, so its own
+  // corners would stay square.
   .iafs__image {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    border-radius: 4px;
+    object-fit: cover;
+    border-radius: 10px;
   }
 
   // -------------------------------------------------------- Overlays

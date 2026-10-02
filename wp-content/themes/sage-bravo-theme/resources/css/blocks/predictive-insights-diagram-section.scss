@@ -1,0 +1,263 @@
+@use "sass:math";
+@use "sass:list";
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// The diagram is placed in % of the image box, from the numbers measured on the
+// design (the image drawn at 312 x 346; the mobile design has the same
+// proportions, so one set of numbers serves both). Each uploaded icon is
+// centred on its point and sized as a share of the image width.
+$pid-w: 312;
+$pid-h: 346;
+
+@function pid-x($value) {
+  @return math.div($value, $pid-w) * 100%;
+}
+
+@function pid-y($value) {
+  @return math.div($value, $pid-h) * 100%;
+}
+
+// The repeater order places the icons (no position field): 1 left node,
+// 2 centre node, 3 bottom node, 4 badge, 5 Action pill.
+//                  centre x, centre y, width
+$pid-items: (
+  1: (-1, 250, 63),
+  2: (114, 216, 64),
+  3: (114, 288, 63),
+  4: (181, 230, 38),
+  5: (268.5, 288.5, 143),
+);
+
+.predictive-insights-diagram-section {
+  position: relative;
+  // The icons hang over the image's edges; clip (not hidden) so they can never
+  // add a horizontal scrollbar, without creating a scroll container
+  overflow-x: clip;
+  padding: min(5vw, 70px) 0;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 7vw 0 10vw;
+  }
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 6vw;
+      padding-right: 6vw;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // Bootstrap row / col (see the Blade view): text col-md-4, a one-column gap
+  // and the image col-md-6, centred as a group. The order classes
+  // (order-1/2, order-md-1/2) do the left/right and top/bottom switching, so
+  // there is only one copy of the markup.
+  .pid__row {
+    @media (max-width: $screen-md-min-767) {
+      row-gap: 8vw;
+    }
+  }
+
+  // ------------------------------------------------------------ Image
+  // The wrapper is what the diagram is positioned against.
+  .pid__media {
+    position: relative;
+    width: min(575px, 100%);
+    aspect-ratio: 575 / 640;
+    margin: 0 auto;
+
+    // Mobile: sized from the screen (about 57% in the design), same proportion
+    @media (max-width: $screen-md-min-767) {
+      width: 57vw;
+    }
+  }
+
+  // Fills the whole 575 x 640 box (the design shows a portrait crop of the
+  // photo), never stretched: an image with other proportions is cropped to it
+  .pid__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  // ------------------------------------------------------ Connections
+  // Above the image, below the icons
+  .pid__lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    pointer-events: none;
+  }
+
+  .pid__line {
+    fill: none;
+    stroke: $white-color;
+    stroke-width: 1.5;
+  }
+
+  .pid__line--dashed {
+    stroke-dasharray: 4 4;
+  }
+
+  // The mask that reveals a line: a wider solid stroke drawn on top of it
+  .pid__line-reveal {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 8;
+  }
+
+  // ------------------------------------------------------------ Icons
+  // The uploaded icons are complete visuals: no background, border, radius or
+  // shadow is added here, only position, size and (in the script) animation.
+  .pid__item {
+    position: absolute;
+    z-index: 2;
+    // Centred on its point; the script only animates the image inside, so
+    // this stays put
+    translate: -50% -50%;
+    display: block;
+    line-height: 0;
+  }
+
+  .pid__item-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @each $index, $item in $pid-items {
+    .pid__item--#{$index} {
+      left: pid-x(list.nth($item, 1));
+      top: pid-y(list.nth($item, 2));
+      width: pid-x(list.nth($item, 3));
+    }
+  }
+
+  // ---------------------------------------------------------- Content
+  .pid__content {
+    text-align: left;
+  }
+
+  .pid__heading {
+    margin: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: min(2.7vw, 40px);
+    line-height: 1.3;
+    color: $black-off-color;
+
+    @media (max-width: $screen-lg-min) {
+      font-size: max(2.7vw, 22px);
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: clamp(26px, 6.9vw, 34px);
+    }
+  }
+
+  .pid__buttons {
+    display: flex;
+    margin-top: min(3.2vw, 48px);
+
+    .pid-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+    }
+
+    .pid-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 8vw;
+
+      // Full-width CTA on mobile, as in the design
+      .pid-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  // content_alignment (desktop / tablet): text, and the CTA with it
+  &--align-left {
+    .pid__content {
+      text-align: left;
+    }
+
+    .pid__buttons {
+      justify-content: flex-start;
+    }
+  }
+
+  &--align-center {
+    .pid__content {
+      text-align: center;
+    }
+
+    .pid__buttons {
+      justify-content: center;
+    }
+  }
+
+  &--align-right {
+    .pid__content {
+      text-align: right;
+    }
+
+    .pid__buttons {
+      justify-content: flex-end;
+    }
+  }
+
+  // content_alignment_mobile: independent of the desktop setting
+  @media (max-width: $screen-md-min-767) {
+    &--mobile-align-left {
+      .pid__content {
+        text-align: left;
+      }
+
+      .pid__buttons {
+        justify-content: flex-start;
+      }
+    }
+
+    &--mobile-align-center {
+      .pid__content {
+        text-align: center;
+      }
+
+      .pid__buttons {
+        justify-content: center;
+      }
+    }
+
+    &--mobile-align-right {
+      .pid__content {
+        text-align: right;
+      }
+
+      .pid__buttons {
+        justify-content: flex-end;
+      }
+    }
+  }
+}

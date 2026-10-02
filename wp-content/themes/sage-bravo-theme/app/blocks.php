@@ -273,6 +273,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Predictive Insights Diagram Section Block
+        acf_register_block_type([
+            'name'                   => 'predictive-insights-diagram-section',
+            'title'                  => __('Predictive Insights Diagram Section', 'sage'),
+            'description'            => __('An image with a diagram of uploaded icons and connecting lines that builds in left to right, beside a heading and CTA', 'sage'),
+            'render_callback'        => ['App\Blocks\PredictiveInsightsDiagramSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'networking',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',
