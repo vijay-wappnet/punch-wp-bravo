@@ -1,0 +1,91 @@
+@use "../common/variables" as *;
+
+.listed-item-section {
+  position: relative;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------------- List
+  // Two columns on desktop, filled down the first and then the second (the
+  // order is kept, nothing is duplicated); one column on mobile
+  .lis__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    column-count: 2;
+    column-gap: 80px;
+
+    @media (max-width: $screen-lg-min) {
+      column-gap: 40px;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      column-count: 1;
+    }
+  }
+
+  .lis__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 0;
+    // An item is never split between the two columns
+    break-inside: avoid;
+
+    @media (max-width: $screen-md-min-767) {
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // The text is a <p>: it keeps the site's default paragraph size and weight
+  // (global.scss); only its spacing is set here
+  .lis__text {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    color: $black-off-color;
+  }
+
+  // Aligned to the first line of the text, however many lines it wraps to
+  .lis__check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: calc((25px - 20px) / 2);
+
+    @media (max-width: $screen-md-min-767) {
+      width: 30px;
+      height: 30px;
+      margin-top: calc((26px - 30px) / 2);
+    }
+  }
+
+  .lis__check-circle {
+    fill: $red-fusion-color;
+  }
+
+  .lis__check-mark {
+    fill: none;
+    stroke: $black-off-color;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
