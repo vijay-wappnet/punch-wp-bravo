@@ -3,7 +3,14 @@
 // punch-acf-compact-editor plugin is used to compact the ACF editor in the admin panel. This is useful for improving the user experience when editing content with ACF fields, especially when there are many fields or complex layouts. The plugin provides a more streamlined and organized interface for managing ACF fields, making it easier for users to navigate and edit content without being overwhelmed by too much information at once.
 add_theme_support('punch-acf-compact-editor');
 
-if (function_exists('acf_add_options_page')) {
+// Registered on acf/init (not while the theme loads): ACF translates the page
+// title with __(), and doing that before init triggers a "translation loading
+// was triggered too early" notice (which Acorn turns into a 500 page).
+add_action('acf/init', function () {
+    if (!function_exists('acf_add_options_page')) {
+        return;
+    }
+
     // Punch Theme General Settings
     $general_settings = array(
         'page_title' => __('Global Website Options', 'punch_theme'),
@@ -14,7 +21,7 @@ if (function_exists('acf_add_options_page')) {
         'icon_url' => 'dashicons-admin-customizer'
     );
     acf_add_options_page($general_settings);
-}
+});
 
 // added dynamic
 function add_dynamic_id_to_menu_links($atts, $item, $args, $depth)
@@ -152,10 +159,10 @@ function custom_acf_dimensions($margin, $padding, $blockId)
         if (!is_array($values))
             return '';
         $unit = $values['unit'] ?? 'px';
-        $top = $values['top'] !== '' ? $values['top'] : null;
-        $right = $values['right'] !== '' ? $values['right'] : null;
-        $bottom = $values['bottom'] !== '' ? $values['bottom'] : null;
-        $left = $values['left'] !== '' ? $values['left'] : null;
+        $top = ($values['top'] ?? '') !== '' ? $values['top'] : null;
+        $right = ($values['right'] ?? '') !== '' ? $values['right'] : null;
+        $bottom = ($values['bottom'] ?? '') !== '' ? $values['bottom'] : null;
+        $left = ($values['left'] ?? '') !== '' ? $values['left'] : null;
         // Only return if at least one value is set
         if ($top === null && $right === null && $bottom === null && $left === null)
             return '';

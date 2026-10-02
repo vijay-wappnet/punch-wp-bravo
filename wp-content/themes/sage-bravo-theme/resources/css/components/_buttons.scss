@@ -71,6 +71,43 @@
   }
 }
 
+.btn-red-light-fusion {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $red-fusion-color;
+  color: $black-off-color;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
+
+  img {
+    transition: transform 350ms ease-in-out, filter 350ms ease-in-out;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: $white-off-color;
+    color: $black-off-color;
+
+    img {
+      filter: brightness(1) invert(0);
+      transform: translateX(0.5em);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    img {
+      transition: none;
+    }
+
+    &:hover,
+    &:focus-visible img {
+      transform: none;
+    }
+  }
+}
+
 // Transparent CTA with a thin border and a sliding right-arrow icon
 // (Latest Article List Section "See all Articles").
 // Fills black-off on hover; the arrow is a mask so it follows currentColor.
