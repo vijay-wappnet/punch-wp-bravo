@@ -29,11 +29,6 @@ class InsightAnalyticsFeatureSection
      */
     private const MAX_OVERLAYS = 2;
 
-    /**
-     * Tallest the image gets (px): desktop / tablet and mobile, from the designs.
-     */
-    private const IMAGE_MAX_HEIGHT = 575;
-    private const IMAGE_MAX_HEIGHT_MOBILE = 410;
 
     /**
      * Render the Insight & Analytics Feature Section block
@@ -86,7 +81,7 @@ class InsightAnalyticsFeatureSection
         $blockId = 'iafs-' . ($block['id'] ?? uniqid());
 
         // Generate responsive CSS for margin and padding
-        $responsiveCss = custom_acf_dimensions($margin, $padding, $blockId) . self::imageSizeCss($blockId, $image);
+        $responsiveCss = custom_acf_dimensions($margin, $padding, $blockId);
 
         // Inline styles are limited to the background color and image
         $section_styles = [];
@@ -115,30 +110,6 @@ class InsightAnalyticsFeatureSection
             'section_style'            => $section_styles ? implode('; ', $section_styles) . ';' : '',
             'is_preview'               => $is_preview,
         ]);
-    }
-
-    /**
-     * Caps the image's height without cropping or stretching it: its width is
-     * limited to (max height x its own width/height ratio), so with height:auto
-     * it can never be taller than the cap. The overlay cards are sized from this
-     * same wrapper, so they follow the image.
-     */
-    private static function imageSizeCss(string $blockId, ?array $image): string
-    {
-        $width = (float) ($image['width'] ?? 0);
-        $height = (float) ($image['height'] ?? 0);
-        if ($width <= 0 || $height <= 0) {
-            return '';
-        }
-
-        $ratio = $width / $height;
-
-        return sprintf(
-            '#%1$s .iafs__media{max-width:%2$spx}@media (max-width:767px){#%1$s .iafs__media{max-width:min(55.2vw,%3$spx)}}',
-            $blockId,
-            round(self::IMAGE_MAX_HEIGHT * $ratio, 2),
-            round(self::IMAGE_MAX_HEIGHT_MOBILE * $ratio, 2)
-        );
     }
 
     /**

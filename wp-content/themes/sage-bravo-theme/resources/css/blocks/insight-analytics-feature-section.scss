@@ -1,9 +1,29 @@
 @use "../common/fonts" as *;
 @use "../common/variables" as *;
 
-// How far the overlay cards settle in (px). Kept small on purpose.
-$iafs-overlay-shift: 16px;
+// How far the overlay cards drift each way (px). Kept small on purpose.
+$iafs-overlay-shift: 12px;
 $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+@keyframes iafs-drift-top {
+  from {
+    transform: translateX(-$iafs-overlay-shift);
+  }
+
+  to {
+    transform: translateX($iafs-overlay-shift);
+  }
+}
+
+@keyframes iafs-drift-bottom {
+  from {
+    transform: translateX($iafs-overlay-shift);
+  }
+
+  to {
+    transform: translateX(-$iafs-overlay-shift);
+  }
+}
 
 .insight-analytics-feature-section {
   position: relative;
@@ -48,20 +68,25 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   .iafs__media {
     position: relative;
     container-type: inline-size;
-    // The block's own CSS caps the max-width so the image is never taller than
-    // 575px (410px on mobile) - see InsightAnalyticsFeatureSection::imageSizeCss
+    // Desktop / tablet: 575 x 640 (never wider than its column); the box keeps
+    // that proportion as it narrows
+    width: min(575px, 100%);
+    aspect-ratio: 575 / 640;
     margin: 0 auto;
 
+    // Mobile: sized from the screen (55.2vw in the design), same proportion, so
+    // the height follows automatically (about 410px on a 490px-wide screen)
     @media (max-width: $screen-md-min-767) {
       width: 55.2vw;
     }
   }
 
-  // Natural proportions: never cropped or stretched
+  // Never cropped or stretched: it fills the box at the design proportion
   .iafs__image {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
     border-radius: 4px;
   }
 
@@ -117,27 +142,38 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     font-size: inherit;
   }
 
-  // Once the script is ready each card starts a few px toward the image and
-  // settles out to its place when the section scrolls into view. Without the
-  // script the cards are simply in their final place.
+  // Once the script is ready the cards fade in when the section reaches the
+  // viewport and then keep moving a few px side to side for as long as it is
+  // on screen: the top card travels left <-> right, the bottom card the
+  // opposite way (right <-> left), so they drift against each other. Without
+  // the script the cards are simply in place.
   &.is-animatable {
     .iafs__overlay {
       opacity: 0;
-      transition: opacity 0.9s $iafs-ease-out, transform 0.9s $iafs-ease-out;
+      transition: opacity 0.9s $iafs-ease-out;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-play-state: paused;
     }
 
-    .iafs__overlay--left {
-      transform: translateX($iafs-overlay-shift);
+    .iafs__overlay--top {
+      animation-name: iafs-drift-top;
     }
 
-    .iafs__overlay--right {
-      transform: translateX(-$iafs-overlay-shift);
+    .iafs__overlay--bottom {
+      animation-name: iafs-drift-bottom;
       transition-delay: 0.15s;
     }
 
     &.is-visible .iafs__overlay {
       opacity: 1;
-      transform: none;
+    }
+
+    // Runs only while the section is on screen
+    &.is-in-view .iafs__overlay {
+      animation-play-state: running;
     }
   }
 
@@ -258,8 +294,8 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   @media (prefers-reduced-motion: reduce) {
     &.is-animatable .iafs__overlay {
       opacity: 1;
-      transform: none;
       transition: none;
+      animation: none;
     }
   }
 }
