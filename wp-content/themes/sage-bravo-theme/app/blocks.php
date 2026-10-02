@@ -361,6 +361,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Metrics Counter Section Block
+        acf_register_block_type([
+            'name'                   => 'metrics-counter-section',
+            'title'                  => __('Metrics Counter Section', 'sage'),
+            'description'            => __('A row of metric cards whose numbers count up from 0, with a floating badge; a swipeable track on mobile', 'sage'),
+            'render_callback'        => ['App\Blocks\MetricsCounterSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'chart-line',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',

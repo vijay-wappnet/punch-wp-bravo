@@ -1,0 +1,246 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+$mcs-positive: #3fae16;
+$mcs-negative: $red-fusion-color;
+
+.metrics-counter-section {
+  position: relative;
+  padding: 40px 0;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      // The track runs to the screen edge on mobile so the next card can peek in
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .metrics-counter-wrapper {
+    position: relative;
+  }
+
+  // ------------------------------------------------------------ Desktop
+  // The cards in one row, equal widths (more than three just share the row,
+  // then wrap once they would get narrower than 200px). Not a carousel.
+  .metrics-counter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .metric-card {
+    position: relative;
+    box-sizing: border-box;
+    padding: 35px 25px;
+    background-color: $white-color;
+    border-radius: 8px;
+    text-align: left;
+  }
+
+  .metric-value-wrapper {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 79px;
+    line-height: 40px;
+    color: $black-off-color;
+    // Digits keep a fixed width, so the number doesn't jitter while it counts
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-prefix,
+  .metric-value,
+  .metric-suffix {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .metric-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  // A <p>: it takes the site's default paragraph size and weight (global.scss);
+  // only the spacing is reset here
+  .metric-label {
+    margin: 0;
+    color: $black-off-color;
+  }
+
+  // The triangle from trend_type; its colour comes from trend_color (inline),
+  // with these as the fallback
+  .metric-trend {
+    font-size: 12px;
+    line-height: 1;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 16px;
+    }
+  }
+
+  .metric-trend--positive {
+    color: $mcs-positive;
+  }
+
+  .metric-trend--negative {
+    color: $mcs-negative;
+  }
+
+  // ------------------------------------------------------ Content alignment
+  // content_alignment (desktop / tablet): the text of every card
+  &--align-left .metric-card {
+    text-align: left;
+  }
+
+  &--align-center .metric-card {
+    text-align: center;
+  }
+
+  &--align-right .metric-card {
+    text-align: right;
+  }
+
+  &--align-center .metric-value-wrapper,
+  &--align-center .metric-footer {
+    justify-content: center;
+  }
+
+  &--align-right .metric-value-wrapper,
+  &--align-right .metric-footer {
+    justify-content: flex-end;
+  }
+
+  // ------------------------------------------------------------- Mobile
+  // A horizontal track: one card fully in view and the next peeking in,
+  // scrolled natively (touch swipe) and by the arrow buttons below. Only the
+  // track scrolls; the page does not.
+  .metric-nav {
+    display: none;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    padding: 28px 0 24px;
+
+    .metrics-counter {
+      display: flex;
+      gap: 26px;
+      padding: 0 6.3vw;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 6.3vw;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .metric-card {
+      flex: 0 0 65%;
+      scroll-snap-align: start;
+    }
+
+    // content_alignment_mobile: independent of the desktop setting
+    &--mobile-align-left .metric-card {
+      text-align: left;
+    }
+
+    &--mobile-align-center .metric-card {
+      text-align: center;
+    }
+
+    &--mobile-align-right .metric-card {
+      text-align: right;
+    }
+
+    &--mobile-align-left .metric-value-wrapper,
+    &--mobile-align-left .metric-footer {
+      justify-content: flex-start;
+    }
+
+    &--mobile-align-center .metric-value-wrapper,
+    &--mobile-align-center .metric-footer {
+      justify-content: center;
+    }
+
+    &--mobile-align-right .metric-value-wrapper,
+    &--mobile-align-right .metric-footer {
+      justify-content: flex-end;
+    }
+
+    // The arrows under the track
+    .metric-nav {
+      display: flex;
+      gap: 4px;
+      padding: 18px 6.3vw 0;
+    }
+
+    .metric-nav-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: $black-off-color;
+      cursor: pointer;
+
+      img {
+        display: block;
+        width: 22px;
+        height: auto;
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $black-off-color;
+        outline-offset: 2px;
+      }
+    }
+
+    // The same arrow icon as the CTA buttons (points right); flipped for "previous"
+    .metric-nav-button--prev img {
+      transform: scaleX(-1);
+    }
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .metrics-counter {
+      scroll-behavior: auto;
+    }
+  }
+}
