@@ -449,6 +449,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Two Column Image With Content CTA Section Block
+        acf_register_block_type([
+            'name'                   => 'two-column-image-with-content-cta-section',
+            'title'                  => __('Two Column Image With Content CTA Section', 'sage'),
+            'description'            => __('An image beside a heading, rich text and CTA buttons; the image can be on either side', 'sage'),
+            'render_callback'        => ['App\Blocks\TwoColumnImageWithContentCtaSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'align-pull-left',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',

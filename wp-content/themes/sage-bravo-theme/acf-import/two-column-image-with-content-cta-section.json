@@ -1,0 +1,390 @@
+[
+    {
+        "key": "group_two_column_image_with_content_cta_section",
+        "title": "Two Column Image With Content Cta Section",
+        "fields": [
+            {
+                "key": "field_tcicts_heading_text",
+                "label": "Heading Text",
+                "name": "heading_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_tcicts_heading_level",
+                "label": "Heading Level",
+                "name": "heading_level",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "h1": "H1",
+                    "h2": "H2",
+                    "h3": "H3",
+                    "h4": "H4",
+                    "h5": "H5",
+                    "h6": "H6",
+                    "p": "Paragraph"
+                },
+                "default_value": "h2",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_tcicts_content",
+                "label": "Content",
+                "name": "content",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
+            },
+            {
+                "key": "field_tcicts_buttons",
+                "label": "Buttons",
+                "name": "buttons",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Add Button",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_tcicts_button_link",
+                        "label": "Button Link",
+                        "name": "button_link",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "parent_repeater": "field_tcicts_buttons"
+                    },
+                    {
+                        "key": "field_tcicts_aria_label",
+                        "label": "Aria Label",
+                        "name": "aria_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcicts_buttons"
+                    },
+                    {
+                        "key": "field_tcicts_button_google_event_label",
+                        "label": "Button Google Event Label",
+                        "name": "button_google_event_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "Used for Google Analytic event tracking.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcicts_buttons"
+                    },
+                    {
+                        "key": "field_tcicts_button_class",
+                        "label": "Button Class",
+                        "name": "button_class",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcicts_buttons"
+                    }
+                ]
+            },
+            {
+                "key": "field_tcicts_image",
+                "label": "Image",
+                "name": "image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "preview_size": "medium",
+                "allow_in_bindings": 0
+            },
+            {
+                "key": "field_tcicts_image_alignment_left_side",
+                "label": "Image Alignment",
+                "name": "image_alignment_left_side",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "left": "Left",
+                    "right": "Right"
+                },
+                "default_value": "left",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_tcicts_content_alignment",
+                "label": "Content Alignment",
+                "name": "content_alignment",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "left": "Left",
+                    "right": "Right",
+                    "center": "Center"
+                },
+                "default_value": "left",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_tcicts_content_alignment_in_mobile",
+                "label": "Content Alignment In Mobile",
+                "name": "content_alignment_in_mobile",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "top": "Top",
+                    "bottom": "Bottom"
+                },
+                "default_value": "top",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_tcicts_section_bg_color",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 0,
+                "return_format": "string",
+                "allow_in_bindings": 1,
+                "show_custom_palette": 0,
+                "show_color_wheel": 1,
+                "custom_palette_source": "",
+                "palette_colors": ""
+            },
+            {
+                "key": "field_tcicts_section_bg_image",
+                "label": "Section Background Image",
+                "name": "section_bg_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "preview_size": "medium",
+                "allow_in_bindings": 0
+            },
+            {
+                "key": "field_tcicts_margin",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_tcicts_padding",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf/two-column-image-with-content-cta-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]

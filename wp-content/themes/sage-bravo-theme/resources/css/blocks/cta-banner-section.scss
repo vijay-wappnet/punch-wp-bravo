@@ -52,8 +52,6 @@
     margin: 0;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    font-size: 40px;
-    line-height: 48px;
     color: $black-off-color;
   }
 
@@ -66,8 +64,6 @@
 
     p {
       margin: 0 0 0.6em;
-      font-size: inherit;
-      line-height: inherit;
       color: inherit;
     }
 
@@ -75,9 +71,6 @@
       margin-bottom: 0;
     }
 
-    @media (max-width: $screen-lg-min) {
-      font-size: 20px;
-    }
   }
 
   // ------------------------------------------------ Content alignment
@@ -120,11 +113,6 @@
       .cta-banner-section__content {
         flex: 1 1 auto;
         max-width: none;
-      }
-
-      .cta-banner-section__heading {
-        font-size: 34px;
-        line-height: 42px;
       }
 
       .cta-banner-section__buttons {
