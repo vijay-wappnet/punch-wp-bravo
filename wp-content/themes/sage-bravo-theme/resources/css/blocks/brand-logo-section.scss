@@ -1,0 +1,70 @@
+@use "../common/variables" as *;
+
+$bls-image-transition: 0.4s ease;
+
+.brand-logo-section {
+  position: relative;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------------- Grid
+  // Bootstrap row / col (see the Blade view): row-cols-3 on mobile and
+  // row-cols-md-5 from tablet up, with justify-content-center, so a last row
+  // with fewer logos is centred as a group instead of sitting on the left.
+  .bls__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    // Vertical spacing between the rows
+    row-gap: 36px;
+
+    @media (max-width: $screen-md-min-767) {
+      row-gap: 28px;
+    }
+  }
+
+  .bls__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // Every logo sits in a box of the same height, so the rows line up
+    margin: 0;
+    padding: 0 8px;
+
+    @media (max-width: $screen-md-min-767) {
+      padding: 0 6px;
+    }
+  }
+
+  // ------------------------------------------------------------- Logo
+  // Each logo keeps its own proportions: it is only limited, never stretched
+  // or cropped. The faded look, then full colour and a little larger on hover.
+  .bls__logo {
+    display: block;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+    transform: scale(1);
+    transition: transform $bls-image-transition, filter $bls-image-transition;
+
+    &:hover {
+      filter: none;
+      transform: scale(1.05);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}

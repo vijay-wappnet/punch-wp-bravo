@@ -18,6 +18,7 @@
 @use "blocks/agency-pricing-plans-section";
 @use "blocks/image-banner-section";
 @use "blocks/two-column-image-with-content-cta-section";
+@use "blocks/brand-logo-section";
 @use "blocks/metrics-counter-section";
 @use "blocks/listed-item-section";
 @use "blocks/data-processing-workflow-section";
@@ -56,6 +57,7 @@
   .wp-block-acf-agency-pricing-plans-section,
   .wp-block-acf-image-banner-section,
   .wp-block-acf-two-column-image-with-content-cta-section,
+  .wp-block-acf-brand-logo-section,
   .wp-block-acf-metrics-counter-section,
   .wp-block-acf-listed-item-section,
   .wp-block-acf-data-processing-workflow-section,
