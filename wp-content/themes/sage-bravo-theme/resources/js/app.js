@@ -30,6 +30,7 @@ import initMetricsCounterSection from './blocks/metrics-counter-section.js';
 import initDataProcessingWorkflowSection from './blocks/data-processing-workflow-section.js';
 import initFaqsAccordionSection from './blocks/faqs-accordion-section.js';
 import initLatestArticleListSection from './blocks/latest-article-list-section.js';
+import initMeetTheTeamSection from './blocks/meet-the-team-section.js';
 
 document.addEventListener('DOMContentLoaded', initTwoColumnsImageIconsWithCtaSection);
 document.addEventListener('DOMContentLoaded', initLeftRightMediaContentSection);
@@ -43,3 +44,4 @@ document.addEventListener('DOMContentLoaded', () => initMetricsCounterSection())
 document.addEventListener('DOMContentLoaded', () => initDataProcessingWorkflowSection());
 document.addEventListener('DOMContentLoaded', () => initFaqsAccordionSection());
 document.addEventListener('DOMContentLoaded', () => initLatestArticleListSection());
+document.addEventListener('DOMContentLoaded', () => initMeetTheTeamSection());

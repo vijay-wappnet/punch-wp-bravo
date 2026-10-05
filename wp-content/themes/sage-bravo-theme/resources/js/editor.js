@@ -3,6 +3,7 @@ import initTestimonialSliderSection from './blocks/testimonial-slider-section.js
 import initProductShowcaseSliderSection from './blocks/product-showcase-slider-section.js';
 import initFaqsAccordionSection from './blocks/faqs-accordion-section.js';
 import initLatestArticleListSection from './blocks/latest-article-list-section.js';
+import initMeetTheTeamSection from './blocks/meet-the-team-section.js';
 import initDotGrid from './dot-grid.js';
 
 // Cleanup function of the dot grid currently running in each block preview
@@ -32,6 +33,10 @@ domReady(() => {
 
     window.acf.addAction('render_block_preview/type=faqs-accordion-section', ($block) => {
       if ($block?.[0]) initFaqsAccordionSection($block[0]);
+    });
+
+    window.acf.addAction('render_block_preview/type=meet-the-team-section', ($block) => {
+      if ($block?.[0]) initMeetTheTeamSection($block[0]);
     });
 
     window.acf.addAction('render_block_preview/type=latest-article-list-section', ($block) => {

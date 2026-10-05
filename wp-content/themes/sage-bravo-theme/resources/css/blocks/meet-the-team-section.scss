@@ -1,0 +1,170 @@
+@use "../common/variables" as *;
+
+$mts-image-transition: 0.4s ease;
+
+.meet-the-team-section {
+  position: relative;
+  overflow: hidden; // keeps the bleeding mobile track from widening the page
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__heading {
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  // content_alignment (desktop / tablet)
+  &--align-left &__heading { text-align: left; }
+  &--align-center &__heading { text-align: center; }
+  &--align-right &__heading { text-align: right; }
+
+  // Arrows: mobile only
+  &__navigation {
+    display: none;
+    flex: 0 0 auto;
+    gap: 16px;
+  }
+
+  &__nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  // Desktop: all cards in a row (four per row)
+  &__track {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  &__card {
+    flex: 0 0 calc((100% - 48px) / 4);
+    min-width: 0;
+  }
+
+  &__image {
+    aspect-ratio: 153 / 185;
+    overflow: hidden;
+    border-radius: 10px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      // Faded monochrome by default (same as the Latest Article List images);
+      // the original colour shows on hover / focus
+      filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+      transform: scale(1);
+      transition: transform $mts-image-transition, filter $mts-image-transition;
+    }
+  }
+
+  &__card:hover &__image img,
+  &__card:focus-within &__image img {
+    filter: none;
+    transform: scale(1.05);
+  }
+
+  &__content {
+    margin-top: 14px;
+  }
+
+  &__name {
+    margin: 0;
+  }
+
+  &__job-title {
+    margin: 4px 0 0;
+  }
+
+  // Mobile: native horizontal scroll; cards are narrower than the track so
+  // the second one is always partly visible. The track bleeds to the screen's
+  // right edge so the card is cut by the screen, not by the container.
+  @media (max-width: $screen-md-min-767) {
+
+    // content_alignment_mobile overrides the desktop setting
+    &--align-mobile-left &__heading { text-align: left; }
+    &--align-mobile-center &__heading { text-align: center; }
+    &--align-mobile-right &__heading { text-align: right; }
+
+    // [hidden] is set by the JS when there is nothing to scroll
+    &__navigation {
+      display: flex;
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    &__track {
+      flex-wrap: nowrap;
+      gap: 18px;
+      margin-right: -20px;
+      padding-right: 20px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__card {
+      flex: 0 0 68%;
+      scroll-snap-align: start;
+    }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__track {
+      scroll-behavior: auto;
+    }
+
+    &__image img {
+      transition: filter $mts-image-transition;
+    }
+
+    &__card:hover &__image img,
+    &__card:focus-within &__image img {
+      transform: none;
+    }
+  }
+}

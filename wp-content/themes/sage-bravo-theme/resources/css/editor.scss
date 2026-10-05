@@ -25,6 +25,7 @@
 @use "blocks/cta-banner-section";
 @use "blocks/faqs-accordion-section";
 @use "blocks/latest-article-list-section";
+@use "blocks/meet-the-team-section";
 
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),
@@ -61,6 +62,7 @@
   .wp-block-acf-two-image-banner-section,
   .wp-block-acf-cta-banner-section,
   .wp-block-acf-faqs-accordion-section,
+  .wp-block-acf-meet-the-team-section,
   .wp-block-acf-latest-article-list-section {
     max-width: none;
     overflow: hidden;

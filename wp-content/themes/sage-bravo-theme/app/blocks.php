@@ -471,6 +471,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Meet The Team Section Block
+        acf_register_block_type([
+            'name'                   => 'meet-the-team-section',
+            'title'                  => __('Meet The Team Section', 'sage'),
+            'description'            => __('A heading and a row of team member cards; a swipeable carousel on mobile', 'sage'),
+            'render_callback'        => ['App\Blocks\MeetTheTeamSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'groups',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',
