@@ -21,6 +21,7 @@
 @use "blocks/brand-logo-section";
 @use "blocks/metrics-counter-section";
 @use "blocks/listed-item-section";
+@use "blocks/compare-listed-item-section";
 @use "blocks/data-processing-workflow-section";
 @use "blocks/two-image-banner-section";
 @use "blocks/cta-banner-section";
@@ -60,6 +61,7 @@
   .wp-block-acf-brand-logo-section,
   .wp-block-acf-metrics-counter-section,
   .wp-block-acf-listed-item-section,
+  .wp-block-acf-compare-listed-item-section,
   .wp-block-acf-data-processing-workflow-section,
   .wp-block-acf-two-image-banner-section,
   .wp-block-acf-cta-banner-section,

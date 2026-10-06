@@ -1,0 +1,155 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// The tick's green, from the design
+$clis-tick-green: #2e9800;
+
+.compare-listed-item-section {
+  position: relative;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // ------------------------------------------------------------- Card
+  // The white rounded card the heading and the list sit in
+  .clis__card {
+    padding: 44px 40px 44px;
+    background-color: $white-color;
+    border-radius: 10px;
+
+    @media (max-width: $screen-md-min-767) {
+      padding: 24px 20px;
+    }
+  }
+
+  // Columns: side by side on desktop, a vertical divider between them (the
+  // later columns' left border); stacked on mobile with a horizontal divider
+  .clis__column {
+    min-width: 0;
+
+    & + .clis__column {
+      @media (min-width: $screen-md-min) {
+        margin-left: 40px;
+        padding-left: 40px;
+        border-left: 1px solid $white-off-light-grayish-color;
+      }
+
+      @media (max-width: $screen-md-min-767) {
+        margin-top: 22px;
+        padding-top: 22px;
+        border-top: 1px solid $white-off-light-grayish-color;
+      }
+    }
+  }
+
+  .clis__heading {
+    margin: 0 0 28px;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 28px;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 18px;
+      font-size: 24px;
+    }
+  }
+
+  // ------------------------------------------------------------- List
+  .clis__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .clis__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 0 0 14px;
+    padding: 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 12px;
+    }
+  }
+
+  // The text is a <p>: it keeps the site's default paragraph size and weight
+  // (global.scss); only its spacing is set here
+  .clis__text {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    color: $black-off-color;
+  }
+
+  // Aligned to the first line of the text, however many lines it wraps to
+  .clis__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: calc((25px - 24px) / 2);
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: calc((26px - 24px) / 2);
+    }
+  }
+
+  .clis__icon-mark {
+    fill: none;
+    stroke: $black-off-color;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  // Cross (icon_type off): red circle, dark cross
+  .clis__icon--cross .clis__icon-circle {
+    fill: $red-fusion-color;
+  }
+
+  // Tick (icon_type on): green circle, white tick
+  .clis__icon--tick {
+    .clis__icon-circle {
+      fill: $clis-tick-green;
+    }
+
+    .clis__icon-mark {
+      stroke: $white-color;
+    }
+  }
+
+  // Read out by screen readers only (kept here as the editor canvas doesn't
+  // load Bootstrap)
+  .clis__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
