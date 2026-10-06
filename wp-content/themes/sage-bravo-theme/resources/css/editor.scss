@@ -19,6 +19,7 @@
 @use "blocks/image-banner-section";
 @use "blocks/two-column-image-with-content-cta-section";
 @use "blocks/brand-logo-section";
+@use "blocks/two-columns-orbit-image-icons-with-cta-section";
 @use "blocks/metrics-counter-section";
 @use "blocks/listed-item-section";
 @use "blocks/compare-listed-item-section";
@@ -59,6 +60,7 @@
   .wp-block-acf-image-banner-section,
   .wp-block-acf-two-column-image-with-content-cta-section,
   .wp-block-acf-brand-logo-section,
+  .wp-block-acf-two-columns-orbit-image-icons-with-cta-section,
   .wp-block-acf-metrics-counter-section,
   .wp-block-acf-listed-item-section,
   .wp-block-acf-compare-listed-item-section,

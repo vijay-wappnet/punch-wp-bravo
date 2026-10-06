@@ -1,0 +1,380 @@
+@use "sass:math";
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// How far the icons are fanned out: 0 = all stacked behind the middle icon,
+// 1 = in their place on the curve. Registered so the browser can animate it
+// (everything that uses it - each icon's turn on the curve, the line's opacity
+// - then moves smoothly).
+@property --spread {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+$tcoi-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$tcoi-pill-medium: #bfb8b0;
+$tcoi-pill-dark: #6b6560;
+
+// The pills and the curve of icons are placed in cqw (% of the visual's width)
+// from the numbers measured on the designs, so the drawing keeps its
+// proportions at any width. $w x $h is the drawing's size; $cx / $cy the centre
+// of the curve; $r its radius; $rot how the curve is turned (0 = it opens to
+// the left, as on desktop; -90 = it opens downwards, as on mobile).
+@function cq($value, $base) {
+  @return math.div($value, $base) * 100cqw;
+}
+
+@function pct($value, $base) {
+  @return math.div($value, $base) * 100%;
+}
+
+@mixin tcoi-layout($w, $h, $cx, $cy, $r, $rot, $icon, $pills-left, $pills-top, $pills-w, $pill-h, $pill-gap, $font) {
+  .tcoi__visual {
+    aspect-ratio: math.div($w, $h);
+  }
+
+  .tcoi__pills {
+    left: pct($pills-left, $w);
+    top: pct($pills-top, $h);
+    width: cq($pills-w, $w);
+    gap: cq($pill-gap, $w);
+  }
+
+  .tcoi__pill {
+    height: cq($pill-h, $w);
+    font-size: cq($font, $w);
+  }
+
+  .tcoi__orbit {
+    --rot: #{$rot};
+    left: pct($cx, $w);
+    top: pct($cy, $h);
+  }
+
+  .tcoi__arc {
+    left: cq(-$r, $w);
+    top: cq(-$r, $w);
+    width: cq(2 * $r, $w);
+    height: cq(2 * $r, $w);
+  }
+
+  .tcoi__icon-pos {
+    left: cq($r, $w);
+    width: cq($icon, $w);
+    height: cq($icon, $w);
+    margin: cq(-0.5 * $icon, $w) 0 0 cq(-0.5 * $icon, $w);
+  }
+}
+
+.two-columns-orbit-image-icons-with-cta-section {
+  position: relative;
+  // The curve of icons reaches the edge of its column; clip (not hidden) so
+  // nothing can add a horizontal scrollbar
+  overflow-x: clip;
+  color: $black-off-color;
+  // Default when no ACF background color is set
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > .container {
+    @media (max-width: $screen-md-min-767) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  // --------------------------------------------------------- Layout
+  // Bootstrap row / col (see the Blade view). The order classes (order-1/2,
+  // order-md-1/2) do the left/right and top/bottom switching, so there is only
+  // one copy of the markup.
+  .tcoi__row {
+    @media (max-width: $screen-md-min-767) {
+      row-gap: 30px;
+    }
+  }
+
+  .tcoi__column--content {
+    @media (min-width: $screen-md-min) {
+      padding-right: 20px;
+    }
+  }
+
+  // ---------------------------------------------------------- Content
+  .tcoi__content {
+    width: 100%;
+    max-width: 420px;
+    text-align: left;
+
+    @media (max-width: $screen-md-min-767) {
+      max-width: none;
+    }
+  }
+
+  &--align-left .tcoi__content {
+    text-align: left;
+  }
+
+  &--align-center .tcoi__content {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &--align-right .tcoi__content {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .tcoi__heading {
+    margin: 0 0 22px;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-medium-weight; //600
+  }
+
+  // Same look whichever tag (h1-h6 / p) is chosen in subheading_level
+  .tcoi__subheading {
+    margin: 0 0 22px;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+  }
+
+  .tcoi__description {
+    color: $black-off-color;
+
+    p {
+      margin-bottom: 14px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong,
+    b {
+      font-weight: $font-articulat-demi-bold-weight;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ul,
+    ol {
+      padding-left: 30px;
+      margin-bottom: 14px;
+    }
+  }
+
+  .tcoi__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 32px;
+
+    .tcoiicwcs-btn {
+      min-width: 171px;
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 10px;
+
+      @media (max-width: $screen-md-min-767) {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+
+    .tcoiicwcs-btn__icon {
+      width: 21px;
+      height: auto;
+    }
+  }
+
+  @media (min-width: $screen-md-min) {
+    &--align-center .tcoi__buttons {
+      justify-content: center;
+    }
+
+    &--align-right .tcoi__buttons {
+      justify-content: flex-end;
+    }
+  }
+
+  // ----------------------------------------------------------- Visual
+  // The size container for the pills and the curve of icons
+  .tcoi__visual {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+
+  // Pills: stacked on desktop; on mobile the first sits on its own row with the
+  // rest two to a row (a pyramid)
+  .tcoi__pills {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tcoi__pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 6%;
+    border-radius: 999px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-light-weight;
+    line-height: 1.1;
+    text-align: center;
+    color: $black-off-color;
+    background-color: $white-off-light-grayish-color;
+  }
+
+  .tcoi__pill--medium {
+    background-color: $tcoi-pill-medium;
+  }
+
+  .tcoi__pill--dark {
+    background-color: $tcoi-pill-dark;
+    color: $white-color;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    .tcoi__pills {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tcoi__pill:first-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: 50%;
+    }
+  }
+
+  // The orbit: a point at the centre of the curve. It is turned as a whole
+  // (--rot) and each icon is turned again to its own place on the curve.
+  .tcoi__orbit {
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    transform: rotate(calc(var(--rot) * 1deg));
+    pointer-events: none;
+  }
+
+  // The thin line through the icons
+  .tcoi__arc {
+    position: absolute;
+    overflow: visible;
+    opacity: var(--spread);
+  }
+
+  .tcoi__arc-line {
+    fill: none;
+    stroke: $tcoi-pill-medium;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .tcoi__icons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Each icon: turned about the centre by its angle (times --spread, so at
+  // spread 0 they are all in the middle, behind the middle icon, which has the
+  // highest z-index) ...
+  .tcoi__icon-item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    z-index: var(--z);
+    transform: rotate(calc(var(--angle) * var(--spread) * 1deg));
+  }
+
+  // ... pushed out to the curve, and turned back so it stays upright. Each
+  // icon sits inside a white circle - the same circle as the icons of the
+  // Two Columns Image Icons With CTA Section.
+  .tcoi__icon-pos {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $white-color;
+    box-shadow: 0 2px 8px rgba($back-color, 0.06);
+    line-height: 0;
+    transform: rotate(calc((var(--angle) * var(--spread) + var(--rot)) * -1deg));
+  }
+
+  // The icon itself, half the circle's size
+  .tcoi__icon {
+    display: block;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+
+  // Desktop / tablet: the curve opens to the left, the pills stacked on the left
+  @include tcoi-layout(300, 425, 54, 217, 207, 0, 52, 32, 128, 160, 46, 19, 14);
+
+  // Mobile: the curve arches over the pills
+  @media (max-width: $screen-md-min-767) {
+    @include tcoi-layout(475, 262, 237, 258, 228, -90, 60, 55, 117, 363, 66, 10, 16);
+  }
+
+  // ------------------------------------------------------ Animation
+  // `is-animate-ready` is added by JS only when animations are enabled, so the
+  // block renders in its final state in the editor / without JS. The transition
+  // is declared on `is-visible` only, and that class is never removed, so the
+  // icons fan out once and then stay put.
+  .tcoi__visual.is-animate-ready {
+    .tcoi__icon-item,
+    .tcoi__arc {
+      --spread: 0;
+    }
+
+    &.is-visible {
+      .tcoi__icon-item,
+      .tcoi__arc {
+        --spread: 1;
+        transition: --spread 1.3s $tcoi-ease-out;
+      }
+
+      // The outer icons set off a little after the inner ones
+      .tcoi__icon-item {
+        transition-delay: calc(var(--rank) * 90ms);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tcoi__visual.is-animate-ready {
+      .tcoi__icon-item,
+      .tcoi__arc {
+        --spread: 1 !important;
+        transition: none !important;
+      }
+    }
+  }
+}

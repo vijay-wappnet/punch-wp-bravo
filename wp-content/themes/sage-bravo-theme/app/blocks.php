@@ -537,6 +537,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Two Columns Orbit Image Icons With CTA Section Block
+        acf_register_block_type([
+            'name'                   => 'two-columns-orbit-image-icons-with-cta-section',
+            'title'                  => __('Two Columns Orbit Image Icons With CTA Section', 'sage'),
+            'description'            => __('Content with CTA buttons beside stacked pills and a curve of icons that fan out from the middle one', 'sage'),
+            'render_callback'        => ['App\Blocks\TwoColumnsOrbitImageIconsWithCtaSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'networking',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
         // Register the CTA Banner Section Block
         acf_register_block_type([
             'name'                   => 'cta-banner-section',
