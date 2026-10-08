@@ -29,6 +29,7 @@
 @use "blocks/faqs-accordion-section";
 @use "blocks/latest-article-list-section";
 @use "blocks/meet-the-team-section";
+@use "blocks/search-results-section";
 
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),

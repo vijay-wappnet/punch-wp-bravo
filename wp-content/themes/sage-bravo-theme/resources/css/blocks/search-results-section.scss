@@ -1,0 +1,286 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.search-results-section {
+  position: relative;
+  color: $black-off-color;
+  background-color: $white-off-color;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
+  .search-results-section__title {
+    margin: 0 0 48px;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    overflow-wrap: break-word;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-bottom: 28px;
+    }
+  }
+
+  // ------------------------------------------------------------- Form
+  .search-results-section__form {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    margin: 0;
+
+    @media (max-width: $screen-md-min-767) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .search-results-section__field {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    min-width: 0;
+    margin: 0;
+    border: 1px solid $gray-granite-color;
+    background-color: transparent;
+
+    &:focus-within {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 2px;
+    }
+  }
+
+  .search-results-section__icon {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    width: 22px;
+    height: auto;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .search-results-section__input {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px 0 60px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 18px;
+    line-height: 25px;
+    outline: 0;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &::placeholder {
+      color: $gray-granite-color;
+      opacity: 1;
+    }
+
+    // Native clear button would clash with the design
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      height: 55px;
+      font-size: 22px;
+    }
+  }
+
+  // Search / Find out More use the shared red CTA (components/_buttons.scss)
+  .srs-btn,
+  .search-results-section__more {
+    border: 0;
+    gap: 10px;
+    justify-content: center;
+
+    img {
+      width: 22px;
+      height: auto;
+    }
+  }
+
+  .srs-btn {
+    flex: 0 0 auto;
+    width: 171px;
+    padding: 0.6rem 1.1rem;
+    justify-content: space-between;
+
+    @media (max-width: $screen-md-min-767) {
+      width: 100%;
+      justify-content: center;
+      font-size: 22px !important; // beats the .btn mobile font-size, also !important
+      line-height: 26px;
+
+      img {
+        display: none;
+      }
+    }
+  }
+
+  // ---------------------------------------------------------- Results
+  .search-results-section__results {
+    margin-top: 56px;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 36px;
+      text-align: center;
+    }
+  }
+
+  .search-results-section__results-title {
+    margin: 0 0 24px;
+    color: $black-off-color;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+  }
+
+  .search-results-section__results-text {
+    max-width: 760px;
+    margin: 0 0 40px;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 18px;
+    line-height: 25px;
+
+    @media (max-width: $screen-md-min-767) {
+      margin: 0 auto 28px;
+      font-size: 22px;
+      line-height: 25px;
+    }
+  }
+
+  .search-results-section__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Title left, button right; a separator under every row
+  .search-results-section__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid $gray-granite-color;
+
+    @media (max-width: $screen-md-min-767) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      padding: 18px 0;
+    }
+  }
+
+  .search-results-section__item-title {
+    min-width: 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 32px;
+    line-height: 38px;
+    overflow-wrap: break-word;
+
+    @media (max-width: $screen-md-min-767) {
+      font-size: 32px;
+      line-height: 34px;
+    }
+  }
+
+  .search-results-section__more {
+    flex: 0 0 auto;
+    width: 171px;
+    padding: 0.5rem 1.1rem;
+    white-space: nowrap;
+    justify-content: space-between;
+
+    @media (max-width: $screen-md-min-767) {
+      width: 100%;
+      justify-content: center;
+      font-size: 16px !important;
+      line-height: 24px;
+
+      img {
+        display: none;
+      }
+    }
+  }
+
+  // -------------------------------------------------------- Pagination
+  .search-results-section__pagination {
+    margin-top: 44px;
+    text-align: center;
+
+    // paginate_links() outputs plain <a>/<span class="page-numbers"> siblings
+    .page-numbers {
+      display: inline-block;
+      min-width: 36px;
+      padding: 4px 10px;
+      color: $black-off-color;
+      font-family: $font-articulat-family;
+      font-weight: $font-articulat-regular-weight;
+      font-size: 22px;
+      line-height: 30px;
+      text-align: center;
+      text-decoration: none;
+
+      &.current {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      &.prev,
+      &.next {
+        font-size: 20px;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: $red-fusion-color;
+      }
+
+      &.current:hover {
+        color: $black-off-color;
+      }
+    }
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 32px;
+    }
+  }
+
+  .search-results-section__empty {
+    margin: 56px 0 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 22px;
+    line-height: 30px;
+
+    @media (max-width: $screen-md-min-767) {
+      margin-top: 36px;
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
+  // Kept here as well because the editor canvas doesn't load Bootstrap
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}

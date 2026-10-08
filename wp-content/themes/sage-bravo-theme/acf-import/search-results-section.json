@@ -1,0 +1,275 @@
+[
+    {
+        "key": "group_search_results_section",
+        "title": "Search Results Section",
+        "fields": [
+            {
+                "key": "field_srs_main_search_title",
+                "label": "Main Title",
+                "name": "main_search_title",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_srs_heading_level",
+                "label": "Heading Level",
+                "name": "heading_level",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "h1": "H1",
+                    "h2": "H2",
+                    "h3": "H3",
+                    "h4": "H4",
+                    "h5": "H5",
+                    "h6": "H6",
+                    "p": "Paragraph"
+                },
+                "default_value": "h1",
+                "return_format": "value",
+                "allow_null": 0,
+                "other_choice": 0,
+                "allow_in_bindings": 1,
+                "layout": "horizontal",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_srs_search_placeholder",
+                "label": "Search Placeholder",
+                "name": "search_placeholder",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_srs_search_button",
+                "label": "Search Button",
+                "name": "search_button",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_srs_button_link",
+                        "label": "Button Link",
+                        "name": "button_link",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array"
+                    },
+                    {
+                        "key": "field_srs_aria_label",
+                        "label": "Aria Label",
+                        "name": "aria_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_srs_button_google_event_label",
+                        "label": "Button Google Event Label",
+                        "name": "button_google_event_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "Used for Google Analytic event tracking.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_srs_button_class",
+                        "label": "Button Class",
+                        "name": "button_class",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "<b>Please add a button with one of the following classes only:</b>\n\nbtn-red-fusion, btn-trans-border-arrow",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_srs_section_bg_color",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 0,
+                "return_format": "string",
+                "allow_in_bindings": 1,
+                "show_custom_palette": 0,
+                "show_color_wheel": 1,
+                "custom_palette_source": "",
+                "palette_colors": ""
+            },
+            {
+                "key": "field_srs_section_bg_image",
+                "label": "Section Background Image",
+                "name": "section_bg_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "preview_size": "medium",
+                "allow_in_bindings": 0
+            },
+            {
+                "key": "field_srs_margin",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_srs_padding",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf/search-results-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]

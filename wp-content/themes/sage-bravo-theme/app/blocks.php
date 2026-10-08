@@ -625,6 +625,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Search Results Section Block
+        acf_register_block_type([
+            'name'                   => 'search-results-section',
+            'title'                  => __('Search Results Section', 'sage'),
+            'description'            => __('A search form with paginated results from pages, posts and client stories', 'sage'),
+            'render_callback'        => ['App\Blocks\SearchResultsSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'search',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });

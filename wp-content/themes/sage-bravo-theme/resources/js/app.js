@@ -31,6 +31,7 @@ import initDataProcessingWorkflowSection from './blocks/data-processing-workflow
 import initFaqsAccordionSection from './blocks/faqs-accordion-section.js';
 import initLatestArticleListSection from './blocks/latest-article-list-section.js';
 import initMeetTheTeamSection from './blocks/meet-the-team-section.js';
+import initSearchResultsSection from './blocks/search-results-section.js';
 import initTwoColumnsOrbitImageIconsWithCtaSection from './blocks/two-columns-orbit-image-icons-with-cta-section.js';
 
 document.addEventListener('DOMContentLoaded', initTwoColumnsImageIconsWithCtaSection);
@@ -46,4 +47,5 @@ document.addEventListener('DOMContentLoaded', () => initDataProcessingWorkflowSe
 document.addEventListener('DOMContentLoaded', () => initFaqsAccordionSection());
 document.addEventListener('DOMContentLoaded', () => initLatestArticleListSection());
 document.addEventListener('DOMContentLoaded', () => initMeetTheTeamSection());
+document.addEventListener('DOMContentLoaded', () => initSearchResultsSection());
 document.addEventListener('DOMContentLoaded', () => initTwoColumnsOrbitImageIconsWithCtaSection());
