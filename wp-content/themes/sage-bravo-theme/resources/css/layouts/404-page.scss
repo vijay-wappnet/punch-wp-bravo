@@ -1,0 +1,98 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+// 404 page: same look as the CTA banner section (red banner, hover dot grid,
+// dark arrow button). Content comes from Website Options > 404 Page Setting.
+.error-404-page {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 60vh;
+  padding: 120px 0;
+  color: $black-off-color;
+  text-align: center;
+  background-color: $red-fusion-color;
+
+  @media (max-width: $screen-lg-min) {
+    min-height: 0;
+    padding: 80px 0;
+  }
+
+  .dot-grid-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .error-404-page__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+
+    @media (max-width: $screen-lg-min) {
+      gap: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .error-404-page__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 900px;
+  }
+
+  // Styled by class so every heading level (h1-h6 / p) looks the same
+  .error-404-page__heading,
+  .error-404-page__main-heading {
+    margin: 0;
+  }
+
+  .error-404-page__description {
+    color: $black-off-color;
+
+    p {
+      margin: 0 0 0.6em;
+      color: inherit;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .error-404-page__buttons {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: $screen-lg-min) {
+      width: 100%;
+    }
+  }
+
+  .error-404-page__btn {
+    @include dark-arrow-btn('.error-404-page__btn-icon');
+    min-width: 171px;
+    border-radius: 5px;
+
+    @media (max-width: $screen-lg-min) {
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      padding: 16px;
+
+      .error-404-page__btn-icon {
+        display: none;
+      }
+    }
+  }
+}
