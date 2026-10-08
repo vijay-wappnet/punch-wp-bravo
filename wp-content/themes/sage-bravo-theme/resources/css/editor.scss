@@ -28,6 +28,7 @@
 @use "blocks/cta-banner-section";
 @use "blocks/faqs-accordion-section";
 @use "blocks/latest-article-list-section";
+@use "blocks/article-post-listing-section";
 @use "blocks/meet-the-team-section";
 @use "blocks/search-results-section";
 
@@ -70,7 +71,8 @@
   .wp-block-acf-cta-banner-section,
   .wp-block-acf-faqs-accordion-section,
   .wp-block-acf-meet-the-team-section,
-  .wp-block-acf-latest-article-list-section {
+  .wp-block-acf-latest-article-list-section,
+  .wp-block-acf-article-post-listing-section {
     max-width: none;
     overflow: hidden;
   }

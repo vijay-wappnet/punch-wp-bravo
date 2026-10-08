@@ -6,6 +6,34 @@ $lals-gap: 30px;
 $lals-transition: 350ms ease-in-out;
 $lals-image-transition: 0.4s ease;
 
+// Card image + hover, shared with the Article Post Listing Section so the
+// hover behaviour is defined once.
+@mixin lals-media($radius: 8px) {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius;
+  background-color: $white-off-light-grayish-color;
+}
+
+// Default: the same faded warm monochrome as the Floating Content Card
+// Section background. Hover: original colours, slight zoom.
+@mixin lals-image($faded: true) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  @if $faded {
+    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
+  }
+  transform: scale(1);
+  transition: transform $lals-image-transition, filter $lals-image-transition;
+}
+
+@mixin lals-image-hover {
+  filter: none;
+  transform: scale(1.05);
+}
+
 .latest-article-list-section {
   position: relative;
   padding: 80px 0;
@@ -217,28 +245,17 @@ $lals-image-transition: 0.4s ease;
   }
 
   .latest-article-list-section__media {
-    position: relative;
+    @include lals-media;
     aspect-ratio: 4 / 5;
     margin-bottom: 20px;
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: $white-off-light-grayish-color;
 
     @media (max-width: $screen-md-min-767) {
       margin-bottom: 14px;
     }
   }
 
-  // Default: the same faded warm monochrome as the Floating Content Card
-  // Section background. Hover: original colours, slight zoom.
   .latest-article-list-section__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%) contrast(56%) brightness(124%) sepia(6%);
-    transform: scale(1);
-    transition: transform $lals-image-transition, filter $lals-image-transition;
+    @include lals-image;
   }
 
   .latest-article-list-section__placeholder {
@@ -295,8 +312,7 @@ $lals-image-transition: 0.4s ease;
   .latest-article-list-section__card:hover,
   .latest-article-list-section__card:focus-visible {
     .latest-article-list-section__image {
-      filter: none;
-      transform: scale(1.05);
+      @include lals-image-hover;
     }
 
     .latest-article-list-section__read-more-icon {
