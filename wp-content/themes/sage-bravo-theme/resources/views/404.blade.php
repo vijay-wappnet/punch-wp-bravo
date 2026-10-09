@@ -33,7 +33,7 @@
             @if($error_button['rel']) rel="{!! esc_attr($error_button['rel']) !!}" @endif
             @if($error_button['event_label']) data-event="{!! esc_attr($error_button['event_label']) !!}" @endif>
             <span>{{ $error_button['title'] }}</span>
-            <span class="error-404-page__btn-icon" aria-hidden="true"></span>
+            <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="error-404-page__btn-icon" aria-hidden="true">
           </a>
         </div>
       @endif

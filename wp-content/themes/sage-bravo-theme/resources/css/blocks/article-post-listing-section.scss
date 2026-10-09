@@ -14,6 +14,11 @@ $apls-transition: 350ms ease-in-out;
   .article-post-listing-section__list {
     --bs-gutter-y: 50px;
 
+    // Desktop: 99px gap between the two columns
+    @media (min-width: $screen-lg-min + 1) {
+      --bs-gutter-x: 99px;
+    }
+
     @media (max-width: $screen-md-min-767) {
       --bs-gutter-y: 36px;
     }

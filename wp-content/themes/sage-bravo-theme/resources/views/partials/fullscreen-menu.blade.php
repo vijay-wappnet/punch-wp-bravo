@@ -115,7 +115,7 @@
                   @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif
                 >
                   <span>{{ $primary_button['button_title'] ?? '' }}</span>
-                  <span class="menu-right-btn__icon" aria-hidden="true"></span>
+                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="menu-right-btn__icon" aria-hidden="true">
                 </a>
               @endif
             </div>

@@ -47,14 +47,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     max-width: 900px;
   }
 
   // Styled by class so every heading level (h1-h6 / p) looks the same
   .error-404-page__heading,
   .error-404-page__main-heading {
-    margin: 0;
+    margin-bottom: 10px;
   }
 
   .error-404-page__description {

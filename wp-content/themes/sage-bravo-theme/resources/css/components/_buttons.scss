@@ -4,7 +4,7 @@
 // Dark CTA button with a sliding right-arrow icon - the fullscreen menu's
 // .menu-right-btn design, shared with the CTA Banner Section.
 // Mirrors .btn-red-fusion (video-banner-section) with inverted colours.
-// Arrow is a mask so it follows currentColor (white -> red-fusion on hover).
+// Arrow is an <img> recoloured via filter (white -> red-fusion on hover).
 // $icon: selector of the icon <span> inside the button.
 
 // ----------- Star button components list
@@ -177,14 +177,14 @@
   color: $white-color;
   transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
 
+  // <img> arrow (btn-left-arrow.svg is #2E2E2E): filtered white on the dark
+  // button, red-fusion on hover.
   #{$icon} {
     display: inline-block;
     width: 21px;
-    height: 15px;
-    background-color: currentColor;
-    -webkit-mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
-    mask: url('../../images/btn-left-arrow.svg') no-repeat center / contain;
-    transition: transform 350ms ease-in-out;
+    height: auto;
+    filter: brightness(0) invert(1);
+    transition: transform 350ms ease-in-out, filter 350ms ease-in-out;
   }
 
   &:hover,
@@ -193,6 +193,8 @@
     color: $red-fusion-color;
 
     #{$icon} {
+      // ≈ $red-fusion-color (#ff5f5d)
+      filter: brightness(0) saturate(100%) invert(54%) sepia(53%) saturate(2564%) hue-rotate(323deg) brightness(102%) contrast(101%);
       transform: translateX(0.5em);
     }
   }

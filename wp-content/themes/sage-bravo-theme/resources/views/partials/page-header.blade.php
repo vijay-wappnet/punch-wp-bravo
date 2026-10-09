@@ -22,22 +22,13 @@
       ======================== button Componets List  demo =======================
 
       <br><br>
-      <a href="" class="btn black-trans-btn">Simple -- black-trasn-btn</a>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-      <a href="" class="btn trans-black-btn">Simple Transparent -- trans-black-btn</a>
-
+      <a href="" class="btn btn-red-fusion">Simple -- btn-red-fusion</a>
       <br><br>
-      <a href="" class="btn shiny-btn">Shiny -- shiny-btn </a>
+      <a href="" class="btn btn-red-light-fusion">Simple -- btn-red-light-fusion</a>
       <br><br>
-      <a href="" class="btn shiny-trans-btn">Shiny Transparent -- shiny-trans-btn</a>
+      <a href="" class="btn btn-trans-border-arrow">Simple -- btn-trans-border-arrow</a>
       <br><br>
-      <a href="" class="btn shiny-reverse-btn">Shiny Reverse -- shiny-reverse-btn</a>
-      <br><br>
-      <a href="" class="btn shiny-reverse-trans-btn">Shiny Reverse Transparent -- shiny-reverse-trans-btn</a>
-      <br><br>
-
-      <a href="#" class="btn btn-animated">Reserve a Table</a>
+      <a href="" class="btn btn-dark-arrow">Simple -- btn-dark-arrow</a>
       <br><br>
     </div>
   @endif
