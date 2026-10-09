@@ -134,7 +134,7 @@ class Links {
 	 * This is a clone of _wp_link_page, except that we don't output HTML.
 	 *
 	 * @since   4.0.0
-	 * @version 5.0.2-2026-09-22-19:31 Cast page_on_front to int so the static front page paginates at /page/N/.
+	 * @version 5.0.2 Cast page_on_front to int so the static front page paginates at /page/N/.
 	 *
 	 * @param  integer $number The page number.
 	 * @return string          The URL.
