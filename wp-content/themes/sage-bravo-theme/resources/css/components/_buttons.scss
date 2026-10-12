@@ -108,6 +108,74 @@
   }
 }
 
+// Contact Form 7 step form buttons (Next / Submit) - red-fusion with the
+// arrow <img>; hover matches .btn-red-fusion. Mobile: wider, centred, no arrow.
+// Markup: <button class="btn btn-contact-from-7"><span>Next</span>
+//         <img class="btn-contact-from-7__icon" ...></button>
+.btn-contact-from-7 {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: auto;
+  min-width: 157px;
+  padding: 7px 14px 7px 30px;
+  border: 0;
+  border-radius: 3px;
+  background-color: $red-fusion-color;
+  color: $black-off-color;
+  transition: background-color 350ms ease-in-out, color 350ms ease-in-out;
+
+  .btn-contact-from-7__icon {
+    width: 21px;
+    height: auto;
+    transition: transform 350ms ease-in-out, filter 350ms ease-in-out;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: $black-off-color;
+    color: $white-color;
+
+    .btn-contact-from-7__icon {
+      filter: brightness(0) invert(1);
+      transform: translateX(0.5em);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $red-fusion-color;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  @media (max-width: $screen-md-min-767) {
+    min-width: 220px;
+    padding: 12px 24px;
+
+    .btn-contact-from-7__icon {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    .btn-contact-from-7__icon {
+      transition: none;
+    }
+
+    &:hover .btn-contact-from-7__icon,
+    &:focus-visible .btn-contact-from-7__icon {
+      transform: none;
+    }
+  }
+}
+
 // Transparent CTA with a thin border and a sliding right-arrow icon
 // (Latest Article List Section "See all Articles").
 // Fills black-off on hover; the arrow is a mask so it follows currentColor.

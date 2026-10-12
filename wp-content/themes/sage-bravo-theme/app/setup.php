@@ -179,5 +179,6 @@ add_action('wp_enqueue_scripts', function () {
 }, 5);
 
 require_once __DIR__ . '/custom-function.php';
+require_once __DIR__ . '/contact-step-form.php';
 require_once __DIR__ . '/remove-default-blocks.php';
 require_once __DIR__ . '/blocks.php';

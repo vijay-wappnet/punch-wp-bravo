@@ -10,6 +10,7 @@
 @use 'components/buttons';
 @use 'components/comments';
 @use 'components/forms';
+@use 'components/contact-step-form';
 @use 'components/accessibility-modal';
 @use 'components/accessibility-settings';
 @use 'components/newsletter-modal';
@@ -53,6 +54,7 @@
 @use "blocks/article-post-listing-section";
 @use "blocks/meet-the-team-section";
 @use "blocks/search-results-section";
+@use "blocks/contact-form-block-section";
 
 
 /** Import WooCommerce styles */

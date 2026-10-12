@@ -1,0 +1,69 @@
+<div class="cfs" data-cfs>
+<div class="cfs__track">
+
+<section class="cfs-step is-active" data-cfs-step aria-labelledby="cfs-step-1-title">
+<h3 class="cfs-step__tab" id="cfs-step-1-title"><span class="cfs-step__number">01</span><span class="cfs-step__title">Your personal details</span></h3>
+<div class="cfs-step__progress" aria-hidden="true"><span></span></div>
+<div class="cfs-step__body">
+<div class="cfs-page" data-cfs-page>
+<div class="cfs-grid">
+<div class="cfs-field cfs-field--half"><label class="cfs-label" for="cfs-name">Name Surname*</label>[text* your-name id:cfs-name autocomplete:name]</div>
+<div class="cfs-field cfs-field--half"><label class="cfs-label" for="cfs-job-title">Job Title*</label>[text* job-title id:cfs-job-title autocomplete:organization-title]</div>
+<div class="cfs-field cfs-field--half"><label class="cfs-label" for="cfs-company">Company*</label>[text* company id:cfs-company autocomplete:organization]</div>
+<div class="cfs-field cfs-field--half cfs-field--half-mobile"><label class="cfs-label" for="cfs-email">Email*</label>[email* your-email id:cfs-email autocomplete:email]</div>
+<div class="cfs-field cfs-field--half cfs-field--half-mobile"><label class="cfs-label" for="cfs-phone">Phone*</label>[tel* phone id:cfs-phone autocomplete:tel minlength:8 maxlength:12]</div>
+<div class="cfs-field cfs-field--half cfs-field--plan"><label class="cfs-label" for="cfs-plan">Are you interested in a particular plan?</label>[select plan id:cfs-plan class:cfs-select first_as_label "Interested in a particular plan?" "Lite" "Smart" "Pro" "Agency"]</div>
+</div>
+</div>
+<div class="cfs-step__actions"><button type="button" class="btn btn-contact-from-7" data-cfs-next><span>Next</span><span class="cfs-arrow"></span></button></div>
+</div>
+</section>
+
+<section class="cfs-step" data-cfs-step aria-labelledby="cfs-step-2-title">
+<h3 class="cfs-step__tab" id="cfs-step-2-title"><span class="cfs-step__number">02</span><span class="cfs-step__title">Your hotel details</span></h3>
+<div class="cfs-step__progress" aria-hidden="true"><span></span></div>
+<div class="cfs-step__body">
+<div class="cfs-page" data-cfs-page>
+<div class="cfs-grid">
+<div class="cfs-field cfs-field--options" role="group" aria-labelledby="cfs-organisation-label"><p class="cfs-label" id="cfs-organisation-label">What sort of organisation are you?&#8288;*</p>[checkbox* organisation use_label_element "Independent Hotel" "Group" "Management Company"]</div>
+<div class="cfs-field cfs-field--options cfs-field--location" role="group" aria-labelledby="cfs-location-label" data-cfs-require-one><p class="cfs-label" id="cfs-location-label">Where are your properties located?&#8288;*</p>[checkbox location use_label_element "International (Outside UK)" "Across the UK"][select region class:cfs-select class:cfs-select--boxed first_as_label "Regional (Please select)" "London" "South East" "South West" "East of England" "East Midlands" "West Midlands" "Yorkshire and the Humber" "North West" "North East" "Scotland" "Wales" "Northern Ireland"]</div>
+</div>
+</div>
+<div class="cfs-page" data-cfs-page>
+<div class="cfs-grid">
+<div class="cfs-field cfs-field--half"><label class="cfs-label" for="cfs-properties">How many properties do you have?&#8288;*</label>[number* properties id:cfs-properties min:1 class:cfs-number]</div>
+<div class="cfs-field cfs-field--half"><label class="cfs-label" for="cfs-rooms">Total number of rooms you have?&#8288;*</label>[number* rooms id:cfs-rooms min:1 class:cfs-number]</div>
+<div class="cfs-field cfs-field--options" role="group" aria-labelledby="cfs-services-label"><p class="cfs-label" id="cfs-services-label">What services do you offer? <span class="cfs-label__note">(Tick all that apply)<span class="cfs-label__req">*</span></span></p>[checkbox* services use_label_element "Meetings &amp; Events" "Food &amp; Beverage" "Spa" "Sports Facilities" "Classes" "Childcare" "Pet Friendly"]</div>
+</div>
+</div>
+<div class="cfs-step__actions"><button type="button" class="btn btn-contact-from-7" data-cfs-next><span>Next</span><span class="cfs-arrow"></span></button></div>
+</div>
+</section>
+
+<section class="cfs-step cfs-step--last" data-cfs-step aria-labelledby="cfs-step-3-title">
+<h3 class="cfs-step__tab" id="cfs-step-3-title"><span class="cfs-step__number">03</span><span class="cfs-step__title" data-cfs-done-title="Thank you">Your challenges</span></h3>
+<div class="cfs-step__progress" aria-hidden="true"><span></span></div>
+<div class="cfs-step__body">
+<div class="cfs-page" data-cfs-page>
+<div class="cfs-grid">
+<div class="cfs-field cfs-field--options cfs-field--two-col" role="group" aria-labelledby="cfs-challenges-label"><p class="cfs-label" id="cfs-challenges-label">Which of these apply to your organisation? <span class="cfs-label__note">(Tick all that apply)<span class="cfs-label__req">*</span></span></p>[checkbox* challenges use_label_element "Too many reporting sources" "Lack of clear insight and accountability" "Manual and time consuming report production" "Difficulty connecting marketing activity with bookings, revenue and ROI" "Uncertainty over CPA, OTA dependency and direct-booking impact." "Slow, disjointed and expensive movement from insight into campaign action"]</div>
+</div>
+</div>
+<div class="cfs-page" data-cfs-page>
+<div class="cfs-grid">
+<div class="cfs-field"><label class="cfs-label" for="cfs-others">Are there any others? <span class="cfs-label__note">(Please state)<span class="cfs-label__req">*</span></span></label>[textarea* other-challenges id:cfs-others x3]</div>
+</div>
+<div class="cfs-final">
+<div class="cfs-field cfs-field--honeypot"><label class="cfs-label" for="cfs-human-check">If you are human leave this field blank</label>[text human-check id:cfs-human-check autocomplete:off]</div>
+<button type="submit" class="btn btn-contact-from-7 wpcf7-submit"><span>Submit</span><span class="cfs-arrow"></span></button>
+</div>
+</div>
+<div class="cfs-step__actions"><button type="button" class="btn btn-contact-from-7" data-cfs-next><span>Next</span><span class="cfs-arrow"></span></button></div>
+<div class="cfs-thanks" data-cfs-thanks hidden>
+<p>Thank you for your interest, a member of the Bravo team will be in touch shortly. In the meantime, learn more about how Bravo works <a href="{home}/product/">here</a></p>
+</div>
+</div>
+</section>
+
+</div>
+</div>

@@ -1,0 +1,32 @@
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+
+// Contact Form Block Section - a section wrapper around a Contact Form 7 form.
+// The step form itself is styled in components/_contact-step-form.scss.
+
+.contact-form-block-section {
+  padding-bottom: 80px;
+  background-color: $white-off-color;
+
+  @media (max-width: $screen-md-min-767) {
+    padding-bottom: 38px;
+  }
+}
+
+.contact-form-block-section {
+  .wpcf7-spinner {
+    display: none;
+  }
+
+  .wpcf7-response-output {
+    margin: 16px 0 0 !important;
+    padding: 10px 16px !important;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+
+  // The thank-you panel replaces CF7's own success message
+  .wpcf7-form.sent .wpcf7-response-output {
+    display: none;
+  }
+}

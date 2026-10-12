@@ -31,6 +31,8 @@
 @use "blocks/article-post-listing-section";
 @use "blocks/meet-the-team-section";
 @use "blocks/search-results-section";
+@use "components/contact-step-form";
+@use "blocks/contact-form-block-section";
 
 // video-banner-section and introtext-section are always rendered full-bleed
 // on the front end by their own block CSS (see resources/css/blocks/*),
@@ -72,7 +74,8 @@
   .wp-block-acf-faqs-accordion-section,
   .wp-block-acf-meet-the-team-section,
   .wp-block-acf-latest-article-list-section,
-  .wp-block-acf-article-post-listing-section {
+  .wp-block-acf-article-post-listing-section,
+  .wp-block-acf-contact-form-block-section {
     max-width: none;
     overflow: hidden;
   }

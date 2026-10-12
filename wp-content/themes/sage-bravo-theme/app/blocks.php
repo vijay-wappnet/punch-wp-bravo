@@ -669,6 +669,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Contact Form Block Section Block
+        acf_register_block_type([
+            'name'                   => 'contact-form-block-section',
+            'title'                  => __('Contact Form Block Section', 'sage'),
+            'description'            => __('A section showing a selected Contact Form 7 form (e.g. the "Contact us Form" step form)', 'sage'),
+            'render_callback'        => ['App\Blocks\ContactFormBlockSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'email-alt',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });

@@ -1,0 +1,113 @@
+[
+    {
+        "key": "group_contact_form_block_section",
+        "title": "Contact Form Block Section",
+        "fields": [
+            {
+                "key": "field_cfbs_contact_form",
+                "label": "Contact Form",
+                "name": "contact_form",
+                "aria-label": "",
+                "type": "post_object",
+                "instructions": "Select a Contact Form 7 form (e.g. \"Contact us Form\").",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "wpcf7_contact_form"
+                ],
+                "post_status": [
+                    "publish"
+                ],
+                "taxonomy": "",
+                "return_format": "id",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "bidirectional": 0,
+                "ui": 1,
+                "bidirectional_target": []
+            },
+            {
+                "key": "field_cfbs_section_bg_color",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "#F4F1EB",
+                "enable_opacity": 0,
+                "return_format": "string",
+                "allow_in_bindings": 1,
+                "show_custom_palette": 0,
+                "show_color_wheel": 1,
+                "custom_palette_source": "",
+                "palette_colors": ""
+            },
+            {
+                "key": "field_cfbs_margin",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_cfbs_padding",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/contact-form-block-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]
