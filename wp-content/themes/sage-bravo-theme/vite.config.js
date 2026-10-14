@@ -3,10 +3,17 @@ import laravel from 'laravel-vite-plugin'
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
 
 // Vite doesn't load .env into process.env on its own, so read it here
-const fileEnv = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), 'APP_URL');
+const fileEnv = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), ['APP_URL', 'DEV_SERVER_HOST']);
 
 // Set APP_URL if it doesn't exist for Laravel Vite plugin
 process.env.APP_URL ||= fileEnv.APP_URL || 'http://localhost/punch-wp-bravo';
+
+// `npm run dev` on the office network: DEV_SERVER_HOST (in .env) is this PC's
+// LAN IP. The dev server listens on all interfaces and WordPress loads the dev
+// assets from http://DEV_SERVER_HOST:5173, so they work on this PC and on other
+// office PCs alike. Without it, the dev server stays local-only.
+const devHost = fileEnv.DEV_SERVER_HOST || '';
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 export default defineConfig({
   //base: '/app/themes/sage/public/build/',
@@ -34,6 +41,20 @@ export default defineConfig({
       disableTailwindBorderRadius: true,
     }),
   ],
+  server: devHost ? {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    // Written to public/hot, so WordPress points asset URLs here
+    origin: `http://${devHost}:5173`,
+    // Pages may be opened on localhost or on the LAN IP
+    cors: {
+      origin: [
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+        new RegExp(`^https?://${escapeRegex(devHost)}(?::\\d+)?$`),
+      ],
+    },
+  } : undefined,
   resolve: {
     alias: {
       '@scripts': '/resources/js',
