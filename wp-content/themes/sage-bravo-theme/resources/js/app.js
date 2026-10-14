@@ -19,6 +19,9 @@ import initContactStepForm from './contact-step-form.js'; // CF7 "Contact us For
    BLOCK SCRIPTS
 ========================================== */
 import './gsap-animations.js';
+import './accessibility-modal.js';
+import './dataLayer-script.js';
+
 import initTwoColumnsImageIconsWithCtaSection from './blocks/two-columns-image-icons-with-cta-section.js';
 import initLeftRightMediaContentSection from './blocks/left-right-media-content-section.js';
 import initTestimonialSliderSection from './blocks/testimonial-slider-section.js';

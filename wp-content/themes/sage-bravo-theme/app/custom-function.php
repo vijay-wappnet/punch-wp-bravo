@@ -112,7 +112,7 @@ add_filter('body_class', function (array $classes): array {
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     // Check for the correct menu location and class
     if (
-        isset($args->theme_location) && $args->theme_location === 'footer_main_navigation' &&
+        isset($args->theme_location) && $args->theme_location === 'footer_main_navigation_one' &&
         isset($item->classes) && is_array($item->classes) &&
         in_array('site-accessibility', $item->classes)
     ) {

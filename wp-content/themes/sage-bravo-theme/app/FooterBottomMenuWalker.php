@@ -25,6 +25,11 @@ class FooterBottomMenuWalker extends Walker_Nav_Menu
             'aria-label' => $item->title,
         ];
 
+        // Let nav_menu_link_attributes filters add to the link - e.g. the
+        // "site-accessibility" item gets data-toggle="modal" and
+        // data-target="#accessibilityModal" (see app/custom-function.php).
+        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args, $depth);
+
         $attributes = '';
         foreach ($atts as $attr => $value) {
             if (! empty($value)) {

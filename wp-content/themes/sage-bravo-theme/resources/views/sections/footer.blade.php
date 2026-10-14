@@ -194,3 +194,105 @@
     </div>
   @endif
 </footer>
+
+
+
+
+<!-- Accessibility Modal -->
+<div class="modal fade accessibility-modal" id="accessibilityModal" tabindex="-1"
+    aria-labelledby="accessibilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title accessibility-title" id="accessibilityModalLabel">Accessibility Display Settings
+                </h5>
+                <button type="button" class="btn-close custom-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contrast Options -->
+                <div class="accessibility-option">
+                    <label class="setting-label">Contrast</label>
+                    <div class="button-group d-flex">
+                        <button type="button" class="btn-setting active" data-setting="contrast"
+                            data-value="default">Default</button>
+                        <button type="button" class="btn-setting" data-setting="contrast"
+                            data-value="higher">Higher</button>
+                        <button type="button" class="btn-setting" data-setting="contrast"
+                            data-value="inverted">Inverted</button>
+                    </div>
+                </div>
+
+                <!-- Text Size Options -->
+                <div class="accessibility-option">
+                    <label class="setting-label">Text size</label>
+                    <div class="button-group d-flex">
+                        <button type="button" class="btn-setting active" data-setting="textSize"
+                            data-value="default">Default</button>
+                        <button type="button" class="btn-setting" data-setting="textSize"
+                            data-value="medium">Medium</button>
+                        <button type="button" class="btn-setting" data-setting="textSize"
+                            data-value="large">Large</button>
+                    </div>
+                </div>
+
+                <!-- Font Options -->
+                <div class="accessibility-option">
+                    <label class="setting-label">Font (dyslexia)</label>
+                    <div class="button-group d-flex">
+                        <button type="button" class="btn-setting active" data-setting="font"
+                            data-value="default">Default</button>
+                        <button type="button" class="btn-setting" data-setting="font"
+                            data-value="adapted">Adapted</button>
+                    </div>
+                </div>
+
+                <!-- Line Spacing Options -->
+                <div class="accessibility-option">
+                    <label class="setting-label">Line spacing</label>
+                    <div class="button-group d-flex">
+                        <button type="button" class="btn-setting active" data-setting="lineSpacing"
+                            data-value="default">Default</button>
+                        <button type="button" class="btn-setting" data-setting="lineSpacing"
+                            data-value="adapted">Adapted</button>
+                    </div>
+                </div>
+
+                <!-- Justification Options -->
+                <div class="accessibility-option">
+                    <label class="setting-label">Justification</label>
+                    <div class="button-group d-flex">
+                        <button type="button" class="btn-setting active" data-setting="justification"
+                            data-value="default">Default</button>
+                        <button type="button" class="btn-setting" data-setting="justification"
+                            data-value="adapted">Adapted</button>
+                    </div>
+                </div>
+
+                <!-- Search Box -->
+                <div class="accessibility-search mt-4">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </span>
+                        <form class="search-results-form" method="GET"
+                                        action="@php echo esc_url(home_url('/search-results/')); @endphp">
+                                                    <input type="text" name="search-field" class="form-control footer-search-input" placeholder="Search"
+                                                        aria-label="Search">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

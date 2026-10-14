@@ -1,0 +1,985 @@
+/**
+* Accessibility Settings Styles
+*
+* These styles are applied to the body element when
+* accessibility settings are changed, but exclude
+* the accessibility modal itself to prevent self-modification
+*/
+
+/* ========================================
+CLOSE BUTTON STYLES - COMPLETELY FLAT STRUCTURE
+These styles are separated to avoid specificity conflicts
+======================================== */
+
+@use "../common/fonts" as *;
+@use "../common/variables" as *;
+@use "../components/buttons" as *;
+
+.accessibility-modal {
+  .btn-close.custom-close {
+    background-color: transparent !important;
+    border: 0 !important;
+    color: #000 !important;
+    opacity: 0.7 !important;
+
+    &:focus {
+      opacity: 1 !important;
+      outline: none !important;
+    }
+
+    &:hover {
+      opacity: 1 !important;
+    }
+
+    svg {
+      stroke: currentColor !important;
+    }
+  }
+}
+
+
+/* ========================================
+    BODY ACCESSIBILITY STYLES
+    These only apply to non-modal elements
+    ======================================== */
+
+/* Contrast Settings */
+
+/* Base contrast styles for both themes */
+body.contrast-higher,
+body.contrast-inverted {
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    img {
+      filter: brightness(1);
+      background-color: transparent !important;
+    }
+    .modal-header {
+      .btn-close{
+        svg{
+          line{
+            color: #000 !important;
+          }
+        }
+      }
+    }
+    .search-results-form {
+      background-color: transparent !important;
+    }
+    .slider-with-multiple-box-section {
+      .smb-item__wrapper,
+      .smb-item__slider,
+      .slick-list,
+      .slick-track,
+      .slick-slide,
+      .slick-slide div,
+      .smb-item__slider-item,
+      .smb-item__slider-item img {
+        background-color: transparent !important;
+      }
+    }
+    .accessibility-modal{
+      background-color: transparent !important;
+    }
+    #accessibilityModal .accessibility-search .input-group-text svg{
+      background-color: transparent !important;
+    }
+    #accessibilityModal .accessibility-search .input-group-text svg path{
+      filter: invert(0) brightness(0);
+    }
+    .accessibility-icon img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+
+    .logo img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+    .search-icon-holder img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+    .search-icon-holder .form-control::placeholder {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+
+    .logos-section img {
+      filter: invert(100%) brightness(200%) contrast(100%);
+    }
+
+    .social-media-links img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+
+    .mobile-menu .navbar-nav .nav-link::after {
+      filter: invert(100%) brightness(200%) contrast(100%);
+    }
+    .site-header .menu-toggle .hamburger .bar img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+    .logo-wrapper img {
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+    .site-footer .footer-main img{
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+    .contact-details-with-image-section__address img{
+      filter: contrast(0) grayscale(0) invert(1) brightness(2);
+    }
+  }
+}
+
+/* Higher contrast theme */
+body.contrast-higher {
+  background-color: #000 !important;
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    background-color: #000 !important;
+    color: $white-color !important;
+    border-color: $white-color !important;
+
+    & * {
+      background-color: #000 !important;
+      color: $white-color !important;
+      border-color: $white-color !important;
+    }
+
+    .top-nav img,
+    .logo-container img,
+    .footer-logo-wrapper img,
+    .menu-back img {
+      filter: brightness(4) invert(0);
+      background-color: transparent !important;
+    }
+    .header-top-nav .menu-item a.main-cart-items .cart-menu-image {
+    width: 32px;
+        filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(57deg) brightness(106%) contrast(101%);
+    }
+    .say-hello-wrapper .btn-say-hello-btn::after {
+      filter: brightness(4);
+    }
+
+    .desktop-menu .navbar .navbar-nav .dropdown-toggle::after {
+      filter: brightness(4);
+    }
+  }
+}
+
+/* Inverted contrast theme */
+body.contrast-inverted {
+  background-color: #30f !important;
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    background-color: #30f !important;
+    color: #ff0 !important;
+    border-color: #fff !important;
+
+    & * {
+      background-color: #30f !important;
+      color: #ff0 !important;
+      border-color: #ff0 !important;
+    }
+
+    .top-nav img,
+    .logo-container img,
+    .footer-logo-wrapper img,
+    .menu-back img {
+      filter: brightness(4);
+      background-color: transparent !important;
+    }
+    .desktop-menu .navbar .navbar-nav .dropdown-toggle::after {
+      filter: brightness(4);
+    }
+  }
+}
+
+/* Text Size Settings */
+body.text-medium {
+  font-size: 5rem !important;
+
+  @media (max-width: $screen-md-min) {
+    font-size: 1.5rem !important;
+  }
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    font-size: 5rem !important;
+
+    @media (max-width: $screen-md-min) {
+      font-size: 1.5rem !important;
+    }
+
+    & * {
+      font-size: 5rem !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 1.5rem !important;
+      }
+    }
+
+    .site-footer,
+    .nav-link,
+    .btn,
+    body,
+    p,
+    a,
+    strong,
+    span,
+    li,
+    .footer-copyright-wrapper,
+    p b,
+    .block-content,
+    .wpcf7-form label,
+    .cf7-submit-button,
+    .wpcf7-response-output,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      font-size: 20px !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+    }
+    .modal-header {
+      .btn-close{
+        svg{
+          background-color: transparent !important;
+            width: 49px !important;
+            height: 49px !important;
+          path{
+            background-color: transparent !important;
+          }
+        }
+      }
+    }
+
+    .fullscreen-menu{
+      .fullscreen-menu-list{
+        .menu-item > a {
+          font-size: 40px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 36px !important;
+          }
+          span{
+            font-size: 40px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 36px !important;
+            }
+          }
+        }
+        .sub-menu{
+          .menu-item > a {
+            font-size: 40px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 36px !important;
+            }
+            span{
+              font-size: 22px !important;
+              @media (max-width: $screen-md-min) {
+                font-size: 20px !important;
+              }
+            }
+          }
+        }
+        .menu-back{
+          font-size: 36px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 30px !important;
+          }
+        }
+      }
+    }
+
+    .site-header{
+      .hamburger{
+        p{
+          font-size: 30px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 24px !important;
+          }
+        }
+      }
+      .header-top-nav{
+        .menu-item{
+          a{
+            font-size: 30px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 24px !important;
+            }
+          }
+        }
+      }
+    }
+
+
+    .footer-contact{
+      font-size: 20px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+      .fc-items{
+        a{
+          font-size: 20px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 18px !important;
+          }
+          div{
+            font-size: 20px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 18px !important;
+            }
+          }
+        }
+        span{
+          font-size: 20px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 18px !important;
+          }
+          div{
+            font-size: 20px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 18px !important;
+            }
+          }
+        }
+      }
+    }
+
+
+    .introtext-with-right-cta-section__content {
+      p {
+        font-size: 36px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 30px !important;
+        }
+      }
+    }
+
+    .search-results-section{
+      font-size: 36px !important;
+      div{
+        font-size: 36px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 30px !important;
+        }
+        strong{
+          font-size: 36px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 30px !important;
+          }
+        }
+      }
+
+      @media (max-width: $screen-md-min) {
+        font-size: 30px !important;
+      }
+    }
+
+    .faq-question{
+      span.faq-question-text{
+        font-size: 36px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 30px !important;
+        }
+      }
+    }
+    .faq-answer{
+      .faq-answer-content{
+        font-size: 24px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 22px !important;
+        }
+      }
+    }
+
+    h1 {
+      font-size: 80px !important;
+      line-height: 88px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 36px !important;
+        line-height: 44px !important;
+      }
+    }
+
+    h2 {
+      font-size: 50px !important;
+      line-height: 60px !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 30px !important;
+        line-height: 36px !important;
+      }
+    }
+
+    h3 {
+      font-size: 40px !important;
+      line-height: 48px !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 24px !important;
+        line-height: 32px !important;
+      }
+    }
+
+    h4 {
+      font-size: 32px !important;
+      line-height: 40px !important;
+
+
+      @media (max-width: $screen-md-min) {
+        font-size: 20px !important;
+        line-height: 28px !important;
+      }
+    }
+
+    h5 {
+      font-size: 26px !important;
+      line-height: 34px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+        line-height: 26px !important;
+      }
+    }
+
+    h6 {
+      font-size: 22px !important;
+      line-height: 30px !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 16px !important;
+        line-height: 24px !important;
+      }
+    }
+  }
+
+
+}
+
+body.text-large {
+  font-size: 6rem !important;
+
+  @media (max-width: $screen-md-min) {
+    font-size: 2rem !important;
+  }
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    font-size: 6rem !important;
+
+    @media (max-width: $screen-md-min) {
+      font-size: 2rem !important;
+    }
+
+    & * {
+      font-size: 6rem !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 2rem !important;
+      }
+    }
+
+    .btn-read-more,
+    .nav-link,
+    .btn,
+    body,
+    p,
+    a,
+    strong,
+    span,
+    li,
+    .footer-copyright-wrapper,
+    p b,
+    .block-content,
+    .wpcf7-form label,
+    .cf7-submit-button,
+    .wpcf7-response-output,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      font-size: 22px !important;
+
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+    }
+
+    .modal-header {
+      .btn-close{
+        svg{
+          //background-color: transparent !important;
+          width: 32px !important;
+          height: 33px !important;
+          path{
+            background-color: transparent !important;
+          }
+        }
+      }
+    }
+    .slider-room-features-section{
+      .slick-dots{
+        li{
+          span{
+            font-size: 0px !important;
+          }
+        }
+      }
+    }
+    .accessibility-modal .modal-header .btn-close.custom-close {
+      font-size: 15px !important;
+    }
+    .fullscreen-menu{
+      .fullscreen-menu-list{
+        .menu-item > a {
+          font-size: 50px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 40px !important;
+          }
+          span{
+            font-size: 50px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 40px !important;
+            }
+          }
+        }
+        .sub-menu{
+          .menu-item > a {
+            font-size: 50px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 40px !important;
+            }
+            span{
+              font-size: 24px !important;
+              @media (max-width: $screen-md-min) {
+                font-size: 22px !important;
+              }
+            }
+          }
+        }
+        .menu-back{
+          font-size: 42px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 36px !important;
+          }
+        }
+      }
+    }
+
+    .site-header{
+      .hamburger{
+        p{
+          font-size: 36px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 30px !important;
+          }
+        }
+      }
+      .header-top-nav{
+        .menu-item{
+          a{
+            font-size: 36px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 30px !important;
+            }
+          }
+        }
+      }
+    }
+
+
+    .footer-contact{
+      font-size: 22px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+      .fc-items{
+        a{
+          font-size: 22px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 18px !important;
+          }
+          div{
+            font-size: 22px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 18px !important;
+            }
+          }
+        }
+        span{
+          font-size: 22px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 18px !important;
+          }
+          div{
+            font-size: 22px !important;
+            @media (max-width: $screen-md-min) {
+              font-size: 18px !important;
+            }
+          }
+        }
+      }
+    }
+
+    .introtext-with-right-cta-section__content {
+      p {
+        font-size: 42px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 36px !important;
+        }
+      }
+    }
+
+    .search-results-section{
+      font-size: 42px !important;
+      div{
+        font-size: 42px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 36px !important;
+        }
+        strong{
+          font-size: 42px !important;
+          @media (max-width: $screen-md-min) {
+            font-size: 36px !important;
+          }
+        }
+      }
+
+      @media (max-width: $screen-md-min) {
+        font-size: 36px !important;
+      }
+    }
+
+
+
+
+    h1 {
+      font-size: 90px !important;
+      line-height: 100px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 40px !important;
+        line-height: 44px !important;
+      }
+    }
+
+    h2 {
+      font-size: 60px !important;
+      line-height: 70px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 32px !important;
+        line-height: 40px !important;
+      }
+    }
+
+    h3 {
+      font-size: 50px !important;
+      line-height: 60px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 26px !important;
+        line-height: 34px !important;
+      }
+    }
+
+    h4 {
+      font-size: 40px !important;
+      line-height: 50px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 22px !important;
+        line-height: 30px !important;
+      }
+    }
+
+    h5 {
+      font-size: 32px !important;
+      line-height: 40px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 20px !important;
+        line-height: 28px !important;
+      }
+    }
+
+    h6 {
+      font-size: 26px !important;
+      line-height: 34px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 16px !important;
+        line-height: 24px !important;
+      }
+    }
+  }
+
+}
+
+/* Font Settings */
+body.font-adapted {
+  font-family: $fonts-dyslexie !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    font-family: $fonts-dyslexie !important;
+
+    & * {
+      font-family: $fonts-dyslexie !important;
+    }
+
+    p,
+    li,
+    td,
+    th {
+      letter-spacing: 0.12em !important;
+      word-spacing: 0.16em !important;
+    }
+    .accessibility-modal{
+      .modal-title {
+        font-family: $font-articulat-family !important;
+      }
+    }
+    .footer-contact{
+      .fc-items{
+        a{
+          div{
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+          }
+        }
+      }
+    }
+    .cdwis-row{
+      .footer-contact{
+        .fc-items{
+          a{
+            div{
+              word-break: break-word !important;
+              overflow-wrap: break-word !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Line Spacing Settings */
+body.line-spacing-adapted {
+  line-height: 1.7 !important;
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    line-height: 1.7 !important;
+
+    p,
+    li,
+    td,
+    th{
+      line-height: 1.7 !important;
+      margin-bottom: 1.5em !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.7 !important;
+      margin-bottom: 0.8em !important;
+    }
+    #site-header{
+      .hamburger{
+        .bar{
+          img{
+            line-height: 1.7 !important;
+            margin-bottom: 1.5em !important;
+          }
+        }
+      }
+    }
+    .faq-answer{
+      .faq-answer-content{
+        line-height: 1.7 !important;
+        margin-bottom: 1.5em !important;
+      }
+    }
+    .site-footer{
+      .footer-bottom{
+        .footer-bottom-inner{
+          .newsletter{
+            .newsletter-title-desktop{
+              line-height: 1.7 !important;
+              margin-bottom: 1.5em !important;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .accessibility-modal{
+      .modal-title{
+        line-height: inherit !important;
+        margin-bottom: inherit !important;
+      }
+    }
+  }
+}
+
+/* Justification Settings */
+body.justify-text {
+  text-align: left !important;
+
+  & > *:not(.accessibility-modal):not(.modal-backdrop) {
+    text-align: left !important;
+
+    p,
+    li,
+    td,
+    th {
+      text-align: left !important;
+    }
+  }
+}
+
+
+/* ========================================
+    ACCESSIBILITY MODAL STYLES - PROTECTED
+    These styles will override any accessibility classes
+    ======================================== */
+body .accessibility-modal,
+body.contrast-higher .accessibility-modal,
+body.contrast-inverted .accessibility-modal,
+body.text-medium .accessibility-modal,
+body.text-large .accessibility-modal,
+body.font-adapted .accessibility-modal,
+body.line-spacing-adapted .accessibility-modal,
+body.justify-text .accessibility-modal {
+  /* Reset all modal base properties */
+  font-size: 16px !important;
+  font-family: $font-articulat-family !important;
+  color: $black-off-color !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  background-color: $white-color !important;
+  /* Modal content */
+  .modal-content {
+    background-color: $white-color !important;
+    color: $black-off-color !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  /* Modal header */
+  .modal-header {
+    background-color: $white-color !important;
+    border-bottom: none !important;
+    .btn-close{
+      svg{
+        background-color: transparent !important;
+          width: 32px !important;
+          height: 33px !important;
+        path{
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+  /* Modal title */
+  .modal-title,
+  .accessibility-title {
+    letter-spacing: normal !important;
+    word-spacing: normal !important;
+    text-align: left !important;
+    background-color: $white-color !important;
+    color: $black-off-color !important;
+  }
+
+  /* Close button styles moved to the top in a flat structure */
+
+  /* Modal body */
+  .modal-body {
+    background-color: $white-color !important;
+
+    .setting-label {
+      color: $black-off-color !important;
+      font-family: $font-articulat-family !important;
+      font-weight: 400 !important;
+      font-size: 20px !important;
+      line-height: 26px !important;
+      margin-bottom: 12px !important;
+      text-align: left !important;
+      letter-spacing: normal !important;
+      word-spacing: normal !important;
+      background-color: transparent !important;
+    }
+
+    .accessibility-option {
+      margin-bottom: 20px !important;
+      background-color: $white-color !important;
+    }
+  }
+
+  /* Button styles */
+  .button-group {
+    background-color: $white-color !important;
+  }
+
+  .btn-setting {
+    font-family: $font-articulat-family !important;
+    font-size: 18px !important;
+    line-height: 25px !important;
+    letter-spacing: normal !important;
+    word-spacing: normal !important;
+    padding: 10px 15px !important;
+    text-align: center !important;
+
+    &:not(.active) {
+      background-color: $white-color !important;
+      color: #333 !important;
+      border-color: #ddd !important;
+    }
+
+    &.active {
+      background-color: #2c3e50 !important;
+      color: $white-color !important;
+      border-color: #2c3e50 !important;
+    }
+
+    &:hover:not(.active) {
+      background-color: #f5f5f5 !important;
+    }
+  }
+
+  /* Search input */
+  .accessibility-search {
+    background-color: $white-color !important;
+
+    .input-group {
+      background-color: $white-color !important;
+      border-color: #ddd !important;
+
+      .input-group-text {
+        background-color: $white-color !important;
+        border: none !important;
+        color: $black-off-color !important;
+
+        svg {
+          color: #777 !important;
+          path{
+            background-color: transparent !important;
+          }
+        }
+      }
+
+      .form-control {
+        background-color: $white-color !important;
+        color: $black-off-color !important;
+        border: none !important;
+        line-height: 25px !important;
+        font-size: 18px !important;
+        font-family: $font-articulat-family !important;
+
+        &::placeholder {
+          color: #aaa !important;
+        }
+      }
+    }
+  }
+
+}
