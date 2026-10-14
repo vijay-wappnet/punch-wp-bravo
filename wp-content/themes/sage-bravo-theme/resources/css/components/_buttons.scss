@@ -26,8 +26,8 @@
   border-radius: 5px;
 
   @media (max-width: $screen-md-min) {
-    font-size: 22px !important;
-    line-height: 26px;
+    font-size: 22px;
+    line-height: 100%;
   }
 }
 

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Vite;
 @if(!empty($responsiveCss))
 <style>{{ $responsiveCss }}</style>
 @endif
-<div id="{{ $blockId }}" class="video-banner-section @if($show_dot_grid_canvas) js-dot-grid @endif" @if($section_bg) style="--overlay-color: {{ esc_attr($section_bg) }};" @endif>
+<div id="{{ $blockId }}" class="video-banner-section @if($show_dot_grid_canvas) js-dot-grid @endif" @if($show_dot_grid_canvas) data-dot-offset="header" @endif @if($section_bg) style="--overlay-color: {{ esc_attr($section_bg) }};" @endif>
 
   <div class="video-banner-section__media">
     @if($video_file)

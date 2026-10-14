@@ -14,8 +14,10 @@
   .header-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    // Desktop: menu icon, then the logo 59px after it (design); the
+    // actions are pushed to the right by their own margin-left: auto.
+    justify-content: flex-start;
+    gap: 59px;
     padding: 20px 40px;
 
     @media (max-width: $screen-lg-min) {
@@ -25,7 +27,7 @@
       // sit at the start (left) rather than space-between's end position.
       position: relative;
       justify-content: flex-start;
-      padding: 16px 20px;
+      padding: 33px 20px 33px 36px;
     }
   }
 
@@ -57,11 +59,15 @@
   padding: 0;
   cursor: pointer;
   z-index: 1;
+  &:focus{
+    outline: 1px solid $red-fusion-color;
+  }
 
   .menu-toggle-icon {
     position: relative;
     display: inline-flex;
     align-items: center;
+
   }
 
   .icon {
@@ -133,7 +139,6 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-
   @media (max-width: $screen-lg-min) {
     position: absolute;
     left: 50%;
@@ -194,14 +199,15 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 27px;
+  margin-left: auto;
   @media (max-width: $screen-lg-min) {
     display: none;
   }
 }
 
 .header-login-link {
-  font-size: 16px;
+  font-size: 18px;
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   color: $white-color;
@@ -210,6 +216,10 @@
 
   @media (max-width: $screen-lg-min) {
     display: none;
+  }
+  &:focus{
+    outline: 1px solid $red-fusion-color;
+    color: $white-color;
   }
 }
 
@@ -253,7 +263,7 @@
     // the start (left) rather than space-between's implicit end position.
     position: relative;
     justify-content: flex-start;
-    padding: 16px 0;
+    padding: 32px 0;
   }
 }
 
@@ -277,7 +287,7 @@
 .close-btn {
   display: inline-flex;
   align-items: center;
-  gap: 30px;
+  gap: 28px;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -292,8 +302,12 @@
   }
 
   .close-icon {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
+    @media (max-width: $screen-lg-min) {
+      width: 35px;
+      height: 35px;
+    }
   }
 
   .close-label {
@@ -324,7 +338,7 @@
 
 .menu-left {
   flex: 0 0 50%;
-  padding: 20px 40px 40px;
+  padding: 20px 20px 40px 160px;
   display: flex;
   flex-direction: column;
   // Centers the nav block vertically when the column is taller than its
@@ -334,7 +348,7 @@
 
   @media (max-width: $screen-lg-min) {
     flex: 1;
-    padding: 0 20px;
+    padding: 0 36px;
     justify-content: flex-start;
   }
 }
@@ -354,10 +368,15 @@
 
 .fullscreen-menu-list {
   list-style: none;
-
+  @media (max-width: $screen-lg-min) {
+    padding-top: 13px;
+  }
+  @media (max-width: $screen-sm-min) {
+    padding-top: 0px;
+  }
   li {
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     @media (max-width: $screen-lg-min) {
       margin-bottom: 0;
     }
@@ -372,11 +391,12 @@
 .fullscreen-menu-link {
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
-  font-size: 48px;
-  line-height: 40px;
+  font-size: 40px;
+  line-height: 48px;
   color: $black-off-color;
   text-decoration: none;
-  padding: 8px 0;
+  padding: 8px 0 0px 0;
+  letter-spacing: 1%;
 
   &:hover,
   &:focus {
@@ -384,15 +404,31 @@
   }
 
   @media (max-width: $screen-lg-min) {
-    font-size: 20px;
-    padding: 5px 0;
-    border-bottom: 1px solid $white-off-light-grayish-color;
+    font-size: 32px;
+    line-height: 38px;
+    padding: 9px 0 13px 0;
+    letter-spacing: normal;
+    border-bottom: 2px solid $gray-grayish-orange-color;
+    text-align: center;
   }
 }
 
-.fullscreen-menu-login-item .fullscreen-menu-link {
+.fullscreen-menu-login-item {
   @media (max-width: $screen-lg-min) {
-    border-bottom: 1px solid $white-off-light-grayish-color;
+    padding-bottom: 53px;
+  }
+  .fullscreen-menu-link {
+    @media (max-width: $screen-lg-min) {
+      border-bottom: 2px solid $gray-grayish-orange-color;
+    }
+  }
+}
+
+// Mobile: every link has a bottom border; the first one also gets a top
+// border so the list is closed at the top too.
+.fullscreen-menu-list li:first-child .fullscreen-menu-link {
+  @media (max-width: $screen-lg-min) {
+    border-top: 2px solid $gray-grayish-orange-color;
   }
 }
 
@@ -438,11 +474,22 @@
   line-height: 48px;
   font-weight: $font-articulat-regular-weight; //400
   color: $black-off-color;
+  letter-spacing: 1%;
 }
 
 .menu-right-btn {
   // Shared with the CTA Banner Section (see components/_buttons.scss)
   @include dark-arrow-btn('.menu-right-btn__icon');
+  // Design: 243 x 44 - text 51px in from the left, arrow 22px in from the
+  // right (the mixin's space-around would spread them evenly instead).
+  // Padding is 1px less on each side for the 1px .btn border.
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 21px 0 50px;
+
+  .menu-right-btn__icon{
+    width: 29px;
+  }
 }
 
 .menu-footer {
@@ -475,6 +522,8 @@
   }
   @media (max-width: $screen-lg-min) {
     color: $black-off-color;
+    font-size: 32px;
+    line-height: 38px;
   }
 }
 

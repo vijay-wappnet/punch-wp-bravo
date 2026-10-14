@@ -23,6 +23,11 @@ export default function initDotGrid(container) {
   // data-dot-color="dark" draws the dots in the dark text colour for light
   // section backgrounds (Product Showcase Slider); the default is white.
   const dotRgb = container.dataset.dotColor === 'dark' ? '46, 46, 46' : '255, 255, 255';
+  // data-dot-offset="header" starts the grid below the fixed site header where
+  // the two overlap (Video Banner Section on the home page), so no dots sit
+  // behind the header. A section lower down the page isn't affected.
+  const header = container.dataset.dotOffset === 'header' ? document.querySelector('.site-header') : null;
+  let offsetTop = 0;
 
   const baseCellSize = 33.36;
   const baseRadiusRatio = varied ? 0.15 : 0.12;
@@ -143,10 +148,18 @@ export default function initDotGrid(container) {
   function resize() {
     const rect = container.getBoundingClientRect();
     width = rect.width;
+
+    // The header is fixed, so its bottom edge (viewport) is where it ends on
+    // the page too; overlap = how far it reaches into this section.
+    offsetTop = header
+      ? Math.max(0, Math.min(rect.height, header.getBoundingClientRect().bottom - (rect.top + window.scrollY)))
+      : 0;
+    canvas.style.top = `${offsetTop}px`;
+
     // Optional per-section CSS variable (0-1): how much of the section's
     // height the grid covers, from the top. Defaults to all of it.
     const coverage = parseFloat(getComputedStyle(container).getPropertyValue('--dot-grid-coverage'));
-    height = rect.height * (coverage > 0 && coverage < 1 ? coverage : 1);
+    height = (rect.height - offsetTop) * (coverage > 0 && coverage < 1 ? coverage : 1);
 
     const styles = getComputedStyle(container);
     const edgeOpacity = parseFloat(styles.getPropertyValue('--dot-grid-edge-opacity'));
@@ -195,7 +208,7 @@ export default function initDotGrid(container) {
 
   container.addEventListener('pointermove', (e) => {
     const rect = container.getBoundingClientRect();
-    target = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    target = { x: e.clientX - rect.left, y: e.clientY - rect.top - offsetTop };
     lastMoveAt = performance.now();
   });
 
@@ -211,6 +224,14 @@ export default function initDotGrid(container) {
   // included.
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
+  if (header) {
+    resizeObserver.observe(header); // header height changes at the mobile breakpoint
+    // The overlap depends on the header being fixed, which only holds once its
+    // CSS has loaded (Vite dev injects CSS late) - so measure again on load.
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', resize, { once: true });
+    }
+  }
 
   if (!reduceMotion) {
     frame = requestAnimationFrame(animate);
