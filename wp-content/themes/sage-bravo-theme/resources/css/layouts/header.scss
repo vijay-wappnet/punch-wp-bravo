@@ -399,7 +399,9 @@
   letter-spacing: 1%;
 
   &:hover,
-  &:focus {
+  &:focus,
+  // Link to the page being viewed (WordPress adds current-menu-item)
+  .current-menu-item > & {
     color: $red-fusion-color;
   }
 

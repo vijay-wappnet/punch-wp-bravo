@@ -525,7 +525,9 @@
   transition: color 0.2s ease;
 
   &:hover,
-  &:focus {
+  &:focus,
+  // Link to the page being viewed (WordPress adds current-menu-item)
+  .current-menu-item > & {
     color: $red-fusion-color;
   }
 }
