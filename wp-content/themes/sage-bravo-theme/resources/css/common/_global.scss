@@ -138,6 +138,23 @@ p {
     line-height: 26px;
   }
 }
+.fs-40{
+  p{
+    font-size: 40px;
+    font-family: $font-articulat-family;
+    line-height: 48px;
+    font-weight: $font-articulat-regular-weight; //400
+    margin-bottom: 20px;
+    letter-spacing: 1%;
+    strong{
+      font-weight: $font-articulat-medium-weight; //600
+    }
+    @media (max-width: $screen-md-min) {
+      font-size: 32px;
+      line-height: normal;
+    }
+  }
+}
 .fs-30{
   p{
     font-size: 30px;
@@ -146,11 +163,11 @@ p {
     font-weight: $font-articulat-regular-weight; //400
     margin-bottom: 20px;
     strong{
-      font-weight: $font-articulat-demi-bold-weight; //700
+      font-weight: $font-articulat-medium-weight; //600
     }
     @media (max-width: $screen-md-min) {
       font-size: 30px;
-      line-height: 38px;
+      line-height: normal;
     }
   }
 }

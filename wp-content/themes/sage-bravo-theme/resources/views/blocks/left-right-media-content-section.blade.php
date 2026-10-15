@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Vite;
             @endif
 
             @if($content)
-              <div class="fs-30 left-right-media-content-section__description">
+              <div class="fs-40 left-right-media-content-section__description">
                 {!! wp_kses_post($content) !!}
               </div>
             @endif
