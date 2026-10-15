@@ -19,6 +19,9 @@
     align-items: flex-start;
     min-height: 0;
     padding: 35px 36px 285px 36px;
+    @media (max-width: $screen-mobile-min) {
+      padding: 35px 15px 285px 15px;
+    }
   }
 
   // ------------------------------------------------ Background image

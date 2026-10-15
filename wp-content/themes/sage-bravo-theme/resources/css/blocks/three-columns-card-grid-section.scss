@@ -46,17 +46,25 @@ $tccgs-duration: 300ms;
   }
 
   // ------------------------------------------------------------ Card
-  // Matches the design prototype: the image fills the whole card and never
-  // moves. A white panel sits over the bottom of the image; on hover it grows
-  // upwards (heading slides up, description fades in, "+" fades out).
+  // Matches the design prototype: the image sits at the top and never moves;
+  // the white panel sits below it and on hover grows upwards over the image
+  // (heading slides up, description fades in, "+" fades out).
   // The card is a size container so type and spacing scale with its width
   // (`cqw`), keeping the same proportions as the design at every size.
+  // Its height = the image + the panel's resting height (padding-bottom,
+  // same formula as the panel: 7% padding top and bottom + the 38px heading
+  // line; % padding is relative to the card's width, like 7cqw inside it).
   .three-columns-card-grid-section__card {
     position: relative;
     container-type: inline-size;
-    aspect-ratio: 4 / 5;
+    padding-bottom: calc(7% * 2 + 38px);
     overflow: hidden;
-    border-radius: 8px;
+
+    // Mobile panel: 16px top + 38px heading line + 20px bottom
+    @media (max-width: $screen-md-min-767) {
+      padding-bottom: calc(16px + 38px + 20px);
+    }
+    border-radius: 10px;
     background-color: $white-off-light-grayish-color;
     outline: none;
 
@@ -67,9 +75,14 @@ $tccgs-duration: 300ms;
   }
 
   // ----------------------------------------------------------- Media
+  // Image area from the design: 369 x 384 on desktop, 503 x 218 on mobile
   .three-columns-card-grid-section__media {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    aspect-ratio: 369 / 384;
+
+    @media (max-width: $screen-md-min-767) {
+      aspect-ratio: 503 / 218;
+    }
   }
 
   .three-columns-card-grid-section__image {
@@ -89,7 +102,8 @@ $tccgs-duration: 300ms;
     --tccgs-pad-y: 7cqw;
     --tccgs-heading-size: clamp(18px, 7.2cqw, 32px);
     --tccgs-heading-lh: 1.2;
-    --tccgs-icon-size: clamp(16px, 6.5cqw, 26px);
+    // "+" is 27 x 27 in the design on desktop and mobile alike (not fluid)
+    --tccgs-icon-size: 27px;
 
     position: absolute;
     right: 0;
@@ -98,6 +112,12 @@ $tccgs-duration: 300ms;
     z-index: 1;
     padding: var(--tccgs-pad-y) 6.5cqw;
     background-color: $white-color;
+    @media (max-width: $screen-md-min-767) {
+      // Bottom padding, also used to pin the "+" level with the heading
+      --tccgs-pad-y: 20px;
+
+      padding: 16px 24px 20px 24px;
+    }
   }
 
   .three-columns-card-grid-section__header {
@@ -109,9 +129,9 @@ $tccgs-duration: 300ms;
     margin: 0;
     color: $black-off-color;
     font-family: $font-articulat-family;
-    font-weight: $font-articulat-demi-bold-weight;
-    font-size: var(--tccgs-heading-size);
-    line-height: var(--tccgs-heading-lh);
+    font-weight: $font-articulat-medium-weight; // 600
+    font-size: 30px;
+    line-height: 38px;
     overflow-wrap: break-word;
   }
 
@@ -123,6 +143,10 @@ $tccgs-duration: 300ms;
     right: 6.5cqw;
     bottom: calc(var(--tccgs-pad-y) + (var(--tccgs-heading-size) * var(--tccgs-heading-lh) - var(--tccgs-icon-size)) / 2);
     width: var(--tccgs-icon-size);
+
+    @media (max-width: $screen-md-min-767) {
+      right: 24px; // matches the panel's mobile side padding
+    }
     aspect-ratio: 1;
     transition: opacity $tccgs-duration $tccgs-ease;
 
@@ -179,7 +203,7 @@ $tccgs-duration: 300ms;
     }
 
     .three-columns-card-grid-section__description {
-      padding-top: 3cqw;
+      padding-top: 15px;
       opacity: 1;
     }
   }
