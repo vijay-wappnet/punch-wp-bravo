@@ -55,6 +55,7 @@ h1 {
   line-height: 60px;
   font-weight: $font-articulat-regular-weight; // 400
   margin-bottom: 20px;
+  letter-spacing: 1%;
   @media (max-width: $screen-md-min) {
     font-size: 42px;
     line-height: 50px;
@@ -67,6 +68,7 @@ h2 {
   line-height: 48px;
   font-weight: $font-articulat-regular-weight; //400
   margin-bottom: 20px;
+  letter-spacing: 1%;
   @media (max-width: $screen-md-min) {
     font-size: 40px;
     line-height: 48px;
@@ -79,6 +81,7 @@ h3 {
   line-height: 38px;
   font-weight: $font-articulat-regular-weight; //400
   margin-bottom: 20px;
+
   @media (max-width: $screen-md-min) {
     font-size: 32px;
     line-height: 38px;
@@ -91,6 +94,7 @@ h4 {
   line-height: 30px;
   font-weight: $font-articulat-regular-weight; //400
   margin-bottom: 20px;
+
   @media (max-width: $screen-md-min) {
     font-size: 24px;
     line-height: 30px;
@@ -104,6 +108,7 @@ h5 {
   line-height: 25px;
   font-weight: $font-articulat-regular-weight; //400
   margin-bottom: 20px;
+
   @media (max-width: $screen-md-min) {
     font-size: 22px;
   }

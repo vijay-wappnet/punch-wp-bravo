@@ -29,6 +29,7 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
     @media (max-width: $screen-md-min) {
       grid-template-columns: 1fr;
+      gap: 66px;
     }
   }
 
@@ -62,14 +63,19 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   .two-columns-image-icons-with-cta-section__heading {
     margin-bottom: 25px;
+    letter-spacing: 1%;
+    @media (max-width: $screen-md-min) {
+      margin-bottom: 44px;
+    }
   }
 
   .two-columns-image-icons-with-cta-section__description {
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-
+    letter-spacing: 1%;
     p {
       margin-bottom: 15px;
+      letter-spacing: 1%;
 
       &:last-child {
         margin-bottom: 0;
@@ -96,7 +102,10 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin-top: 35px;
+    margin-top: 57px;
+    @media (max-width: $screen-md-min) {
+      margin-top: 50px;
+    }
 
     .twociiwcs-btn {
       min-width: 171px;
@@ -104,41 +113,38 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       padding-left: 20px;
       padding-right: 20px;
       gap: 10px;
+      @media (max-width: $screen-md-min) {
+        width: 100%;
+      }
     }
 
     .twociiwcs-btn__icon {
       width: 21px;
       height: auto;
+      @media (max-width: $screen-md-min) {
+        display: none;
+      }
     }
   }
 
   // -------------------------------------------------- Image / icons orbit
+  // Everything is a fraction of the orbit's own width, taken from the design
+  // (Figma Group 210: 599 x 692.96). Mobile (Group 2285, 503 x 581.9) is the
+  // exact same orbit at 0.8397 scale, so these hold at every width.
+  //   outer ring 599 (full width)    inner ring 383.97 (0.641)
+  //   icon circle 102.09 (17.04%)    centre logo 79.86 (13.33%)
+  //   ring line 0.9px, Bravo/Slate
+  // Icon positions (--x / --y, in outer-ring radii) come from the PHP.
   .two-columns-image-icons-with-cta-section__image_icon {
-    --icon-size: 64px;
-    --center-size: 20%;
-    --outer-r: calc((100cqi - var(--icon-size)) / 2);
-    --inner-r: calc(var(--outer-r) * 0.6);
+    --icon-size: calc(102.09 / 599 * 100%);
+    --center-size: calc(79.86 / 599 * 100%);
+    --ring-r: 50cqi;
 
     position: relative;
     width: 100%;
-    max-width: 480px;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 599 / 692.96;
     margin: 0 auto;
     container-type: inline-size;
-
-    @media (max-width: $screen-lg-min) {
-      --icon-size: 52px;
-      max-width: 400px;
-    }
-
-    @media (max-width: $screen-md-min) {
-      --icon-size: 48px;
-      max-width: 360px;
-    }
-
-    @media (max-width: $screen-mobile-min) {
-      --icon-size: 40px;
-    }
   }
 
   // Static orbit lines
@@ -148,17 +154,18 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     left: 50%;
     z-index: 0;
     aspect-ratio: 1 / 1;
-    border: 1px solid rgba($black-off-color, 0.45);
+    // 0.9px at 599 wide (0.76px at 503)
+    border: max(0.15cqi, 0.5px) solid $gray-granite-color;
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(1);
     pointer-events: none;
 
     &--outer {
-      width: calc(var(--outer-r) * 2);
+      width: 100%;
     }
 
     &--inner {
-      width: calc(var(--inner-r) * 2);
+      width: calc(383.97 / 599 * 100%);
     }
   }
 
@@ -184,11 +191,9 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     list-style: none;
   }
 
-  // Each icon is rotated to its angle, pushed out by the ring radius, then
-  // counter-rotated so the artwork stays upright.
+  // Each icon is centred on the orbit centre, then moved out to its design
+  // position (--x / --y are in outer-ring radii, set inline by the PHP).
   .two-columns-image-icons-with-cta-section__icon-item {
-    --r: var(--outer-r);
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -197,23 +202,22 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     align-items: center;
     justify-content: center;
     width: var(--icon-size);
-    height: var(--icon-size);
-    margin: calc(var(--icon-size) / -2) 0 0 calc(var(--icon-size) / -2);
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background-color: $white-color;
     box-shadow: 0 2px 8px rgba($back-color, 0.06);
-    transform: rotate(var(--angle)) translateX(var(--r)) rotate(calc(var(--angle) * -1)) scale(1);
-
-    &--inner {
-      --r: var(--inner-r);
-    }
+    transform:
+      translate(-50%, -50%)
+      translate(calc(var(--x) * var(--ring-r)), calc(var(--y) * var(--ring-r)))
+      scale(1);
   }
 
+  // Width is set inline from the SVG's own size (its share of the 102.09px
+  // circle in the design); the height follows the artwork.
   .two-columns-image-icons-with-cta-section__icon {
     display: block;
-    width: 50%;
-    height: 50%;
-    object-fit: contain;
+    width: 54%;
+    height: auto;
   }
 
   // ------------------------------------------------------------ Animation
@@ -234,7 +238,7 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
     .two-columns-image-icons-with-cta-section__icon-item {
       opacity: 0;
-      transform: rotate(var(--angle)) translateX(0) rotate(calc(var(--angle) * -1)) scale(0.3);
+      transform: translate(-50%, -50%) translate(0, 0) scale(0.3);
     }
 
     // Sequence: centre image -> inner ring + inner icons -> outer ring +
@@ -264,7 +268,10 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
         --icon-delay: calc(300ms + var(--i) * 150ms);
 
         opacity: 1;
-        transform: rotate(var(--angle)) translateX(var(--r)) rotate(calc(var(--angle) * -1)) scale(1);
+        transform:
+          translate(-50%, -50%)
+          translate(calc(var(--x) * var(--ring-r)), calc(var(--y) * var(--ring-r)))
+          scale(1);
         transition:
           transform 1000ms $tcic-ease-out var(--icon-delay),
           opacity 600ms ease var(--icon-delay);

@@ -11,6 +11,33 @@ class TwoColumnsImageIconsWithCtaSection
     private const INNER_RING_MAX = 2;
 
     /**
+     * Orbit geometry from the design (Figma Group 210, 599 x 692.96 - mobile
+     * Group 2285 is the same at 0.8397 scale). Positions are in units of the
+     * outer ring radius (599 / 2), measured from the orbit centre.
+     */
+    private const ICON_CIRCLE_SIZE = 102.09;          // icon circle, px at 599 wide
+    private const INNER_RING_RATIO = 383.97 / 599;    // inner ring / outer ring
+
+    /**
+     * The design's six outer icons, clockwise from the top. They are not on an
+     * even 60deg spread: the side icons sit ~40deg from horizontal, slightly
+     * outside the ring, and the top/bottom ones slightly inside it.
+     */
+    private const OUTER_SLOTS_6 = [
+        [0, -0.9879],
+        [0.7753, -0.6493],
+        [0.7753, 0.6493],
+        [0, 0.9879],
+        [-0.7753, 0.6493],
+        [-0.7753, -0.6493],
+    ];
+
+    /**
+     * Glyph width (as % of the icon circle) when an icon's own size is unknown.
+     */
+    private const DEFAULT_GLYPH_RATIO = 55.11 / 102.09;
+
+    /**
      * Allowed heading tags for the heading_level field.
      */
     private const HEADING_LEVELS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
@@ -106,6 +133,7 @@ class TwoColumnsImageIconsWithCtaSection
         }
 
         return [
+            'id'     => is_array($image) ? (int) ($image['ID'] ?? $image['id'] ?? 0) : 0,
             'url'    => $url,
             'alt'    => is_array($image) ? ($image['alt'] ?? '') : '',
             'width'  => is_array($image) ? ($image['width'] ?? '') : '',
@@ -117,7 +145,9 @@ class TwoColumnsImageIconsWithCtaSection
      * Build the icon list with its orbit ring and angle.
      *
      * Rows 1-2 sit on the inner ring (row 1 on the left, row 2 on the right).
-     * Rows 3+ are spread evenly around the outer ring, clockwise from the top.
+     * Rows 3+ go around the outer ring, clockwise from the top: at the design's
+     * positions when there are six of them, otherwise evenly spaced.
+     * `x` / `y` are the icon centre in outer-ring radii from the orbit centre.
      * `order` is the icon's position within its ring, used to stagger the
      * build-out animation (inner ring first, then outer ring).
      */
@@ -142,17 +172,54 @@ class TwoColumnsImageIconsWithCtaSection
             if ($index < $innerCount) {
                 $icon['ring'] = 'inner';
                 $icon['order'] = $index;
-                $icon['angle'] = 180 + (360 / $innerCount) * $index;
+                $angle = deg2rad(180 + (360 / $innerCount) * $index);
+                $x = self::INNER_RING_RATIO * cos($angle);
+                $y = self::INNER_RING_RATIO * sin($angle);
             } else {
                 $icon['ring'] = 'outer';
                 $icon['order'] = $index - $innerCount;
-                $icon['angle'] = -90 + (360 / $outerCount) * $icon['order'];
+                if ($outerCount === count(self::OUTER_SLOTS_6)) {
+                    [$x, $y] = self::OUTER_SLOTS_6[$icon['order']];
+                } else {
+                    // Any other count: evenly spaced on the ring, from the top
+                    $angle = deg2rad(-90 + (360 / $outerCount) * $icon['order']);
+                    $x = cos($angle);
+                    $y = sin($angle);
+                }
             }
-            $icon['angle'] = round($icon['angle'], 2);
+
+            $icon['x'] = round($x, 4);
+            $icon['y'] = round($y, 4);
+            $icon['glyph'] = self::glyphPercent($icon);
         }
         unset($icon);
 
         return $icons;
+    }
+
+    /**
+     * Icon artwork width as a % of the icon circle. The SVGs are exported at
+     * their design size (e.g. 66 x 47 for Salesforce), so each keeps its own
+     * proportion to the 102.09px circle, as in the design.
+     */
+    private static function glyphPercent(array $icon): float
+    {
+        $width = (float) ($icon['width'] ?: 0);
+
+        if ($width <= 1 && !empty($icon['id']) && 'image/svg+xml' === get_post_mime_type($icon['id'])) {
+            $file = get_attached_file($icon['id']);
+            $svg = $file && is_readable($file) ? (string) file_get_contents($file, false, null, 0, 2048) : '';
+
+            if (preg_match('/<svg\b[^>]*\swidth="([\d.]+)(?:px)?"/i', $svg, $match)) {
+                $width = (float) $match[1];
+            } elseif (preg_match('/viewBox="[\d.\s-]+?\s([\d.]+)\s[\d.]+"/i', $svg, $match)) {
+                $width = (float) $match[1];
+            }
+        }
+
+        $ratio = $width > 1 ? $width / self::ICON_CIRCLE_SIZE : self::DEFAULT_GLYPH_RATIO;
+
+        return round(min($ratio, 0.8) * 100, 2);
     }
 
     /**

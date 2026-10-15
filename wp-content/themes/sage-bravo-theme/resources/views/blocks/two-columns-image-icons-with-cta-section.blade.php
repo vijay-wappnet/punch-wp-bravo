@@ -73,10 +73,11 @@ use Illuminate\Support\Facades\Vite;
               <ul class="two-columns-image-icons-with-cta-section__icons" role="list">
                 @foreach($icons as $icon)
                   <li class="two-columns-image-icons-with-cta-section__icon-item two-columns-image-icons-with-cta-section__icon-item--{{ $icon['ring'] }}"
-                    style="--angle: {{ $icon['angle'] }}deg; --i: {{ $icon['order'] }};">
+                    style="--x: {{ $icon['x'] }}; --y: {{ $icon['y'] }}; --i: {{ $icon['order'] }};">
                     <img src="{!! esc_url($icon['url']) !!}"
                       alt="{!! esc_attr($icon['alt']) !!}"
                       loading="lazy"
+                      style="width: {{ $icon['glyph'] }}%;"
                       class="two-columns-image-icons-with-cta-section__icon">
                   </li>
                 @endforeach

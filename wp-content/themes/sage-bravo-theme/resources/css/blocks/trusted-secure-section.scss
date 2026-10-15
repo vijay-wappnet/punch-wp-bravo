@@ -3,7 +3,6 @@
 
 .trusted-secure-section {
   position: relative;
-  padding: 40px 0;
   overflow: hidden;
   color: $black-off-color;
   background-position: center;
@@ -27,7 +26,7 @@
     gap: 50px;
 
     @media (max-width: $screen-lg-min) {
-      gap: 35px;
+      gap: 32px;
     }
 
     // Mobile: icon row on top, centred content below
@@ -43,7 +42,7 @@
     display: flex;
     flex: 0 1 auto;
     align-items: center;
-    gap: 55px;
+    gap: 60px;
     min-width: 0;
     margin: 0;
     padding: 0;
@@ -104,8 +103,8 @@
     }
   }
 
-  &--align-right .trusted-secure-section__content {
-    text-align: right;
+  &--align-left .trusted-secure-section__content {
+    text-align: left;
 
     @media (max-width: $screen-md-min-767) {
       text-align: center;
