@@ -54,7 +54,7 @@
               @endif
             </div>
 
-            <h3 class="latest-article-list-section__title">{{ $article['title'] }}</h3>
+            <h4 class="latest-article-list-section__title">{{ $article['title'] }}</h4>
 
             <span class="latest-article-list-section__read-more">
               {{ __('Read More', 'sage') }}

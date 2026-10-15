@@ -57,13 +57,12 @@ $lals-image-transition: 0.4s ease;
     justify-content: space-between;
     gap: 16px 24px;
     margin-bottom: 52px;
-
     // Mobile: heading, button and arrows stay on one row (no wrapping,
     // which pushed the button onto its own line, far to the right)
     @media (max-width: $screen-md-min-767) {
       flex-wrap: nowrap;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 34px;
     }
   }
 
@@ -76,12 +75,10 @@ $lals-image-transition: 0.4s ease;
     font-size: 40px;
     line-height: 48px;
     overflow-wrap: break-word;
-
+    line-height: 1%;
     @media (max-width: $screen-md-min-767) {
       flex: 1 1 auto;
-      min-width: 0;
-      font-size: 30px;
-      line-height: 36px;
+      //min-width: 0;
     }
   }
 
@@ -102,10 +99,9 @@ $lals-image-transition: 0.4s ease;
   // and shown without its arrow as in the design.
   .btn-trans-border-arrow {
     @media (max-width: $screen-md-min-767) {
-      width: auto;
-      padding: 7px 14px;
-      font-size: 15px !important; // beats the .btn mobile font-size, also !important
-      line-height: 20px;
+
+      font-size: 22px !important; // beats the .btn mobile font-size, also !important
+      line-height: 100%;
     }
   }
 
@@ -247,10 +243,10 @@ $lals-image-transition: 0.4s ease;
   .latest-article-list-section__media {
     @include lals-media;
     aspect-ratio: 4 / 5;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
     @media (max-width: $screen-md-min-767) {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
   }
 
@@ -270,7 +266,7 @@ $lals-image-transition: 0.4s ease;
     overflow: hidden;
     color: $black-off-color;
     font-family: $font-articulat-family;
-    font-weight: $font-articulat-light-weight;
+    font-weight: $font-articulat-regular-weight;
     font-size: 24px;
     line-height: 40px;
     overflow-wrap: break-word;
@@ -285,8 +281,8 @@ $lals-image-transition: 0.4s ease;
 
     @media (max-width: $screen-md-min-767) {
       margin-bottom: 12px;
-      font-size: 16px;
-      line-height: 28px;
+      font-size: 24px;
+      line-height: 40px;
     }
   }
 

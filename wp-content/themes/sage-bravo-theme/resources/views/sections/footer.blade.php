@@ -53,7 +53,7 @@
 <footer id="site-footer" class="site-footer" role="contentinfo">
   @if ($newsletter_title || $newsletter_title_mobile || $newsletter_shortcode)
     <div class="footer-newsletter">
-      <div class="footer-newsletter-inner">
+      <div class="footer-newsletter-inner container">
         <div class="footer-newsletter-copy">
           @if ($newsletter_title)
             <h4 class="footer-newsletter-title footer-newsletter-title-desktop">{{ $newsletter_title }}</h4>

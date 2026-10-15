@@ -12,7 +12,6 @@
 .footer-newsletter-inner,
 .footer-main-inner,
 .footer-bottom-inner {
-  max-width: $screen-xl-min;
   margin: 0 auto;
 }
 
@@ -23,11 +22,12 @@
 .footer-newsletter {
   background-color: $white-color;
   border-bottom: 1px solid $white-off-light-grayish-color;
-  padding: 32px 40px;
+  padding: 45px 43px;
 
   @media (max-width: $screen-lg-min) {
-    padding: 32px 20px;
+    padding: 30px 36px 42px 36px;
   }
+
 }
 
 .footer-newsletter-inner {
@@ -35,7 +35,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-
+  &.container {
+    @media (max-width: $screen-lg-min) {
+      padding: 0;
+    }
+  }
   @media (max-width: $screen-lg-min) {
     flex-direction: column;
     align-items: stretch;
@@ -52,7 +56,7 @@
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   font-size: 24px;
-  line-height: 30px;
+  line-height: 40px;
   color: $black-off-color;
   margin: 0;
 }
@@ -151,7 +155,7 @@
     color: $black-off-color;
     background-color: $white-color;
     border: 1.5px solid $gray-grayish-orange-color;
-    border-radius: 8px;
+    border-radius: 0px;
     padding: 9.6px 15px;
 
     &::placeholder {
@@ -289,6 +293,7 @@
 
     input[type='email'] {
       text-align: center;
+      padding: 16px 15px;
     }
 
     .footer-newsletter-submit {
@@ -302,7 +307,7 @@
     input[type='submit'] {
       width: 100%;
       text-align: center;
-      padding: 18px 24px;
+      padding: 16px 24px;
     }
   }
 }
@@ -317,7 +322,7 @@
   padding: 56px 40px;
 
   @media (max-width: $screen-lg-min) {
-    padding: 40px 20px;
+    padding: 40px 36px;
   }
 }
 

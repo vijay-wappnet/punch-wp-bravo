@@ -40,8 +40,10 @@ if (!animationsEnabled || prefersReducedMotion) {
       // Three Columns Card Grid Section
       '.three-columns-card-grid-section__item',
 
-      // Testimonial Slider Section
-      '.testimonial-slider-section__inner',
+      // Testimonial Slider Section - the container, not __inner: the arrows are
+      // positioned against the container, and a transform on __inner would
+      // pull them in to the quote column while it animates.
+      '.testimonial-slider-section > .container',
 
       // Product Showcase Slider Section
       '.product-showcase-slider-section__inner',

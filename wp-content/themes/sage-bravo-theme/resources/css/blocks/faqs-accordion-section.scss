@@ -38,7 +38,7 @@ $faqas-ease: ease;
     gap: 24px;
     width: 100%;
     margin: 0;
-    padding: 24px 25px;
+    padding: 18px 26px;
     border: 0;
     background: none;
     color: inherit;
@@ -62,11 +62,11 @@ $faqas-ease: ease;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
     font-size: 24px;
-    line-height: 30px;
+    line-height: 40px;
 
     @media (max-width: $screen-md-min-767) {
       font-size: 24px;
-      line-height: 30px;
+      line-height: 40px;
     }
   }
 

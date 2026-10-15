@@ -6,6 +6,7 @@
 @use "@accessible360/accessible-slick/slick/slick.min";
 
 $tss-arrow-size: 44px;
+$tss-arrow-icon: 22px;
 $tss-transition: 350ms ease-in-out;
 
 .testimonial-slider-section {
@@ -18,10 +19,21 @@ $tss-transition: 350ms ease-in-out;
   background-size: cover;
 
   // Leaves room either side of the quote for the arrows on desktop
+  // Desktop: the arrows line up with the page container's content edges
+  // (design), not the 1024px quote column - so they're positioned against
+  // the container instead of __inner.
+  > .container {
+    position: relative;
+  }
+
   .testimonial-slider-section__inner {
     position: relative;
     max-width: 1024px;
     margin: 0 auto;
+
+    @media (min-width: $screen-md-min) {
+      position: static;
+    }
 
     &.has-slider {
       padding: 0 calc(#{$tss-arrow-size} + 40px);
@@ -117,9 +129,11 @@ $tss-transition: 350ms ease-in-out;
   // ----------------------------------------------------------- Arrows
   // Desktop: pinned to the left/right edges, vertically centred on the slide.
   // Mobile: a centred pair under the logo.
+  // Inset by the container's padding, minus the button's padding around the
+  // icon, so the arrow glyphs themselves sit on the content edges.
   .testimonial-slider-section__arrows {
     position: absolute;
-    inset: 0;
+    inset: 0 calc(var(--bs-gutter-x, 1.5rem) * 0.5 - (#{$tss-arrow-size} - #{$tss-arrow-icon}) / 2);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -148,7 +162,7 @@ $tss-transition: 350ms ease-in-out;
 
     img {
       display: block;
-      width: 22px;
+      width: $tss-arrow-icon;
       height: auto;
       transition: transform $tss-transition;
     }

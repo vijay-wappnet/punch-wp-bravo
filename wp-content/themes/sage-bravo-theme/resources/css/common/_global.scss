@@ -228,3 +228,10 @@ b{
   font-family: $font-articulat-heavy-family;
   font-weight: $font-articulat-heavy-weight;
 }
+
+.container{
+  @media (max-width: $screen-md-min) {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+}
