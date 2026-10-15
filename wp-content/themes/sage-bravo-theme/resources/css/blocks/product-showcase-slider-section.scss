@@ -5,7 +5,7 @@
 // used - the dots are styled below.
 @use "@accessible360/accessible-slick/slick/slick.min";
 
-$pss-dot-size: 14px;
+$pss-dot-size: 22px;
 $pss-dot-gap: 9px;
 $pss-transition: 350ms ease-in-out;
 
@@ -95,18 +95,19 @@ $pss-transition: 350ms ease-in-out;
 
   // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
   .product-showcase-slider-section__heading {
-    max-width: 560px;
+    max-width: 900px;
     margin: 0 auto;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    font-size: 36px;
-    line-height: 44px;
+    font-size: 50px;
+    line-height: 60px;
+    letter-spacing: 1%;
     overflow-wrap: break-word;
 
     @media (max-width: $screen-md-min-767) {
-      font-size: 30px;
-      line-height: 38px;
+      font-size: 42px;
+      line-height: 50px;
     }
   }
 

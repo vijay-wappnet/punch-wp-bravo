@@ -535,9 +535,9 @@ body.no-scroll {
 
 // Inner pages: header isn't overlaying a hero, so push content below it.
 body:not(.home) .main {
-  padding-top: 96px;
+  padding-top: 99px;
 
   @media (max-width: $screen-lg-min) {
-    padding-top: 76px;
+    padding-top: 99px;
   }
 }

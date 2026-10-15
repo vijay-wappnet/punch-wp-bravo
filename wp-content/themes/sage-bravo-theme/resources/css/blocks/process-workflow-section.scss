@@ -109,9 +109,12 @@
     white-space: nowrap;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    font-size: clamp(14px, 5.2cqw, 24px);
+    font-size: 36px; //clamp(14px, 5.2cqw, 24px);
     line-height: 1.2;
     color: $black-off-color;
+    @media (max-width: $screen-md-min-767) {
+      font-size: clamp(14px, 5.2cqw, 24px);
+    }
   }
 
   // The uploaded icon already carries its own colour; this is only a round box
@@ -156,7 +159,7 @@
 
   .process-workflow-section__buttons {
     display: flex;
-    margin-top: 40px;
+    margin-top: 57px;
 
     .pws-btn {
       min-width: 171px;
@@ -164,15 +167,21 @@
       padding-left: 20px;
       padding-right: 20px;
       gap: 10px;
+      @media (max-width: $screen-md-min-767) {
+        height: 58px;
+      }
     }
 
     .pws-btn__icon {
       width: 21px;
       height: auto;
+      @media (max-width: $screen-md-min-767) {
+        display: none;
+      }
     }
 
     @media (max-width: $screen-md-min-767) {
-      margin-top: 30px;
+      margin-top: 69px;
 
       // Full-width CTA on mobile, as in the design
       .pws-btn {

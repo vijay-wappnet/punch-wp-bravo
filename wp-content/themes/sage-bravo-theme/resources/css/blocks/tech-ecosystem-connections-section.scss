@@ -89,7 +89,6 @@
   // Everything is sized from the screen width, as in the design (heading at
   // 6.7%, drawing from 13.7% down, 6% below it), and stops growing at the
   // 1511px design width.
-  padding: min(5vw, 75px) 0 min(6vw, 90px);
   color: $white-color;
   // Default when no ACF background color is set
   background-color: $gray-granite-color;
