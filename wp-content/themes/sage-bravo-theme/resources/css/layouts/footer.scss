@@ -419,6 +419,10 @@
   display: none;
   width: 24px;
   height: 24px;
+    @media (max-width: $screen-lg-min) {
+      width: 50px;
+      height: 50px;
+    }
 }
 
 @media (max-width: $screen-lg-min) {
@@ -449,6 +453,7 @@
   display: none;
 
   @media (max-width: $screen-lg-min) {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -466,7 +471,8 @@
 .footer-nav-toggle-label {
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
-  font-size: 18px;
+  font-size: 32px;
+  line-height: 38px;
   color: $white-color;
 }
 
@@ -474,10 +480,24 @@
   width: 14px;
   height: auto;
   transition: transform 0.2s ease;
+
+  // Design (mobile): the chevron sits on its own at the right edge, at its
+  // natural 26 x 15 size, so "Site map" stays centred across the full width.
+  @media (max-width: $screen-lg-min) {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 26px;
+    transform: translateY(-50%);
+  }
 }
 
 .footer-nav-toggle.is-open .footer-nav-toggle-icon {
   transform: rotate(180deg);
+
+  @media (max-width: $screen-lg-min) {
+    transform: translateY(-50%) rotate(180deg);
+  }
 }
 
 .footer-menu-list {
@@ -597,11 +617,120 @@
   }
 
   p {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 100%;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-light-weight;
     color: inherit;
     margin: 0;
+  }
+}
+
+/* ==========================================
+   DESKTOP LAYOUT (design)
+   Content sits on the page container's edges, like the newsletter row and
+   blocks above it: logo on top, then the contact links, then the menu in
+   two columns. Measured from the Figma desktop footer (design px):
+   - menu column 1 starts at 26.8% of the container, column 2 at 50.4%
+   - 44px top / 58px bottom padding, 48px between the logo and the links
+   - links 18px on a 25px line with no extra spacing
+   - copyright 18px, bar 54px tall
+   Mobile (<= $screen-lg-min) is unchanged.
+========================================== */
+
+// Same widths as Bootstrap's .container (which the newsletter row uses)
+@mixin footer-container {
+  width: 100%;
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+  padding-left: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+
+  @media (min-width: $screen-xl-min) {
+    max-width: 1140px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+}
+
+@media (min-width: ($screen-lg-min + 1px)) {
+  // Its .container already gives the page edges - the extra side padding
+  // pushed it in further than the blocks above below ~1400px wide.
+  .footer-newsletter {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .footer-main {
+    padding: 44px 0 58px;
+  }
+
+  .footer-main-inner {
+    @include footer-container;
+
+    // Above the circle artwork, which reaches under the links below ~1400px
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 26.8% minmax(0, 1fr);
+    align-items: start;
+    gap: 48px 0;
+  }
+
+  // Logo spans the top row; the contact list and menu share the row below
+  .footer-branding {
+    display: contents;
+  }
+
+  .footer-logo-wrapper {
+    grid-column: 1 / -1;
+  }
+
+  .footer-contact-list {
+    margin: 0;
+  }
+
+  .footer-contact-item {
+    margin-bottom: 0;
+  }
+
+  .footer-nav-wrapper {
+    max-width: none;
+  }
+
+  // Balanced 2 columns; the width puts column 2 at 50.4% of the container
+  // (the menu itself starts at 26.8%, so: 23.6 / 73.2 of its own width,
+  // doubled, minus the gap).
+  .footer-menu-list {
+    width: calc(64.48% - 48px);
+    margin: 0;
+    padding: 0;
+    column-gap: 48px;
+
+    li {
+      margin-bottom: 0;
+    }
+  }
+
+  .footer-bottom {
+    padding: 18px 0;
+  }
+
+  .footer-bottom-inner {
+    @include footer-container;
+
+    &,
+    p {
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    // The global `a { line-height: 25px }` would otherwise stretch the line
+    a {
+      line-height: inherit;
+    }
   }
 }
