@@ -13,7 +13,9 @@
     @if($heading_text || $description)
       <div class="cta-banner-section__content">
         @if($heading_text)
-          <{{ $heading_level }} class="cta-banner-section__heading">{!! nl2br(esc_html($heading_text)) !!}</{{ $heading_level }}>
+          {{-- Line breaks in the heading - including Unicode line/paragraph
+               separators (U+2028 / U+2029, e.g. pasted from Figma) - become <br> --}}
+          <{{ $heading_level }} class="cta-banner-section__heading">{!! nl2br(esc_html(str_replace(["\u{2028}", "\u{2029}"], "\n", $heading_text))) !!}</{{ $heading_level }}>
         @endif
 
         @if($description)

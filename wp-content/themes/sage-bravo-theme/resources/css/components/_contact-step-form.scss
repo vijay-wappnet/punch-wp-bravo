@@ -76,7 +76,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 .cfs-step__tab {
   display: flex;
   align-items: baseline;
-  gap: 35px;
+  gap: 37px;
   margin: 0;
   padding: 22px 43px 0;
   font-size: 32px;
@@ -99,7 +99,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   }
 
   @media (max-width: $screen-md-min-767) {
-    gap: 30px;
+    gap: 37px;
     padding: 18px 24px 0;
     white-space: normal;
   }
@@ -111,8 +111,8 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 
   @media (max-width: $screen-md-min-767) {
     display: block;
-    height: 10px;
-    margin: 14px 24px 0;
+    height: 12px;
+    margin: 22px 25px 0;
     background-color: $white-off-light-grayish-color;
 
     span {
@@ -136,7 +136,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   }
 
   @media (max-width: $screen-md-min-767) {
-    padding: 20px 24px 30px;
+    padding: 25px 24px 30px;
   }
 }
 
@@ -329,7 +329,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 .cfs .cfs-select--boxed,
 .cfs .cfs-field--plan .cfs-select {
   @media (max-width: $screen-md-min-767) {
-    height: 46px;
+    height: 49px;
     padding: 8px 46px 8px 16px;
     border: 1px solid $gray-grayish-orange-color;
     border-radius: 3px;
