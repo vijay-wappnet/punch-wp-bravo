@@ -51,7 +51,8 @@ class ImageBannerSection
             $section_styles[] = 'background-image: url("' . esc_url($section_bg_image_url) . '")';
         }
 
-        // ... and the banner's corner radius (a whole number of px)
+        // ... and the banner's corner radius (a whole number of px). Passed as a
+        // CSS variable so the stylesheet can drop it on mobile (design: square).
         $radius = is_numeric($border_radius) ? max(0, (int) round((float) $border_radius)) : 0;
 
         // Render the Blade template with data using view helper
@@ -59,7 +60,7 @@ class ImageBannerSection
             'blockId'       => $blockId,
             'responsiveCss' => $responsiveCss,
             'banner_image'  => $banner_image,
-            'image_style'   => $radius > 0 ? 'border-radius: ' . $radius . 'px;' : '',
+            'image_style'   => $radius > 0 ? '--ibs-radius: ' . $radius . 'px;' : '',
             'filtered'      => $image_filter === 'yes',
             'section_style' => $section_styles ? implode('; ', $section_styles) . ';' : '',
             'is_preview'    => $is_preview,

@@ -29,11 +29,23 @@
     width: 100%;
   }
 
+  // banner_border_radius arrives as --ibs-radius (inline, from the PHP)
   .image-banner__image {
     display: block;
     width: 100%;
     max-width: 100%;
     height: auto;
+    border-radius: var(--ibs-radius, 0);
+
+    // Mobile (design: 503 x 323): a fixed frame the image fills (cropped,
+    // never stretched), with square corners
+    @media (max-width: $screen-md-min-767) {
+      aspect-ratio: 503 / 323;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0;
+    }
   }
 
   // banner_image_filter = yes: the same faded, warm monochrome used on the
