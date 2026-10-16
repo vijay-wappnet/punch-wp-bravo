@@ -5,12 +5,7 @@
 // The step form itself is styled in components/_contact-step-form.scss.
 
 .contact-form-block-section {
-  padding-bottom: 80px;
   background-color: $white-off-color;
-
-  @media (max-width: $screen-md-min-767) {
-    padding-bottom: 38px;
-  }
 }
 
 .contact-form-block-section {

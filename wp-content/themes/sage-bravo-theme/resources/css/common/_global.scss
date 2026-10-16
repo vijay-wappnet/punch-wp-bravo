@@ -91,13 +91,13 @@ h3 {
 h4 {
   font-size: 24px;
   font-family: $font-articulat-family;
-  line-height: 30px;
+  line-height: 40px;
   font-weight: $font-articulat-regular-weight; //400
   margin-bottom: 20px;
 
   @media (max-width: $screen-md-min) {
     font-size: 24px;
-    line-height: 30px;
+    line-height: 40px;
   }
 }
 
@@ -188,6 +188,7 @@ a {
   background-color: transparent;
   line-height: 25px;
   color: $black-off-color;
+  text-decoration: none;
 }
 
 a:hover,

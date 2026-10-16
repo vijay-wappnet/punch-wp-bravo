@@ -11,8 +11,8 @@
   background-size: cover;
   > .container {
     @media (max-width: $screen-md-min-767) {
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 36px;
+      padding-right: 36px;
     }
   }
 
@@ -22,20 +22,20 @@
   // and top/bottom switching, so there is only one copy of the markup.
   .tciwccs__row {
     @media (max-width: $screen-md-min-767) {
-      row-gap: 30px;
+      row-gap: 46px;
     }
   }
 
   // Gap between the image and the text, on the text's side of the image
   &--image-left .tciwccs__column--content {
     @media (min-width: $screen-md-min) {
-      padding-left: 5%;
+      padding-left: 58px;
     }
   }
 
   &--image-right .tciwccs__column--content {
     @media (min-width: $screen-md-min) {
-      padding-right: 5%;
+      padding-right: 58px;
     }
   }
 
@@ -46,7 +46,7 @@
     width: 100%;
     aspect-ratio: 285 / 317;
     overflow: hidden;
-    border-radius: 3px;
+    border-radius: 0px;
 
     @media (max-width: $screen-md-min-767) {
       aspect-ratio: 348 / 285;
@@ -82,22 +82,11 @@
   }
 
   .tciwccs__heading {
-    margin: 0 0 22px;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    font-size: 30px;
-    line-height: 1.25;
     overflow-wrap: break-word;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    @media (max-width: $screen-md-min-767) {
-      font-size: 28px;
-      margin-bottom: 18px;
-    }
   }
 
   // The WYSIWYG text: the strong lead-in (bold, dark) then the lighter grey copy
@@ -152,12 +141,16 @@
       @media (max-width: $screen-md-min-767) {
         flex: 1 1 100%;
         justify-content: center;
+        width: 100%;
       }
     }
 
     .tciwccs-btn__icon {
       width: 21px;
       height: auto;
+      @media (max-width: $screen-md-min-767) {
+        display: none;
+      }
     }
   }
 

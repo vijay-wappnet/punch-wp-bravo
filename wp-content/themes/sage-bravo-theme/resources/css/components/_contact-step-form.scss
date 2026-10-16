@@ -214,12 +214,12 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   margin: 0 0 12px;
   font-family: $font-articulat-family;
   font-size: 18px;
-  line-height: 24px;
+  line-height: 100%;
   font-weight: $font-articulat-medium-weight; // 600
 
   @media (max-width: $screen-md-min-767) {
     font-size: 22px;
-    line-height: 28px;
+    line-height: 100%;
   }
 }
 
