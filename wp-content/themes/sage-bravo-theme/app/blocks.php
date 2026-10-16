@@ -691,6 +691,28 @@ add_action('init', function () {
             ],
         ]);
 
+        // Register the Line Block Section Block
+        acf_register_block_type([
+            'name'                   => 'line-block-section',
+            'title'                  => __('Line Block Section', 'sage'),
+            'description'            => __('A thin divider line inside the page container, with its own colour and width (%)', 'sage'),
+            'render_callback'        => ['App\Blocks\LineBlockSection', 'render'],
+            'category'               => 'common',
+            'icon'                   => 'minus',
+            'mode'                   => 'preview',
+            'align'                  => false,
+            'api_version'            => 3,
+            'acf_block_version'      => 3,
+            // Fields are edited inline via the block's pencil button, not the sidebar
+            'hide_fields_in_sidebar' => true,
+            'supports'               => [
+                'align'           => false,
+                'mode'            => true,
+                'jsx'             => true,
+                'align_text'      => false,
+            ],
+        ]);
+
     }
 
 });
