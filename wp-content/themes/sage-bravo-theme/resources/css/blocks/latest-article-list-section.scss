@@ -2,13 +2,13 @@
 @use "../common/variables" as *;
 @use "../components/buttons" as *;
 
-$lals-gap: 30px;
+$lals-gap: 32px;
 $lals-transition: 350ms ease-in-out;
 $lals-image-transition: 0.4s ease;
 
 // Card image + hover, shared with the Article Post Listing Section so the
 // hover behaviour is defined once.
-@mixin lals-media($radius: 8px) {
+@mixin lals-media($radius: 10px) {
   position: relative;
   overflow: hidden;
   border-radius: $radius;
@@ -36,7 +36,6 @@ $lals-image-transition: 0.4s ease;
 
 .latest-article-list-section {
   position: relative;
-  padding: 80px 0;
   overflow: hidden;
   color: $black-off-color;
   background-color: $white-off-color;
@@ -44,9 +43,6 @@ $lals-image-transition: 0.4s ease;
   background-repeat: no-repeat;
   background-size: cover;
 
-  @media (max-width: $screen-md-min-767) {
-    padding: 50px 0;
-  }
 
   // ----------------------------------------------------------- Header
   // Heading left; button (and the arrows on tablet/mobile) right
@@ -236,7 +232,7 @@ $lals-image-transition: 0.4s ease;
     &:focus-visible {
       outline: 2px solid $red-fusion-color;
       outline-offset: 4px;
-      border-radius: 8px;
+      border-radius: 10px;
     }
   }
 
@@ -262,7 +258,7 @@ $lals-image-transition: 0.4s ease;
 
   .latest-article-list-section__title {
     display: -webkit-box;
-    margin: 0 0 16px;
+    margin: 0 0 22px;
     overflow: hidden;
     color: $black-off-color;
     font-family: $font-articulat-family;
