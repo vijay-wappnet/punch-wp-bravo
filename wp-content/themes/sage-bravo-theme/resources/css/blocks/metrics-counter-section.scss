@@ -32,15 +32,15 @@ $mcs-negative: $red-fusion-color;
   .metrics-counter {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    gap: 28px;
   }
 
   .metric-card {
     position: relative;
     box-sizing: border-box;
-    padding: 35px 25px;
+    padding: 46px 26px 35px 26px;
     background-color: $white-color;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: left;
   }
 
@@ -62,13 +62,17 @@ $mcs-negative: $red-fusion-color;
       line-height: 40px;
     }
     @media (max-width: $screen-lg-min) {
-      font-size: 42px;
+      font-size: 60px;
       line-height: 40px;
     }
     @media (max-width: $screen-md-min-767) {
+      font-size: 60px;
+      line-height: 40px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: $screen-sm-min) {
       font-size: 36px;
       line-height: 26px;
-      margin-bottom: 20px;
     }
   }
 
@@ -91,17 +95,19 @@ $mcs-negative: $red-fusion-color;
   // only the spacing is reset here
   .metric-label {
     margin: 0;
+    font-size: 22px;
+    line-height: 100%;
     color: $black-off-color;
   }
 
   // The triangle from trend_type; its colour comes from trend_color (inline),
   // with these as the fallback
   .metric-trend {
-    font-size: 12px;
+    font-size: 22px;
     line-height: 1;
 
     @media (max-width: $screen-md-min-767) {
-      font-size: 16px;
+      font-size: 22px;
     }
   }
 
@@ -150,7 +156,7 @@ $mcs-negative: $red-fusion-color;
 
     .metrics-counter {
       display: flex;
-      gap: 26px;
+      gap: 28px;
       padding: 0 6.3vw;
       overflow-x: auto;
       overscroll-behavior-x: contain;
