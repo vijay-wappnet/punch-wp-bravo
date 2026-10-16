@@ -12,8 +12,16 @@
   &--background-only {
     min-height: 240px;
 
+    // Mobile (design ~575 x 408): a fixed shape at any width, like the image
+    // mode. The block's padding is ignored here - with Mobile padding left
+    // empty it falls back to the desktop value (e.g. 250px), which made the
+    // band far too tall and zoomed the background right in. The padding is an
+    // #id rule from custom_acf_dimensions(), hence !important.
     @media (max-width: $screen-md-min-767) {
-      min-height: 160px;
+      min-height: 0;
+      aspect-ratio: 575 / 408;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
   }
 
