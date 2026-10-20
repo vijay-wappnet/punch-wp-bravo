@@ -164,6 +164,14 @@
       opacity: 1;
     }
 
+    // Keyboard/click focus: the border turns red with a 1px red ring
+    // (2px red edge), matching the contact form's boxed fields
+    &:focus {
+      outline: 0;
+      border-color: $red-fusion-color;
+      box-shadow: 0 0 0 1px $red-fusion-color;
+    }
+
     @media (max-width: $screen-mobile-min) {
       font-size: 22px;
       padding: 14px 20px;

@@ -9,9 +9,10 @@ const menuToggle = document.querySelector('.menu-toggle');
 const fullscreenMenu = document.getElementById('fullscreen-menu');
 const closeBtn = fullscreenMenu?.querySelector('.close-btn');
 
-let focusableElements = [];
-let firstFocusable = null;
-let lastFocusable = null;
+// Elements made inert while the menu is open (everything outside it)
+let inertElements = [];
+
+const FOCUSABLE = 'a[href]:not([tabindex="-1"]), button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /* ==========================================
    HEADER SCROLL EFFECT
@@ -34,18 +35,64 @@ function updateScrollState() {
    FOCUS TRAP (ACCESSIBILITY)
 ========================================== */
 
+// The menu's links/buttons that can actually take focus right now (e.g. the
+// mobile-only "Get Started" bar is display:none on desktop and is skipped)
+function visibleFocusables() {
+  return [...fullscreenMenu.querySelectorAll(FOCUSABLE)]
+    .filter((el) => el.getClientRects().length > 0);
+}
+
+// Tab / Shift+Tab cycle inside the menu: from the last link back to Close,
+// and from Close back to the last link
 function trapFocus(e) {
   if (e.key !== 'Tab') return;
-  if (!firstFocusable || !lastFocusable) return;
+
+  const items = visibleFocusables();
+  if (!items.length) return;
+
+  const first = items[0];
+  const last = items[items.length - 1];
+  const inside = fullscreenMenu.contains(document.activeElement);
 
   if (e.shiftKey) {
-    if (document.activeElement === firstFocusable) {
+    if (!inside || document.activeElement === first) {
       e.preventDefault();
-      lastFocusable.focus();
+      last.focus();
     }
-  } else if (document.activeElement === lastFocusable) {
+  } else if (!inside || document.activeElement === last) {
     e.preventDefault();
-    firstFocusable.focus();
+    first.focus();
+  }
+}
+
+// Everything outside the menu: the header bar (menu button, logo, Login,
+// Get Started), the page content, footer, etc. `inert` takes it out of the
+// Tab order and away from screen readers and the mouse. Walking up from the
+// menu covers every branch of the page except the one the menu is in.
+function setOutsideInert(on) {
+  if (!on) {
+    inertElements.forEach((el) => el.removeAttribute('inert'));
+    inertElements = [];
+    return;
+  }
+
+  for (let node = fullscreenMenu; node && node !== document.body; node = node.parentElement) {
+    [...(node.parentElement?.children || [])].forEach((sibling) => {
+      if (sibling !== node && !sibling.hasAttribute('inert') && !['SCRIPT', 'STYLE', 'TEMPLATE'].includes(sibling.tagName)) {
+        sibling.setAttribute('inert', '');
+        inertElements.push(sibling);
+      }
+    });
+  }
+}
+
+// The menu fades in (visibility: hidden -> visible), and the browser won't
+// focus anything inside it until it is visible - so keep trying briefly
+function focusWhenVisible(el, tries = 20) {
+  if (!el) return;
+  el.focus();
+  if (document.activeElement !== el && tries > 0 && fullscreenMenu.classList.contains('is-open')) {
+    setTimeout(() => focusWhenVisible(el, tries - 1), 25);
   }
 }
 
@@ -69,20 +116,11 @@ function openMenu() {
   menuToggle.setAttribute('aria-expanded', 'true');
   lockBodyScroll();
 
-  focusableElements = fullscreenMenu.querySelectorAll(
-    'a:not([tabindex="-1"]), button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-  );
-
-  firstFocusable = closeBtn || focusableElements[0];
-  lastFocusable = focusableElements[focusableElements.length - 1];
-
-  firstFocusable?.focus();
-
-  document.querySelectorAll('body > *:not(#fullscreen-menu)').forEach((el) => {
-    el.setAttribute('aria-hidden', 'true');
-  });
-
+  // Only the menu can be reached while it is open
+  setOutsideInert(true);
   document.addEventListener('keydown', trapFocus);
+
+  focusWhenVisible(closeBtn || visibleFocusables()[0]);
 }
 
 function closeMenu() {
@@ -94,11 +132,10 @@ function closeMenu() {
   unlockBodyScroll();
 
   document.removeEventListener('keydown', trapFocus);
-  menuToggle.focus();
 
-  document.querySelectorAll('body > *:not(#fullscreen-menu)').forEach((el) => {
-    el.removeAttribute('aria-hidden');
-  });
+  // Page is reachable again; focus goes back to the button that opened the menu
+  setOutsideInert(false);
+  menuToggle.focus();
 }
 
 function toggleMenu() {
