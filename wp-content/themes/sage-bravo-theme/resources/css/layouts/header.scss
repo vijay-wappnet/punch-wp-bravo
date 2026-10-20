@@ -190,13 +190,17 @@
     pointer-events: none;
   }
 
+  // The visible logo must also take the click - the base rule above turns
+  // pointer events off, which left no clickable logo in this top state
   .brand-logo-white {
     opacity: 1;
+    pointer-events: auto;
   }
 
   &.header-scrolled {
     .brand-logo-white {
       opacity: 0;
+      pointer-events: none;
     }
 
     .brand-logo-transition {
