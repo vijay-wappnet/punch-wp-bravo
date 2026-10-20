@@ -17,7 +17,8 @@
           {{-- The whole card is one link --}}
           <a href="{!! esc_url($article['url']) !!}"
             class="article-post-listing-section__link"
-            aria-label="{{ sprintf(__('Read more: %s', 'sage'), $article['title']) }}">
+            aria-label="{{ bravo_label(trim($article['category'] . ' ' . $article['title']) . ' - ' . __('Read More', 'sage')) }}"
+            data-event="{{ bravo_label($article['title']) }}">
             <div class="article-post-card">
               <div class="article-post-card__image">
                 @if($article['image'])
@@ -47,7 +48,7 @@
 
     @if(count($articles) > min($per_page, $per_page_mobile))
       <nav class="article-post-listing-section__pagination js-apls-pager" aria-label="{{ __('Article pages', 'sage') }}" hidden>
-        <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--prev js-apls-prev" disabled>
+        <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--prev js-apls-prev" aria-label="{{ __('Previous page', 'sage') }}" data-event="{{ __('Previous article page', 'sage') }}" disabled>
           <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Previous arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           <span class="visually-hidden">{{ __('Previous page', 'sage') }}</span>
         </button>
@@ -56,7 +57,7 @@
           <span class="js-apls-current">1</span>/<span class="js-apls-total">1</span>
         </span>
 
-        <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--next js-apls-next">
+        <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--next js-apls-next" aria-label="{{ __('Next page', 'sage') }}" data-event="{{ __('Next article page', 'sage') }}">
           <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Next arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           <span class="visually-hidden">{{ __('Next page', 'sage') }}</span>
         </button>

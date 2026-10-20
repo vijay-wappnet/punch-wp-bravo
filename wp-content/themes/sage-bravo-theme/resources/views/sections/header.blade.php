@@ -84,7 +84,7 @@
 
 <header id="site-header" class="site-header @if (is_front_page()) site-header--home @endif" role="banner">
   <div class="header-inner container">
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="fullscreen-menu" aria-label="{{ __('Open menu', 'sage') }}">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="fullscreen-menu" aria-label="{{ __('Open menu', 'sage') }}" data-event="{{ __('Open menu', 'sage') }}">
       <span class="menu-toggle-icon">
         <img src="{{ Vite::asset('resources/images/menu-icon-desktop-white.svg') }}" alt="" class="icon menu-icon-desktop menu-icon-white" aria-hidden="true">
         <img src="{{ Vite::asset('resources/images/menu-icon-desktop-black.svg') }}" alt="" class="icon menu-icon-desktop menu-icon-black" aria-hidden="true">

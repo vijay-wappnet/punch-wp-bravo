@@ -20,7 +20,7 @@
 
         @if($description)
           <div class="cta-banner-section__description">
-            {!! wp_kses_post($description) !!}
+            {!! bravo_link_attrs(wp_kses_post($description)) !!}
           </div>
         @endif
       </div>
@@ -31,10 +31,10 @@
         @foreach($buttons as $button)
           <a href="{!! esc_url($button['url']) !!}"
             class="{!! esc_attr($button['class']) !!}"
-            @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
+            aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
             @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
-            @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
+            data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
             <span>{{ $button['title'] }}</span>
             <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="cta-banner-section__btn-icon" aria-hidden="true" width="22" height="15">
           </a>

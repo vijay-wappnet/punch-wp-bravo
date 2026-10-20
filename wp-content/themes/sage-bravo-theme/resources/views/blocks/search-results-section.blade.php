@@ -25,8 +25,8 @@
 
       <button type="submit"
         class="btn {!! esc_attr($button['class']) !!}"
-        @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
-        @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
+        aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
+        data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
         <span>{{ $button['title'] }}</span>
         <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
       </button>
@@ -43,7 +43,8 @@
               <span class="search-results-section__item-title">{{ $result['title'] }}</span>
               <a href="{!! esc_url($result['link']) !!}"
                 class="btn btn-red-fusion search-results-section__more"
-                aria-label="{{ sprintf(__('Find out more about %s', 'sage'), $result['title']) }}">
+                aria-label="{{ sprintf(__('Find out more about %s', 'sage'), $result['title']) }}"
+                data-event="{{ bravo_label(sprintf(__('Search result - %s', 'sage'), $result['title'])) }}">
                 <span>{{ __('Find out More', 'sage') }}</span>
                 <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               </a>
@@ -53,7 +54,7 @@
 
         @if($pagination)
           <nav class="search-results-section__pagination" aria-label="{{ __('Search results pages', 'sage') }}">
-            {!! $pagination !!}
+            {!! bravo_link_attrs($pagination, __('Search results', 'sage')) !!}
           </nav>
         @endif
       </div>

@@ -27,9 +27,9 @@ document.querySelectorAll('.btn-setting').forEach(button => {
 /*
   Search dataLayer Event (Desktop + Mobile)
 */
-document.querySelectorAll('.search-results-form').forEach(form => {
+document.querySelectorAll('.searsearch-results-section__form').forEach(form => {
 
-  const input = form.querySelector('input[name="search-field"]');
+  const input = form.querySelector('input[name="s"]');
 
   // Helper → detect device
   const getEventData = (keyword) => {

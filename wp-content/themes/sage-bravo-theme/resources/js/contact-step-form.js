@@ -230,7 +230,11 @@ function addNumberSpinner(input) {
     button.type = 'button';
     button.className = `cfs-number-spin__btn cfs-number-spin__btn--${dir}`;
     button.tabIndex = -1; // arrow keys already step the input
-    button.setAttribute('aria-label', `${label} ${input.labels?.[0]?.textContent.replace('*', '').trim() || ''}`.trim());
+    // "Increase How many properties do you have?" (the * and the invisible
+    // word joiner that keeps "?*" together are dropped)
+    const fieldLabel = (input.labels?.[0]?.textContent || '').replace(/[*⁠]/g, '').trim();
+    button.setAttribute('aria-label', `${label} ${fieldLabel}`.trim());
+    button.setAttribute('data-event', `Contact form - ${label} ${fieldLabel}`.trim());
     button.addEventListener('click', () => {
       if (dir === 'down' && !input.value) {
         return;

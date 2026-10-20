@@ -15,10 +15,10 @@
       {{-- Mobile only (CSS); JS hides it when there is nothing to scroll --}}
       @if(count($members) > 1)
       <div class="meet-the-team-section__navigation js-mts-nav">
-        <button type="button" class="meet-the-team-section__nav-button js-mts-prev" aria-label="{{ __('Previous team member', 'sage') }}" disabled>
+        <button type="button" class="meet-the-team-section__nav-button js-mts-prev" aria-label="{{ __('Previous team member', 'sage') }}" data-event="{{ __('Previous team member', 'sage') }}" disabled>
           <svg width="22" height="15" viewBox="0 0 22 15" fill="none" aria-hidden="true" focusable="false"><path d="M21 7.5H1.5M7.5 1.5l-6 6 6 6" stroke="currentColor" stroke-width="1.4"/></svg>
         </button>
-        <button type="button" class="meet-the-team-section__nav-button js-mts-next" aria-label="{{ __('Next team member', 'sage') }}">
+        <button type="button" class="meet-the-team-section__nav-button js-mts-next" aria-label="{{ __('Next team member', 'sage') }}" data-event="{{ __('Next team member', 'sage') }}">
           <svg width="22" height="15" viewBox="0 0 22 15" fill="none" aria-hidden="true" focusable="false"><path d="M1 7.5h19.5M14.5 1.5l6 6-6 6" stroke="currentColor" stroke-width="1.4"/></svg>
         </button>
       </div>

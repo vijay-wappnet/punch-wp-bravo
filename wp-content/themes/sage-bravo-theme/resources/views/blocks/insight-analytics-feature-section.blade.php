@@ -71,8 +71,8 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                   class="{!! esc_attr($button['class']) !!}"
                   @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
                   @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
-                  @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
-                  @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
+                  aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
+                  data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
                   <span>{{ $button['title'] }}</span>
                   @if($button['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>

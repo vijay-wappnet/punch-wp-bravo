@@ -18,7 +18,9 @@
               type="button"
               id="{{ $questionId }}"
               aria-expanded="false"
-              aria-controls="{{ $answerId }}">
+              aria-controls="{{ $answerId }}"
+              aria-label="{{ bravo_label($faq['question']) }}"
+              data-event="{{ bravo_label(sprintf(__('FAQ: %s', 'sage'), $faq['question'])) }}">
               <span class="faqs-accordion-section__question-text">{{ $faq['question'] }}</span>
               <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Toggle arrow icon', 'sage') }}" class="faqs-accordion-section__icon" aria-hidden="true" width="22" height="15">
             </button>

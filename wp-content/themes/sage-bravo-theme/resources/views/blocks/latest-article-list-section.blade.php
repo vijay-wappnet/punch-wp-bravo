@@ -17,10 +17,10 @@
         @if($button)
           <a href="{!! esc_url($button['url']) !!}"
             class="btn {!! esc_attr($button['class']) !!}"
-            @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
+            aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
             @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
-            @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
+            data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
             <span>{{ $button['title'] }}</span>
             <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
           </a>
@@ -28,11 +28,11 @@
 
         @if(count($articles) > 1)
           <div class="latest-article-list-section__arrows">
-            <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--prev js-lals-prev" disabled>
+            <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--prev js-lals-prev" aria-label="{{ __('Previous articles', 'sage') }}" data-event="{{ __('Previous articles', 'sage') }}" disabled>
               <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Previous arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               <span class="visually-hidden">{{ __('Previous articles', 'sage') }}</span>
             </button>
-            <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--next js-lals-next">
+            <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--next js-lals-next" aria-label="{{ __('Next articles', 'sage') }}" data-event="{{ __('Next articles', 'sage') }}">
               <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Next arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               <span class="visually-hidden">{{ __('Next articles', 'sage') }}</span>
             </button>
@@ -45,7 +45,9 @@
       @foreach($articles as $article)
         <li class="latest-article-list-section__item">
           {{-- The whole card is one link --}}
-          <a href="{!! esc_url($article['url']) !!}" class="latest-article-list-section__card">
+          <a href="{!! esc_url($article['url']) !!}" class="latest-article-list-section__card"
+            aria-label="{{ bravo_label($article['title'] . ' - ' . __('Read More', 'sage')) }}"
+            data-event="{{ bravo_label($article['title']) }}">
             <div class="latest-article-list-section__media">
               @if($article['image'])
                 {!! $article['image'] !!}

@@ -60,8 +60,8 @@ use Illuminate\Support\Facades\Vite;
                   class="{!! esc_attr($plan['button']['class']) !!}"
                   @if($plan['button']['target']) target="{!! esc_attr($plan['button']['target']) !!}" @endif
                   @if($plan['button']['rel']) rel="{!! esc_attr($plan['button']['rel']) !!}" @endif
-                  @if($plan['button']['aria_label']) aria-label="{!! esc_attr($plan['button']['aria_label']) !!}" @endif
-                  @if($plan['button']['event_label']) data-google-event="{!! esc_attr($plan['button']['event_label']) !!}" @endif>
+                  aria-label="{!! esc_attr(bravo_label($plan['button']['aria_label'], $plan['button']['title'])) !!}"
+                  data-event="{!! esc_attr(bravo_label($plan['button']['event_label'], $plan['button']['title'])) !!}">
                   <span>{{ $plan['button']['title'] }}</span>
                   @if($plan['button']['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>

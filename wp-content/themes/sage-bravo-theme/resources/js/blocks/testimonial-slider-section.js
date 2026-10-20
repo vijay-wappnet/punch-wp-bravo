@@ -6,7 +6,7 @@ import '@accessible360/accessible-slick';
  * the "previous" one is flipped in CSS.
  */
 function arrowButton(direction, icon, label) {
-  return `<button class="slick-${direction} testimonial-slider-section__arrow testimonial-slider-section__arrow--${direction}" type="button">`
+  return `<button class="slick-${direction} testimonial-slider-section__arrow testimonial-slider-section__arrow--${direction}" type="button" aria-label="${label}" data-event="${label}">`
     + `<img src="${icon}" alt="${direction === 'prev' ? 'Previous' : 'Next'} arrow icon" aria-hidden="true" width="22" height="15">`
     + `<span class="visually-hidden">${label}</span>`
     + '</button>';

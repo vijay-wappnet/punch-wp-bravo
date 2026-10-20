@@ -154,6 +154,8 @@
             class="footer-nav-toggle"
             aria-expanded="false"
             aria-controls="footer-nav-menu"
+            aria-label="{{ __('Site map', 'sage') }}"
+            data-event="{{ __('Site map', 'sage') }}"
           >
             <span class="footer-nav-toggle-label">{{ __('Site map', 'sage') }}</span>
             <img src="{{ Vite::asset('resources/images/arrow-down.svg') }}" alt="" class="footer-nav-toggle-icon" aria-hidden="true">
@@ -189,7 +191,7 @@
   @if ($copy_right_content)
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
-        {!! $copy_right_content !!}
+        {!! bravo_link_attrs($copy_right_content) !!}
       </div>
     </div>
   @endif
@@ -206,7 +208,7 @@
             <div class="modal-header">
                 <h5 class="modal-title accessibility-title" id="accessibilityModalLabel">Accessibility Display Settings
                 </h5>
-                <button type="button" class="btn-close custom-close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close custom-close" data-bs-dismiss="modal" aria-label="{{ __('Close accessibility settings', 'sage') }}" data-event="{{ __('Close accessibility settings', 'sage') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -221,11 +223,11 @@
                     <label class="setting-label">Contrast</label>
                     <div class="button-group d-flex">
                         <button type="button" class="btn-setting active" data-setting="contrast"
-                            data-value="default">Default</button>
+                            data-value="default" aria-label="Contrast: Default" data-event="Accessibility - Contrast: Default">Default</button>
                         <button type="button" class="btn-setting" data-setting="contrast"
-                            data-value="higher">Higher</button>
+                            data-value="higher" aria-label="Contrast: Higher" data-event="Accessibility - Contrast: Higher">Higher</button>
                         <button type="button" class="btn-setting" data-setting="contrast"
-                            data-value="inverted">Inverted</button>
+                            data-value="inverted" aria-label="Contrast: Inverted" data-event="Accessibility - Contrast: Inverted">Inverted</button>
                     </div>
                 </div>
 
@@ -234,11 +236,11 @@
                     <label class="setting-label">Text size</label>
                     <div class="button-group d-flex">
                         <button type="button" class="btn-setting active" data-setting="textSize"
-                            data-value="default">Default</button>
+                            data-value="default" aria-label="Text size: Default" data-event="Accessibility - Text size: Default">Default</button>
                         <button type="button" class="btn-setting" data-setting="textSize"
-                            data-value="medium">Medium</button>
+                            data-value="medium" aria-label="Text size: Medium" data-event="Accessibility - Text size: Medium">Medium</button>
                         <button type="button" class="btn-setting" data-setting="textSize"
-                            data-value="large">Large</button>
+                            data-value="large" aria-label="Text size: Large" data-event="Accessibility - Text size: Large">Large</button>
                     </div>
                 </div>
 
@@ -247,9 +249,9 @@
                     <label class="setting-label">Font (dyslexia)</label>
                     <div class="button-group d-flex">
                         <button type="button" class="btn-setting active" data-setting="font"
-                            data-value="default">Default</button>
+                            data-value="default" aria-label="Font (dyslexia): Default" data-event="Accessibility - Font (dyslexia): Default">Default</button>
                         <button type="button" class="btn-setting" data-setting="font"
-                            data-value="adapted">Adapted</button>
+                            data-value="adapted" aria-label="Font (dyslexia): Adapted" data-event="Accessibility - Font (dyslexia): Adapted">Adapted</button>
                     </div>
                 </div>
 
@@ -258,9 +260,9 @@
                     <label class="setting-label">Line spacing</label>
                     <div class="button-group d-flex">
                         <button type="button" class="btn-setting active" data-setting="lineSpacing"
-                            data-value="default">Default</button>
+                            data-value="default" aria-label="Line spacing: Default" data-event="Accessibility - Line spacing: Default">Default</button>
                         <button type="button" class="btn-setting" data-setting="lineSpacing"
-                            data-value="adapted">Adapted</button>
+                            data-value="adapted" aria-label="Line spacing: Adapted" data-event="Accessibility - Line spacing: Adapted">Adapted</button>
                     </div>
                 </div>
 
@@ -269,9 +271,9 @@
                     <label class="setting-label">Justification</label>
                     <div class="button-group d-flex">
                         <button type="button" class="btn-setting active" data-setting="justification"
-                            data-value="default">Default</button>
+                            data-value="default" aria-label="Justification: Default" data-event="Accessibility - Justification: Default">Default</button>
                         <button type="button" class="btn-setting" data-setting="justification"
-                            data-value="adapted">Adapted</button>
+                            data-value="adapted" aria-label="Justification: Adapted" data-event="Accessibility - Justification: Adapted">Adapted</button>
                     </div>
                 </div>
 

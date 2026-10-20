@@ -38,8 +38,8 @@
                     <a href="{{ esc_url($url) }}"
                       target="{{ esc_attr($target) }}"
                       class="btn its-btn {{ esc_attr($button_class) }}"
-                      @if($button_aria)aria-label="{{ esc_attr($button_aria) }}"@endif
-                      @if($event_label)data-event-label="{{ esc_attr($event_label) }}"@endif>
+                      aria-label="{{ bravo_label($button_aria, $link_title) }}"
+                      data-event="{{ bravo_label($event_label, $link_title) }}">
                         {{ esc_html($link_title) }}
                     </a>
                 @endforeach

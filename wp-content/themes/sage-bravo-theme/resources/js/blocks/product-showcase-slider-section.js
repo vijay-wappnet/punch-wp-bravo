@@ -36,7 +36,7 @@ export default function initProductShowcaseSliderSection(root = document) {
         regionLabel: 'product showcase',
         appendDots: dots ? jQuery(dots) : $slider,
         dotsClass: 'product-showcase-slider-section__dots-list',
-        customPaging: (_slick, index) => `<button type="button" class="product-showcase-slider-section__dot"><span class="visually-hidden">Go to slide ${index + 1}</span></button>`,
+        customPaging: (_slick, index) => `<button type="button" class="product-showcase-slider-section__dot" aria-label="Go to slide ${index + 1}" data-event="Product showcase - Go to slide ${index + 1}"><span class="visually-hidden">Go to slide ${index + 1}</span></button>`,
       });
     } catch (error) {
       console.error('Error initializing product showcase slider:', error);

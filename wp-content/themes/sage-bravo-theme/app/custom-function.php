@@ -118,7 +118,7 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     ) {
         $atts['data-toggle'] = 'modal';
         $atts['data-target'] = '#accessibilityModal';
-        $atts['aria-label'] = 'Accessibility settings';
+        $atts['aria-label'] = __('Site Accessibility settings', 'sage');
     }
     return $atts;
 }, 10, 3);
@@ -294,4 +294,48 @@ function bravo_alt(...$candidates)
     }
 
     return '';
+}
+
+/**
+ * aria-label / data-event value: the first non-empty candidate, as plain text
+ * (the ACF field first, then the button's visible title or a fixed label).
+ * Same rules as bravo_alt(); named separately so templates read clearly.
+ */
+function bravo_label(...$candidates)
+{
+    return bravo_alt(...$candidates);
+}
+
+/**
+ * Links and buttons inside editable HTML (ACF WYSIWYG, Contact Form 7, WP
+ * pagination...) - add aria-label and data-event where they are missing,
+ * taken from the element's own text. Existing values are never changed.
+ * $event_prefix (e.g. "Contact form") is added in front of data-event.
+ */
+function bravo_link_attrs($html, $event_prefix = '')
+{
+    if (!is_string($html) || '' === $html || (false === stripos($html, '<a') && false === stripos($html, '<button'))) {
+        return $html;
+    }
+
+    return preg_replace_callback('#<(a|button)\b([^>]*)>(.*?)</\1>#is', function ($m) use ($event_prefix) {
+        [$all, $tag, $attrs, $inner] = $m;
+        $text = bravo_label($inner);
+        if ('' === $text) {
+            return $all;
+        }
+
+        // A link that is just a number (pagination) reads as "Page 2"
+        $label = ctype_digit($text) ? sprintf(__('Page %s', 'sage'), $text) : $text;
+
+        $extra = '';
+        if (!preg_match('/\saria-label\s*=/i', $attrs)) {
+            $extra .= ' aria-label="' . esc_attr($label) . '"';
+        }
+        if (!preg_match('/\sdata-event\s*=/i', $attrs)) {
+            $extra .= ' data-event="' . esc_attr($event_prefix ? $event_prefix . ' - ' . $label : $label) . '"';
+        }
+
+        return $extra ? '<' . $tag . $attrs . $extra . '>' . $inner . '</' . $tag . '>' : $all;
+    }, $html);
 }

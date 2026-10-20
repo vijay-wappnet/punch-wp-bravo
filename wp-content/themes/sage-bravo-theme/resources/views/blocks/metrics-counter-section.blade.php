@@ -61,10 +61,10 @@ use Illuminate\Support\Facades\Vite;
       {{-- Mobile only: real buttons that move the track one card at a time --}}
       @if(count($metrics) > 1)
         <div class="metric-nav">
-          <button type="button" class="metric-nav-button metric-nav-button--prev js-mcs-prev" aria-label="{{ __('Previous metric', 'sage') }}" disabled>
+          <button type="button" class="metric-nav-button metric-nav-button--prev js-mcs-prev" aria-label="{{ __('Previous metric', 'sage') }}" data-event="{{ __('Previous metric', 'sage') }}" disabled>
             <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Previous arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           </button>
-          <button type="button" class="metric-nav-button metric-nav-button--next js-mcs-next" aria-label="{{ __('Next metric', 'sage') }}">
+          <button type="button" class="metric-nav-button metric-nav-button--next js-mcs-next" aria-label="{{ __('Next metric', 'sage') }}" data-event="{{ __('Next metric', 'sage') }}">
             <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Next arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           </button>
         </div>

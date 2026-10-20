@@ -36,8 +36,8 @@ use Illuminate\Support\Facades\Vite;
                 class="btn fccs-btn {!! esc_attr($button['class']) !!}"
                 @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
                 @if($button['target'] === '_blank') rel="noopener noreferrer" @endif
-                @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
-                @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
+                aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
+                data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
                 <span>{{ $button['title'] }}</span>
                 <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="fccs-btn__icon" aria-hidden="true" width="22" height="15">
               </a>

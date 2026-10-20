@@ -35,11 +35,13 @@ add_filter('wpcf7_form_elements', function ($form) {
 
     $arrow = '<img src="' . esc_url(Vite::asset('resources/images/btn-left-arrow.svg')) . '" alt="' . esc_attr__('Right arrow icon', 'sage') . '" class="btn-contact-from-7__icon" aria-hidden="true" width="22" height="15">';
 
-    return str_replace(
+    // Links/buttons in the form template (Next, Submit, the thank-you link)
+    // get aria-label and data-event from their own text where missing
+    return bravo_link_attrs(str_replace(
         ['<span class="cfs-arrow"></span>', '{home}'],
         [$arrow, untrailingslashit(home_url())],
         $form
-    );
+    ), __('Contact form', 'sage'));
 }, 20);
 
 // "Where are your properties located?*" - tick a location or pick a region.

@@ -63,8 +63,8 @@ use Illuminate\Support\Facades\Vite;
                 {{ $target_attr }}
               @endif
               class="btn vbs-btn {{ esc_attr($button_class) }}"
-              @if($button_aria)aria-label="{{ esc_attr($button_aria) }}"@endif
-              @if($event_label)data-event-label="{{ esc_attr($event_label) }}"@endif>
+              aria-label="{{ bravo_label($button_aria, $link_title) }}"
+              data-event="{{ bravo_label($event_label, $link_title) }}">
                 <span>{{ esc_html($link_title) }}</span>
                 <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="vbs-btn__icon" aria-hidden="true" width="22" height="15">
             </a>
