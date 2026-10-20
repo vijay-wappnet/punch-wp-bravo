@@ -315,6 +315,12 @@
     margin-left: 0;
   }
 
+  // Keyboard focus (the menu moves focus here when it opens)
+  &:focus-visible {
+    outline: 1px solid $red-fusion-color;
+    outline-offset: 4px;
+  }
+
   .close-icon {
     width: 19px;
     height: 19px;
