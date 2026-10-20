@@ -17,7 +17,7 @@
               <div class="three-columns-card-grid-section__media">
                 @if($card['image'])
                   <img src="{!! esc_url($card['image']['url']) !!}"
-                    alt="{!! esc_attr($card['image']['alt']) !!}"
+                    alt="{!! esc_attr(bravo_alt($card['image']['alt'], $card['heading'], __('Card image', 'sage'))) !!}"
                     @if($card['image']['width']) width="{!! esc_attr($card['image']['width']) !!}" @endif
                     @if($card['image']['height']) height="{!! esc_attr($card['image']['height']) !!}" @endif
                     loading="lazy"

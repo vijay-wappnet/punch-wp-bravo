@@ -36,7 +36,7 @@
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
             @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
             <span>{{ $button['title'] }}</span>
-            <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="cta-banner-section__btn-icon" aria-hidden="true" width="22" height="15">
+            <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="cta-banner-section__btn-icon" aria-hidden="true" width="22" height="15">
           </a>
         @endforeach
       </div>

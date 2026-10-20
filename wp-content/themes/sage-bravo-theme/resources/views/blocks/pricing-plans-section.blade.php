@@ -66,7 +66,7 @@ use Illuminate\Support\Facades\Vite;
                   @if($plan['button']['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                   @else
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="pps-btn__icon" aria-hidden="true" width="22" height="15">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="pps-btn__icon" aria-hidden="true" width="22" height="15">
                   @endif
                 </a>
               </div>

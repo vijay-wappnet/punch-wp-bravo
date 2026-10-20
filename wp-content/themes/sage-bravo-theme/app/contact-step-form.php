@@ -33,7 +33,7 @@ add_filter('wpcf7_form_elements', function ($form) {
         return $form;
     }
 
-    $arrow = '<img src="' . esc_url(Vite::asset('resources/images/btn-left-arrow.svg')) . '" alt="" class="btn-contact-from-7__icon" aria-hidden="true" width="22" height="15">';
+    $arrow = '<img src="' . esc_url(Vite::asset('resources/images/btn-left-arrow.svg')) . '" alt="' . esc_attr__('Right arrow icon', 'sage') . '" class="btn-contact-from-7__icon" aria-hidden="true" width="22" height="15">';
 
     return str_replace(
         ['<span class="cfs-arrow"></span>', '{home}'],

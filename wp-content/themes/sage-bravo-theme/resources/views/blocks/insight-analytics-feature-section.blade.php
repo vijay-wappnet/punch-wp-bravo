@@ -27,7 +27,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
           {{-- The overlay cards are positioned against this wrapper, so they stay attached to the image wherever it sits --}}
           <div class="iafs__media">
             <img src="{!! esc_url($image['url']) !!}"
-              alt="{!! esc_attr($image['alt']) !!}"
+              alt="{!! esc_attr(bravo_alt($image['alt'], $heading_text, __('Insight analytics feature image', 'sage'))) !!}"
               @if($image['width']) width="{!! esc_attr($image['width']) !!}" @endif
               @if($image['height']) height="{!! esc_attr($image['height']) !!}" @endif
               loading="lazy"
@@ -39,7 +39,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                 @if($overlay['style']) style="{!! esc_attr($overlay['style']) !!}" @endif>
                 @if($overlay['icon'])
                   <img src="{!! esc_url($overlay['icon']['url']) !!}"
-                    alt="{!! esc_attr($overlay['title'] ? '' : $overlay['icon']['alt']) !!}"
+                    alt="{!! esc_attr(bravo_alt($overlay['icon']['alt'], $overlay['title'], __('Insight overlay icon', 'sage'))) !!}"
                     @if($overlay['icon']['width']) width="{!! esc_attr($overlay['icon']['width']) !!}" @endif
                     @if($overlay['icon']['height']) height="{!! esc_attr($overlay['icon']['height']) !!}" @endif
                     @if($overlay['title']) aria-hidden="true" @endif
@@ -77,7 +77,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                   @if($button['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                   @else
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="iafs-btn__icon" aria-hidden="true" width="22" height="15">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="iafs-btn__icon" aria-hidden="true" width="22" height="15">
                   @endif
                 </a>
               </div>

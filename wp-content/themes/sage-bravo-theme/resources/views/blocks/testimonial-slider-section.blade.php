@@ -28,7 +28,7 @@
 
                     @if($testimonial['logo'])
                       <img src="{!! esc_url($testimonial['logo']['url']) !!}"
-                        alt="{!! esc_attr($testimonial['logo']['alt']) !!}"
+                        alt="{!! esc_attr(bravo_alt($testimonial['logo']['alt'], __('Client logo', 'sage'))) !!}"
                         @if($testimonial['logo']['width']) width="{!! esc_attr($testimonial['logo']['width']) !!}" @endif
                         @if($testimonial['logo']['height']) height="{!! esc_attr($testimonial['logo']['height']) !!}" @endif
                         loading="lazy"

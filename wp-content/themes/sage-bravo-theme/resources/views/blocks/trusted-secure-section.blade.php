@@ -13,7 +13,7 @@
           @foreach($icons as $icon)
             <li class="trusted-secure-section__icon">
               <img src="{!! esc_url($icon['url']) !!}"
-                alt="{!! esc_attr($icon['alt']) !!}"
+                alt="{!! esc_attr(bravo_alt($icon['alt'], __('Security certification badge', 'sage'))) !!}"
                 @if($icon['width']) width="{{ $icon['width'] }}" @endif
                 @if($icon['height']) height="{{ $icon['height'] }}" @endif
                 loading="lazy" decoding="async">

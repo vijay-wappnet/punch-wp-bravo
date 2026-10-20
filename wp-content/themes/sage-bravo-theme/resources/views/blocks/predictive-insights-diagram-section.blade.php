@@ -27,7 +27,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
           {{-- Everything in the diagram is positioned against this wrapper, so it stays attached to the image wherever it sits --}}
           <div class="pid__media js-pid-media">
             <img src="{!! esc_url($image['url']) !!}"
-              alt="{!! esc_attr($image['alt']) !!}"
+              alt="{!! esc_attr(bravo_alt($image['alt'], $heading_text, __('Predictive insights image', 'sage'))) !!}"
               @if($image['width']) width="{!! esc_attr($image['width']) !!}" @endif
               @if($image['height']) height="{!! esc_attr($image['height']) !!}" @endif
               loading="lazy"
@@ -56,7 +56,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
             @foreach($elements as $element)
               <span class="pid__item pid__item--{{ $element['slot'] }} js-pid-item" data-index="{{ $element['index'] }}">
                 <img src="{!! esc_url($element['icon']['url']) !!}"
-                  alt="{!! esc_attr($element['icon']['alt']) !!}"
+                  alt="{!! esc_attr(bravo_alt($element['icon']['alt'], __('Predictive insights diagram icon', 'sage'))) !!}"
                   @if($element['icon']['width']) width="{!! esc_attr($element['icon']['width']) !!}" @endif
                   @if($element['icon']['height']) height="{!! esc_attr($element['icon']['height']) !!}" @endif
                   loading="lazy"
@@ -89,7 +89,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                   @if($button['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                   @else
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="pid-btn__icon" aria-hidden="true" width="22" height="15">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="pid-btn__icon" aria-hidden="true" width="22" height="15">
                   @endif
                 </a>
               </div>

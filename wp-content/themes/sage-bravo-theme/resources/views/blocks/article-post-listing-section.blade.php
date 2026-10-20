@@ -36,7 +36,7 @@
 
                 <span class="article-post-card__read-more">
                   {{ __('Read More', 'sage') }}
-                  <img class="article-post-card__read-more-icon" src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="19" height="13">
+                  <img class="article-post-card__read-more-icon" src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" aria-hidden="true" width="19" height="13">
                 </span>
               </div>
             </div>
@@ -48,7 +48,7 @@
     @if(count($articles) > min($per_page, $per_page_mobile))
       <nav class="article-post-listing-section__pagination js-apls-pager" aria-label="{{ __('Article pages', 'sage') }}" hidden>
         <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--prev js-apls-prev" disabled>
-          <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+          <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Previous arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           <span class="visually-hidden">{{ __('Previous page', 'sage') }}</span>
         </button>
 
@@ -57,7 +57,7 @@
         </span>
 
         <button type="button" class="article-post-listing-section__arrow article-post-listing-section__arrow--next js-apls-next">
-          <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+          <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Next arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
           <span class="visually-hidden">{{ __('Next page', 'sage') }}</span>
         </button>
       </nav>

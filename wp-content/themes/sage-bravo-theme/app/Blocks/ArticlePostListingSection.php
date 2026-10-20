@@ -119,10 +119,12 @@ class ArticlePostListingSection
                 'title'    => $title,
                 'url'      => get_permalink($post),
                 'category' => $categories ? html_entity_decode($categories[0]->name, ENT_QUOTES, 'UTF-8') : '',
-                // Decorative: the title is right below the image inside the same link
+                // Alt: the image's own Alt Text, else the article title. Hidden from
+                // screen readers - the title is right below it in the same link.
                 'image'    => $thumbnail_id ? wp_get_attachment_image($thumbnail_id, 'large', false, [
                     'class'    => 'article-post-card__img',
-                    'alt'      => '',
+                    'alt'      => bravo_alt(get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true), $title),
+                    'aria-hidden' => 'true',
                     'loading'  => 'lazy',
                     'decoding' => 'async',
                     'sizes'    => '(min-width: 1200px) 540px, (min-width: 768px) 45vw, 100vw',

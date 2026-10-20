@@ -121,10 +121,12 @@ class LatestArticleListSection
             $articles[] = [
                 'title' => $title,
                 'url'   => get_permalink($post),
-                // Decorative: the title is right below the image inside the same link
+                // Alt: the image's own Alt Text, else the article title. Hidden from
+                // screen readers - the title is right below it in the same link.
                 'image' => $thumbnail_id ? wp_get_attachment_image($thumbnail_id, 'large', false, [
                     'class'    => 'latest-article-list-section__image',
-                    'alt'      => '',
+                    'alt'      => bravo_alt(get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true), $title),
+                    'aria-hidden' => 'true',
                     'loading'  => 'lazy',
                     'decoding' => 'async',
                     'sizes'    => '(min-width: 1200px) 360px, (min-width: 992px) 300px, (min-width: 576px) 44vw, 64vw',

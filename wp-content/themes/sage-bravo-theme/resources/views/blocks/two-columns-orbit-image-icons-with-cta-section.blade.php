@@ -55,7 +55,7 @@ $desktopContentOrder = 3 - $desktopVisualOrder;
                     @if($button['arrow_span'])
                       <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                     @else
-                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="tcoiicwcs-btn__icon" aria-hidden="true" width="22" height="15">
+                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="tcoiicwcs-btn__icon" aria-hidden="true" width="22" height="15">
                     @endif
                   </a>
                 @endforeach
@@ -93,7 +93,7 @@ $desktopContentOrder = 3 - $desktopVisualOrder;
                     <li class="tcoi__icon-item" style="--angle: {{ $icon['angle'] }}; --rank: {{ $icon['rank'] }}; --z: {{ $icon['z'] }};">
                       <span class="tcoi__icon-pos">
                         <img src="{!! esc_url($icon['url']) !!}"
-                          alt="{!! esc_attr($icon['alt']) !!}"
+                          alt="{!! esc_attr(bravo_alt($icon['alt'], __('Integration icon', 'sage'))) !!}"
                           @if($icon['width']) width="{!! esc_attr($icon['width']) !!}" @endif
                           @if($icon['height']) height="{!! esc_attr($icon['height']) !!}" @endif
                           loading="lazy"

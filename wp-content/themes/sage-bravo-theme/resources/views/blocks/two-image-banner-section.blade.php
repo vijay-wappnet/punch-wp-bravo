@@ -18,7 +18,7 @@ $columnClass = count($banner_images) > 1 ? 'col-12 col-md-6' : 'col-12';
         <div class="{{ $columnClass }}">
           <div class="image-banner @if(count($banner_images) > 1) image-banner--tile @endif">
             <img src="{!! esc_url($banner_image['url']) !!}"
-              alt="{!! esc_attr($banner_image['alt']) !!}"
+              alt="{!! esc_attr(bravo_alt($banner_image['alt'], sprintf(__('Banner image %d', 'sage'), $loop->iteration))) !!}"
               @if($banner_image['width']) width="{!! esc_attr($banner_image['width']) !!}" @endif
               @if($banner_image['height']) height="{!! esc_attr($banner_image['height']) !!}" @endif
               @if($loop->first) fetchpriority="high" @else loading="lazy" @endif

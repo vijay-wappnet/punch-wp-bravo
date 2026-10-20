@@ -29,11 +29,11 @@
         @if(count($articles) > 1)
           <div class="latest-article-list-section__arrows">
             <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--prev js-lals-prev" disabled>
-              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Previous arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               <span class="visually-hidden">{{ __('Previous articles', 'sage') }}</span>
             </button>
             <button type="button" class="latest-article-list-section__arrow latest-article-list-section__arrow--next js-lals-next">
-              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Next arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               <span class="visually-hidden">{{ __('Next articles', 'sage') }}</span>
             </button>
           </div>

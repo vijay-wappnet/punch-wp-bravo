@@ -24,7 +24,7 @@
                 @if($item['image'])
                   <div class="product-showcase-slider-section__media">
                     <img src="{!! esc_url($item['image']['url']) !!}"
-                      alt="{!! esc_attr($item['image']['alt']) !!}"
+                      alt="{!! esc_attr(bravo_alt($item['image']['alt'], $item['heading'], __('Product showcase image', 'sage'))) !!}"
                       @if($item['image']['width']) width="{!! esc_attr($item['image']['width']) !!}" @endif
                       @if($item['image']['height']) height="{!! esc_attr($item['image']['height']) !!}" @endif
                       @if($loop->first) fetchpriority="high" @else loading="lazy" @endif

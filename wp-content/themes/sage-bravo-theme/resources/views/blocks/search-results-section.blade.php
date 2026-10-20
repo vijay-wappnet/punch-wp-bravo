@@ -13,7 +13,7 @@
     {{-- Desktop: input + button on one row. Mobile: stacked --}}
     <form class="search-results-section__form js-srs-form" role="search" method="get" action="{!! esc_url($form_action) !!}">
       <label class="search-results-section__field">
-        <img src="{{ Vite::asset('resources/images/Search-icon.svg') }}" alt="" aria-hidden="true" width="25" height="27" class="search-results-section__icon">
+        <img src="{{ Vite::asset('resources/images/Search-icon.svg') }}" alt="{{ __('Search icon', 'sage') }}" aria-hidden="true" width="25" height="27" class="search-results-section__icon">
         <span class="visually-hidden">{{ __('Search', 'sage') }}</span>
         <input type="search"
           name="{{ $search_param }}"
@@ -28,7 +28,7 @@
         @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
         @if($button['event_label']) data-event="{!! esc_attr($button['event_label']) !!}" @endif>
         <span>{{ $button['title'] }}</span>
-        <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+        <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
       </button>
     </form>
 
@@ -45,7 +45,7 @@
                 class="btn btn-red-fusion search-results-section__more"
                 aria-label="{{ sprintf(__('Find out more about %s', 'sage'), $result['title']) }}">
                 <span>{{ __('Find out More', 'sage') }}</span>
-                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" aria-hidden="true" width="22" height="15">
+                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" aria-hidden="true" width="22" height="15">
               </a>
             </li>
           @endforeach

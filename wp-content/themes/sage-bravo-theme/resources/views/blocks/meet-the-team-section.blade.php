@@ -34,7 +34,7 @@
             @if($member['image'])
             <div class="meet-the-team-section__image">
               <img src="{!! esc_url($member['image']['url']) !!}"
-                alt="{!! esc_attr($member['image']['alt']) !!}"
+                alt="{!! esc_attr(bravo_alt($member['image']['alt'], $member['name'], __('Team member photo', 'sage'))) !!}"
                 @if($member['image']['width']) width="{!! esc_attr($member['image']['width']) !!}" @endif
                 @if($member['image']['height']) height="{!! esc_attr($member['image']['height']) !!}" @endif
                 loading="lazy" decoding="async">

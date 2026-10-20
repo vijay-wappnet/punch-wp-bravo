@@ -31,7 +31,7 @@
     @foreach($elements as $element)
       <span class="dpw__item dpw__item--{{ $element['index'] }} js-dpw-item" data-index="{{ $element['index'] }}">
         <img src="{!! esc_url($element['icon']['url']) !!}"
-          alt="{!! esc_attr($element['icon']['alt']) !!}"
+          alt="{!! esc_attr(bravo_alt($element['icon']['alt'], __('Data processing workflow icon', 'sage'))) !!}"
           @if($element['icon']['width']) width="{!! esc_attr($element['icon']['width']) !!}" @endif
           @if($element['icon']['height']) height="{!! esc_attr($element['icon']['height']) !!}" @endif
           loading="lazy"

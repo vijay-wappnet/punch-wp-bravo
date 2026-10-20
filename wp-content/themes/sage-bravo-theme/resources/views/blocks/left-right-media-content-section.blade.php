@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Vite;
                     @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
                     @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
                     <span>{{ $button['title'] }}</span>
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="lrmcs-btn__icon" aria-hidden="true" width="22" height="15">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="lrmcs-btn__icon" aria-hidden="true" width="22" height="15">
                   </a>
                 @endforeach
               </div>
@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Vite;
         <div class="left-right-media-content-section__column left-right-media-content-section__column--media">
           <div class="left-right-media-content-section__media js-lrmcs-media">
             <img src="{!! esc_url($image['url']) !!}"
-              alt="{!! esc_attr($image['alt']) !!}"
+              alt="{!! esc_attr(bravo_alt($image['alt'], $title, __('Section image', 'sage'))) !!}"
               @if($image['width']) width="{!! esc_attr($image['width']) !!}" @endif
               @if($image['height']) height="{!! esc_attr($image['height']) !!}" @endif
               loading="lazy"

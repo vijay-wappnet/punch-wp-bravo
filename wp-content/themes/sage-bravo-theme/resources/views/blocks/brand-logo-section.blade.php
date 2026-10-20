@@ -11,7 +11,7 @@
       @foreach($logos as $logo)
         <li class="col bls__item">
           <img src="{!! esc_url($logo['url']) !!}"
-            alt="{!! esc_attr($logo['alt']) !!}"
+            alt="{!! esc_attr(bravo_alt($logo['alt'], __('Brand logo', 'sage'))) !!}"
             @if($logo['width']) width="{!! esc_attr($logo['width']) !!}" @endif
             @if($logo['height']) height="{!! esc_attr($logo['height']) !!}" @endif
             loading="lazy"

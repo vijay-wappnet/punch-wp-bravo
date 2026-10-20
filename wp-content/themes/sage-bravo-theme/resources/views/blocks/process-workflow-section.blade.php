@@ -38,7 +38,7 @@ $hasContent = $heading_text || $description || $button;
               @if($step['icon'])
                 <span class="pws__step-icon pws__step-icon--{{ $loop->iteration }} js-pws-icon">
                   <img src="{!! esc_url($step['icon']['url']) !!}"
-                    alt="{!! esc_attr($step['icon']['alt']) !!}"
+                    alt="{!! esc_attr(bravo_alt($step['icon']['alt'], $step['title'], __('Workflow step icon', 'sage'))) !!}"
                     @if($step['icon']['width']) width="{!! esc_attr($step['icon']['width']) !!}" @endif
                     @if($step['icon']['height']) height="{!! esc_attr($step['icon']['height']) !!}" @endif
                     loading="lazy"
@@ -77,7 +77,7 @@ $hasContent = $heading_text || $description || $button;
                   @if($button['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                   @else
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="pws-btn__icon" aria-hidden="true" width="22" height="15">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="pws-btn__icon" aria-hidden="true" width="22" height="15">
                   @endif
                 </a>
               </div>

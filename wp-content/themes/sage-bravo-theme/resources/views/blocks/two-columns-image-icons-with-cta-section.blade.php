@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Vite;
                   @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
                   @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
                   <span>{{ $button['title'] }}</span>
-                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="twociiwcs-btn__icon" aria-hidden="true" width="22" height="15">
+                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="twociiwcs-btn__icon" aria-hidden="true" width="22" height="15">
                 </a>
               @endforeach
             </div>
@@ -62,7 +62,7 @@ use Illuminate\Support\Facades\Vite;
             @if($image)
               <div class="two-columns-image-icons-with-cta-section__center">
                 <img src="{!! esc_url($image['url']) !!}"
-                  alt="{!! esc_attr($image['alt']) !!}"
+                  alt="{!! esc_attr(bravo_alt($image['alt'], $heading_text, __('Connected platform image', 'sage'))) !!}"
                   @if($image['width']) width="{!! esc_attr($image['width']) !!}" @endif
                   @if($image['height']) height="{!! esc_attr($image['height']) !!}" @endif
                   class="two-columns-image-icons-with-cta-section__center-image">
@@ -75,7 +75,7 @@ use Illuminate\Support\Facades\Vite;
                   <li class="two-columns-image-icons-with-cta-section__icon-item two-columns-image-icons-with-cta-section__icon-item--{{ $icon['ring'] }}"
                     style="--x: {{ $icon['x'] }}; --y: {{ $icon['y'] }}; --i: {{ $icon['order'] }};">
                     <img src="{!! esc_url($icon['url']) !!}"
-                      alt="{!! esc_attr($icon['alt']) !!}"
+                      alt="{!! esc_attr(bravo_alt($icon['alt'], __('Integration icon', 'sage'))) !!}"
                       @if($icon['width']) width="{!! esc_attr($icon['width']) !!}" @endif
                       @if($icon['height']) height="{!! esc_attr($icon['height']) !!}" @endif
                       loading="lazy"

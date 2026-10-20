@@ -12,7 +12,7 @@
       <div class="col-12">
         <div class="image-banner">
           <img src="{!! esc_url($banner_image['url']) !!}"
-            alt="{!! esc_attr($banner_image['alt']) !!}"
+            alt="{!! esc_attr(bravo_alt($banner_image['alt'], get_the_title(), __('Banner image', 'sage'))) !!}"
             @if($banner_image['width']) width="{!! esc_attr($banner_image['width']) !!}" @endif
             @if($banner_image['height']) height="{!! esc_attr($banner_image['height']) !!}" @endif
             loading="lazy"

@@ -7,7 +7,7 @@ import '@accessible360/accessible-slick';
  */
 function arrowButton(direction, icon, label) {
   return `<button class="slick-${direction} testimonial-slider-section__arrow testimonial-slider-section__arrow--${direction}" type="button">`
-    + `<img src="${icon}" alt="" aria-hidden="true" width="22" height="15">`
+    + `<img src="${icon}" alt="${direction === 'prev' ? 'Previous' : 'Next'} arrow icon" aria-hidden="true" width="22" height="15">`
     + `<span class="visually-hidden">${label}</span>`
     + '</button>';
 }

@@ -64,7 +64,7 @@ $drawings = [
               @foreach($logos as $logo)
                 <li class="tec__logo">
                   <img src="{!! esc_url($logo['url']) !!}"
-                    alt="{!! esc_attr($logo['alt']) !!}"
+                    alt="{!! esc_attr(bravo_alt($logo['alt'], __('Integration partner logo', 'sage'))) !!}"
                     @if($logo['width']) width="{!! esc_attr($logo['width']) !!}" @endif
                     @if($logo['height']) height="{!! esc_attr($logo['height']) !!}" @endif
                     loading="lazy"
@@ -81,7 +81,9 @@ $drawings = [
             @if($item['position'] === 'top' && $item['icon'])
               <span class="tec__item-icon">
                 <img src="{!! esc_url($item['icon']['url']) !!}"
-                  alt="{!! esc_attr($item['title'] ? '' : $item['icon']['alt']) !!}"
+                  alt="{!! esc_attr(bravo_alt($item['icon']['alt'], $item['title'], __('Integration icon', 'sage'))) !!}"
+                  {{-- The title is shown next to it, so screen readers skip the icon --}}
+                  @if($item['title']) aria-hidden="true" @endif
                   @if($item['icon']['width']) width="{!! esc_attr($item['icon']['width']) !!}" @endif
                   @if($item['icon']['height']) height="{!! esc_attr($item['icon']['height']) !!}" @endif
                   loading="lazy"

@@ -277,3 +277,21 @@ add_filter('wp_get_attachment_metadata', function ($data, $attachment_id) {
 
     return $data;
 }, 10, 2);
+
+/**
+ * Image alt text: the first non-empty candidate, as plain text. Blocks pass
+ * the image's own Alt Text (Media Library) first, then block content (a
+ * heading, a name...) and finally a block-related label, so no <img> ends up
+ * with an empty alt when its Alt Text field was left blank.
+ */
+function bravo_alt(...$candidates)
+{
+    foreach ($candidates as $candidate) {
+        $text = trim(preg_replace('/\s+/', ' ', wp_strip_all_tags(html_entity_decode((string) $candidate, ENT_QUOTES, 'UTF-8'))));
+        if ('' !== $text) {
+            return $text;
+        }
+    }
+
+    return '';
+}

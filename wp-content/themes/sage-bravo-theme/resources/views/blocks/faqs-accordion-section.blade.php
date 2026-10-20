@@ -20,7 +20,7 @@
               aria-expanded="false"
               aria-controls="{{ $answerId }}">
               <span class="faqs-accordion-section__question-text">{{ $faq['question'] }}</span>
-              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="faqs-accordion-section__icon" aria-hidden="true" width="22" height="15">
+              <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Toggle arrow icon', 'sage') }}" class="faqs-accordion-section__icon" aria-hidden="true" width="22" height="15">
             </button>
           </h3>
 
