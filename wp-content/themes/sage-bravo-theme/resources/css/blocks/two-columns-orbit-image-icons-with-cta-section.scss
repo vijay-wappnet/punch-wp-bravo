@@ -81,8 +81,8 @@ $tcoi-pill-dark: #6b6560;
 
   > .container {
     @media (max-width: $screen-md-min-767) {
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: 36px;
+      padding-right: 36px;
     }
   }
 
@@ -92,7 +92,7 @@ $tcoi-pill-dark: #6b6560;
   // one copy of the markup.
   .tcoi__row {
     @media (max-width: $screen-md-min-767) {
-      row-gap: 30px;
+      row-gap: 59px;
     }
   }
 
@@ -108,6 +108,9 @@ $tcoi-pill-dark: #6b6560;
     max-width: 420px;
     text-align: left;
 
+    @media (max-width: $screen-xl-min) {
+      max-width: 450px;
+    }
     @media (max-width: $screen-md-min-767) {
       max-width: none;
     }
@@ -129,18 +132,26 @@ $tcoi-pill-dark: #6b6560;
   }
 
   .tcoi__heading {
-    margin: 0 0 22px;
+    margin: 0 0 43px;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-medium-weight; //600
+    @media (max-width: $screen-md-min-767) {
+      margin: 0 0 25px;
+    }
   }
 
   // Same look whichever tag (h1-h6 / p) is chosen in subheading_level
   .tcoi__subheading {
-    margin: 0 0 22px;
+    margin: 0 0 37px;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
+    @media (max-width: $screen-md-min-767) {
+      font-size: 32px;
+      line-height: 38px;
+      margin: 0 0 25px;
+    }
   }
 
   .tcoi__description {
