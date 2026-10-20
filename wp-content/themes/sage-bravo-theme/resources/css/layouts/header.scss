@@ -139,6 +139,20 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+
+  // Keyboard focus ring on the wrapper, not the link: the focusable logo link
+  // can be the one faded out (the home page shows the white logo, which is
+  // tabindex -1), so a ring on the link itself would be invisible.
+  &:has(.brand-logo:focus-visible) {
+    outline: 2px solid $red-fusion-color;
+    outline-offset: 6px;
+    border-radius: 2px;
+  }
+
+  .brand-logo:focus-visible {
+    outline: 0;
+  }
+
   @media (max-width: $screen-lg-min) {
     position: absolute;
     left: 50%;
