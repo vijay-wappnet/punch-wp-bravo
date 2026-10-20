@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Vite;
         role="presentation">
         <source src="{{ esc_url($video_file) }}" type="video/mp4">
         @if($video_image)
-          <img src="{{ esc_url($video_image) }}" alt="banner" class="video-banner-section__fallback-image">
+          <img src="{{ esc_url($video_image) }}" alt="banner" class="video-banner-section__fallback-image" @if($video_image_width) width="{{ esc_attr($video_image_width) }}" @endif @if($video_image_height) height="{{ esc_attr($video_image_height) }}" @endif>
         @endif
       </video>
     @elseif($video_image)
-      <img src="{{ esc_url($video_image) }}" alt="banner" class="video-banner-section__image">
+      <img src="{{ esc_url($video_image) }}" alt="banner" class="video-banner-section__image" @if($video_image_width) width="{{ esc_attr($video_image_width) }}" @endif @if($video_image_height) height="{{ esc_attr($video_image_height) }}" @endif>
     @else
       <img src="{{ Vite::asset('resources/images/home-video.webp') }}" alt="home video banner" class="video-banner-section__fallback-image home-video-banner">
     @endif
@@ -66,7 +66,7 @@ use Illuminate\Support\Facades\Vite;
               @if($button_aria)aria-label="{{ esc_attr($button_aria) }}"@endif
               @if($event_label)data-event-label="{{ esc_attr($event_label) }}"@endif>
                 <span>{{ esc_html($link_title) }}</span>
-                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="vbs-btn__icon" aria-hidden="true">
+                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="vbs-btn__icon" aria-hidden="true" width="22" height="15">
             </a>
           </div>
         @endif
@@ -75,7 +75,7 @@ use Illuminate\Support\Facades\Vite;
   @endif
 
   {{-- <div class="video-banner-section__arrow" role="button" tabindex="0" aria-label="Scroll to next section">
-    <img src="{{ Vite::asset('resources/images/arrow-down.svg') }}" alt="flower" class="icon">
+    <img src="{{ Vite::asset('resources/images/arrow-down.svg') }}" alt="flower" class="icon" width="26" height="15">
   </div> --}}
 
 </div>

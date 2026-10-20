@@ -39,11 +39,19 @@ class VideoBannerSection
             $video_file = wp_get_attachment_url($video_file);
         }
 
-        // Ensure video_image is properly formatted
+        // Ensure video_image is properly formatted - and keep its size for the
+        // <img width/height> attributes
+        $video_image_width = '';
+        $video_image_height = '';
         if (is_array($video_image) && isset($video_image['url'])) {
+            $video_image_width = $video_image['width'] ?? '';
+            $video_image_height = $video_image['height'] ?? '';
             $video_image = $video_image['url'];
         } elseif (is_numeric($video_image)) {
-            $video_image = wp_get_attachment_url($video_image);
+            $image_src = wp_get_attachment_image_src($video_image, 'full');
+            $video_image_width = $image_src[1] ?? '';
+            $video_image_height = $image_src[2] ?? '';
+            $video_image = $image_src[0] ?? wp_get_attachment_url($video_image);
         }
 
         // Render the Blade template with data using view helper
@@ -54,6 +62,8 @@ class VideoBannerSection
             'heading_level' => $heading_level,
             'button'        => $button,
             'video_image'   => $video_image,
+            'video_image_width'  => $video_image_width,
+            'video_image_height' => $video_image_height,
             'video_file'    => $video_file,
             'section_bg'    => $section_bg,
             'is_preview'    => $is_preview,

@@ -64,7 +64,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                     @if($button['arrow_span'])
                       <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                     @else
-                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="tciwccs-btn__icon" aria-hidden="true">
+                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="tciwccs-btn__icon" aria-hidden="true" width="22" height="15">
                     @endif
                   </a>
                 @endforeach

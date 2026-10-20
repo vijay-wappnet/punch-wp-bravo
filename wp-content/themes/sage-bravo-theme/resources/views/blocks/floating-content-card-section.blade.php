@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Vite;
                 @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
                 @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
                 <span>{{ $button['title'] }}</span>
-                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="fccs-btn__icon" aria-hidden="true">
+                <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="fccs-btn__icon" aria-hidden="true" width="22" height="15">
               </a>
             @endforeach
           </div>

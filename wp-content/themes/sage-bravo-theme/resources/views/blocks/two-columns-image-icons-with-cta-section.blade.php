@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Vite;
                   @if($button['aria_label']) aria-label="{!! esc_attr($button['aria_label']) !!}" @endif
                   @if($button['event_label']) data-google-event="{!! esc_attr($button['event_label']) !!}" @endif>
                   <span>{{ $button['title'] }}</span>
-                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="twociiwcs-btn__icon" aria-hidden="true">
+                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="twociiwcs-btn__icon" aria-hidden="true" width="22" height="15">
                 </a>
               @endforeach
             </div>
@@ -76,6 +76,8 @@ use Illuminate\Support\Facades\Vite;
                     style="--x: {{ $icon['x'] }}; --y: {{ $icon['y'] }}; --i: {{ $icon['order'] }};">
                     <img src="{!! esc_url($icon['url']) !!}"
                       alt="{!! esc_attr($icon['alt']) !!}"
+                      @if($icon['width']) width="{!! esc_attr($icon['width']) !!}" @endif
+                      @if($icon['height']) height="{!! esc_attr($icon['height']) !!}" @endif
                       loading="lazy"
                       style="width: {{ $icon['glyph'] }}%;"
                       class="two-columns-image-icons-with-cta-section__icon">

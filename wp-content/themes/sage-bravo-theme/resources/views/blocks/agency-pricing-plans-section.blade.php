@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Vite;
                     @if($button['arrow_span'])
                       <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                     @else
-                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="apps-btn__icon" aria-hidden="true">
+                      <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="apps-btn__icon" aria-hidden="true" width="22" height="15">
                     @endif
                   </a>
                 </div>

@@ -40,6 +40,8 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                 @if($overlay['icon'])
                   <img src="{!! esc_url($overlay['icon']['url']) !!}"
                     alt="{!! esc_attr($overlay['title'] ? '' : $overlay['icon']['alt']) !!}"
+                    @if($overlay['icon']['width']) width="{!! esc_attr($overlay['icon']['width']) !!}" @endif
+                    @if($overlay['icon']['height']) height="{!! esc_attr($overlay['icon']['height']) !!}" @endif
                     @if($overlay['title']) aria-hidden="true" @endif
                     loading="lazy"
                     decoding="async"
@@ -75,7 +77,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
                   @if($button['arrow_span'])
                     <span class="btn-trans-border-arrow__icon" aria-hidden="true"></span>
                   @else
-                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="iafs-btn__icon" aria-hidden="true">
+                    <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="" class="iafs-btn__icon" aria-hidden="true" width="22" height="15">
                   @endif
                 </a>
               </div>

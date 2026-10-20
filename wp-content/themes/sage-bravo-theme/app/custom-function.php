@@ -216,3 +216,64 @@ function custom_acf_dimensions($margin, $padding, $blockId)
 
     return $responsiveCss;
 }
+
+/**
+ * SVG uploads: WordPress stores no width/height for them, so every
+ * <img width/height> built from an ACF image (or wp_get_attachment_image)
+ * was missing its dimensions. Read them from the file instead - the svg's own
+ * width/height attributes, else its viewBox - and cache them per request.
+ */
+function bravo_svg_dimensions($file)
+{
+    static $cache = [];
+
+    if (!$file || !is_readable($file)) {
+        return null;
+    }
+
+    if (array_key_exists($file, $cache)) {
+        return $cache[$file];
+    }
+
+    $svg = (string) file_get_contents($file, false, null, 0, 4096);
+    $dims = null;
+
+    if (preg_match('/<svg\b[^>]*>/i', $svg, $tag)) {
+        $number = static function ($name) use ($tag) {
+            // Plain numbers or px only - a percentage is not a size
+            return preg_match('/\s' . $name . '\s*=\s*["\']\s*([\d.]+)\s*(?:px)?\s*["\']/i', $tag[0], $m) ? (float) $m[1] : 0;
+        };
+
+        $width = $number('width');
+        $height = $number('height');
+
+        if ((!$width || !$height) && preg_match('/viewBox\s*=\s*["\']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)/i', $tag[0], $box)) {
+            $width = (float) $box[1];
+            $height = (float) $box[2];
+        }
+
+        if ($width > 0 && $height > 0) {
+            $dims = [(int) round($width), (int) round($height)];
+        }
+    }
+
+    return $cache[$file] = $dims;
+}
+
+add_filter('wp_get_attachment_metadata', function ($data, $attachment_id) {
+    if ('image/svg+xml' !== get_post_mime_type($attachment_id)) {
+        return $data;
+    }
+
+    if (is_array($data) && !empty($data['width']) && !empty($data['height'])) {
+        return $data;
+    }
+
+    $dims = bravo_svg_dimensions(get_attached_file($attachment_id));
+    if ($dims) {
+        $data = is_array($data) ? $data : [];
+        [$data['width'], $data['height']] = $dims;
+    }
+
+    return $data;
+}, 10, 2);
