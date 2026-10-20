@@ -257,7 +257,9 @@
     }
   }
 
-  .wpcf7-response-output {
+  // .wpcf7-form in the selector: CF7's core `.wpcf7 form .wpcf7-response-output`
+  // (margin: 2em 0.5em 1em) is more specific than a two-class rule
+  .wpcf7-form .wpcf7-response-output {
     flex-basis: 100%;
     font-size: 14px;
     color: $gray-granite-color;
@@ -284,13 +286,32 @@
   // the copy and the input/button line up on the same centre line.
   @media (min-width: ($screen-lg-min + 1px)) {
     .wpcf7-form-control-wrap.kc_captcha,
-    .wpcf7-response-output {
+    .wpcf7-form .wpcf7-response-output {
       position: absolute;
       left: 0;
       top: 100%;
       width: 100%;
       margin-top: 8px;
     }
+
+    // Invalid email: the field's own tip sits right under the input, so the
+    // summary message goes below it instead of on top of it
+    .wpcf7-form.invalid .wpcf7-response-output {
+      margin-top: 41px;
+    }
+  }
+
+  // Honeypot ("leave this field blank") - kept off screen, out of the tab
+  // order and away from screen readers; bots that fill every field get
+  // flagged as spam (app/contact-step-form.php)
+  p:has(.footer-newsletter-honeypot),
+  .footer-newsletter-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
   }
 
   // Mobile: input and button each become their own full-width, centered row
@@ -306,6 +327,14 @@
       font-size: 22px;
       text-align: center;
       padding: 15px 15px;
+    }
+
+    // Rows are stacked here, so the tip can sit in flow right under the
+    // input (absolute, it landed below the response message at the
+    // section's bottom edge)
+    .wpcf7-not-valid-tip {
+      position: static;
+      width: auto;
     }
 
     .footer-newsletter-submit {
@@ -683,6 +712,17 @@
   .footer-newsletter {
     padding-right: 0;
     padding-left: 0;
+
+    // The form's messages hang below the input row (out of flow, so the row
+    // stays centred with the title) - grow the white section to hold them
+    // instead of letting them spill onto the dark footer
+    &:has(.wpcf7-form:is(.sent, .failed, .aborted, .spam, .unaccepted, .payment-required)) {
+      padding-bottom: 74px;
+    }
+
+    &:has(.wpcf7-form.invalid) {
+      padding-bottom: 107px;
+    }
   }
 
   .footer-main {

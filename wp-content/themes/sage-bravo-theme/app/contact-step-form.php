@@ -78,8 +78,9 @@ add_filter('wpcf7_validate_tel*', function ($result, $tag) {
 }, 10, 2);
 
 // "If you are human leave this field blank" - a filled-in honeypot is spam.
+// Applies to every form with a human-check field (step form, footer newsletter).
 add_filter('wpcf7_spam', function ($spam) {
-    if ($spam || !bravo_is_cf7_step_form()) {
+    if ($spam || !isset($_POST['human-check'])) {
         return $spam;
     }
 
