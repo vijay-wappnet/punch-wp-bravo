@@ -116,15 +116,13 @@ class AccessibilityModal {
       el.addEventListener('click', () => modalInstance.hide());
     });
 
-    // Handle search functionality
+    // Search: Enter submits the panel's form (name="s", action = the search
+    // results page) natively, so search tracking in dataLayer-script.js sees
+    // it too. An empty search is not sent.
     document.querySelectorAll('.footer-search-input').forEach(input => {
-      input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          const query = this.value.trim();
-          if (query !== '') {
-            const baseUrl = window.location.origin;
-            window.location.href = baseUrl + '/?s=' + encodeURIComponent(query);
-          }
+      input.form?.addEventListener('submit', (e) => {
+        if (!input.value.trim()) {
+          e.preventDefault();
         }
       });
     });

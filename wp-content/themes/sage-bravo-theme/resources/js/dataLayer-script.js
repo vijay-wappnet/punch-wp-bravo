@@ -19,76 +19,61 @@ document.querySelectorAll('.btn-setting').forEach(button => {
       event: 'accessibilityPanel',
       ap_status: formattedStatus
     });
-
-    console.log('dataLayer push:', formattedStatus); // debug
   });
 });
 
 /*
   Search dataLayer Event (Desktop + Mobile)
+
+  Every site search form is tracked:
+  - the Search Results Section block's form (.search-results-section__form)
+  - the accessibility panel's search box (.search-results-form)
+  Both submit the keyword as "s" and land on the search results page.
+
+  One event per search: on submit the keyword is saved in sessionStorage and
+  pushed once the results page has loaded (a push made just before the page
+  navigates away can be lost, and pushing at both moments counted each
+  search twice).
 */
-document.querySelectorAll('.searsearch-results-section__form').forEach(form => {
+const SEARCH_FORMS = '.search-results-section__form, .search-results-form';
+
+// Same breakpoint as the theme's mobile layout ($screen-md-min-767)
+const getSearchEvent = (keyword, isMobile) => (
+  isMobile
+    ? { event: 'mobileSearch', ms_status: keyword }
+    : { event: 'desktopSearch', ds_status: keyword }
+);
+
+document.querySelectorAll(SEARCH_FORMS).forEach(form => {
 
   const input = form.querySelector('input[name="s"]');
 
-  // Helper → detect device
-  const getEventData = (keyword) => {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-    return isMobile
-      ? {
-          event: 'mobileSearch',
-          ms_status: keyword
-        }
-      : {
-          event: 'desktopSearch',
-          ds_status: keyword
-        };
-  };
-
-  // SUBMIT (Enter key)
+  // SUBMIT (Enter key or the form's own button)
   form.addEventListener('submit', function () {
     const keyword = input?.value.trim();
     if (!keyword) return;
 
-    const eventData = getEventData(keyword);
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
 
-    // Save in sessionStorage
     sessionStorage.setItem('searchKeyword', keyword);
-    sessionStorage.setItem('searchType', eventData.event);
-
-    // Push immediately
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(eventData);
-
-    console.log('Search pushed (before redirect):', eventData);
+    sessionStorage.setItem('searchType', getSearchEvent(keyword, isMobile).event);
   });
 
-  // ICON CLICK
+  // ICON CLICK (accessibility panel) - just submits; the submit handler above
+  // records the search
   const icon = form.closest('.input-group')?.querySelector('.input-group-text');
 
   icon?.addEventListener('click', function () {
-    const keyword = input?.value.trim();
-    if (!keyword) return;
-
-    const eventData = getEventData(keyword);
-
-    sessionStorage.setItem('searchKeyword', keyword);
-    sessionStorage.setItem('searchType', eventData.event);
-
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(eventData);
-
-    console.log('Search (icon):', eventData);
-
-    form.requestSubmit();
+    if (input?.value.trim()) {
+      form.requestSubmit();
+    }
   });
 
 });
 
 
 /*
-  Step 2: Push again after page reload
+  Push the search once the results page has loaded
 */
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -97,15 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (keyword && eventType) {
 
-    const eventData =
-      eventType === 'mobileSearch'
-        ? { event: 'mobileSearch', ms_status: keyword }
-        : { event: 'desktopSearch', ds_status: keyword };
-
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(eventData);
-
-    console.log('Search pushed (after reload):', eventData);
+    window.dataLayer.push(getSearchEvent(keyword, eventType === 'mobileSearch'));
 
     // Clear after use
     sessionStorage.removeItem('searchKeyword');
