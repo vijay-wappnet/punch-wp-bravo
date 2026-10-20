@@ -100,7 +100,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 
   @media (max-width: $screen-md-min-767) {
     gap: 37px;
-    padding: 18px 24px 0;
+    padding: 18px 25px 0;
     white-space: normal;
   }
 }
@@ -129,14 +129,14 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   display: none;
   flex: 1;
   flex-direction: column;
-  padding: 45px 43px 42px;
+  padding: 45px 43px 47px;
 
   .cfs-step.is-active & {
     display: flex;
   }
 
   @media (max-width: $screen-md-min-767) {
-    padding: 25px 24px 30px;
+    padding: 25px 25px 30px;
   }
 }
 

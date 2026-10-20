@@ -12,14 +12,14 @@
 
   // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
   .search-results-section__title {
-    margin: 0 0 48px;
+    margin: 0 0 49px;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
     overflow-wrap: break-word;
 
     @media (max-width: $screen-md-min-767) {
-      margin-bottom: 28px;
+      margin-bottom: 55px;
     }
   }
 
@@ -71,7 +71,7 @@
     background: transparent;
     color: $black-off-color;
     font-family: $font-articulat-family;
-    font-weight: $font-articulat-regular-weight;
+    font-weight: $font-articulat-light-weight;
     font-size: 18px;
     line-height: 25px;
     outline: 0;
@@ -109,8 +109,9 @@
 
   .srs-btn {
     flex: 0 0 auto;
-    width: 171px;
-    padding: 0.6rem 1.1rem;
+    width: 208px;
+    height: 44px;
+    padding: 9px 16px 9px 27px;
     justify-content: space-between;
 
     @media (max-width: $screen-md-min-767) {
@@ -118,7 +119,7 @@
       justify-content: center;
       font-size: 22px !important; // beats the .btn mobile font-size, also !important
       line-height: 26px;
-
+      height: 58px;
       img {
         display: none;
       }
@@ -127,31 +128,36 @@
 
   // ---------------------------------------------------------- Results
   .search-results-section__results {
-    margin-top: 56px;
+    margin-top: 58px;
 
     @media (max-width: $screen-md-min-767) {
-      margin-top: 36px;
+      margin-top: 55px;
       text-align: center;
     }
   }
 
   .search-results-section__results-title {
-    margin: 0 0 24px;
+    margin: 0 0 36px;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
+    @media (max-width: $screen-md-min-767) {
+      font-size: 32px;
+      line-height: 34px;
+      margin-bottom: 38px;
+    }
   }
 
   .search-results-section__results-text {
     max-width: 760px;
     margin: 0 0 40px;
     font-family: $font-articulat-family;
-    font-weight: $font-articulat-regular-weight;
+    font-weight: $font-articulat-light-weight;
     font-size: 18px;
     line-height: 25px;
 
     @media (max-width: $screen-md-min-767) {
-      margin: 0 auto 28px;
+      margin: 0 auto 30px;
       font-size: 22px;
       line-height: 25px;
     }
@@ -171,13 +177,13 @@
     gap: 24px;
     margin: 0;
     padding: 14px 0;
-    border-bottom: 1px solid $gray-granite-color;
+    border-bottom: 1px solid $black-off-color;
 
     @media (max-width: $screen-md-min-767) {
       flex-direction: column;
       align-items: stretch;
-      gap: 14px;
-      padding: 18px 0;
+      gap: 38px;
+      padding: 31px 0 35px 0;
     }
   }
 
@@ -197,16 +203,20 @@
 
   .search-results-section__more {
     flex: 0 0 auto;
-    width: 171px;
-    padding: 0.5rem 1.1rem;
+    width: 208px;
+    height: 44px;
+    padding: 9px 16px 9px 27px;
     white-space: nowrap;
     justify-content: space-between;
 
     @media (max-width: $screen-md-min-767) {
       width: 100%;
       justify-content: center;
-      font-size: 16px !important;
-      line-height: 24px;
+      font-size: 22px;
+      line-height: 100%;
+      font-weight: $font-articulat-light-weight;
+      border-radius: 0px;
+      height: 52px;
 
       img {
         display: none;
