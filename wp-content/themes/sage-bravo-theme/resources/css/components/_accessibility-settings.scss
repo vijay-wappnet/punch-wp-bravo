@@ -51,6 +51,44 @@ $a11y-block-headings: (
   }
 }
 
+// Block body text with a fluid default size. Not covered by the 20px text
+// list, these fell to the catch-all `* { font-size: 5rem }` (80px). Each
+// keeps its own clamp(), scaled, so it still fits its card at every width.
+// $scale: 1.25 for Medium, 1.5 for Large
+@mixin a11y-block-text($scale) {
+  // Default: clamp(16px, 7cqw, 30px) - three-columns-card-grid-section.scss
+  .three-columns-card-grid-section .three-columns-card-grid-section__description {
+    font-size: clamp(#{math.round(16px * $scale)}, #{7cqw * $scale}, #{math.round(30px * $scale)}) !important;
+  }
+
+  // The card has a fixed height (image + a resting strip for one heading
+  // line) and the panel opens upwards over the image, so the bigger text
+  // got clipped at the top. Image and panel share one grid cell instead:
+  // the panel still overlays the image from the bottom, and the card grows
+  // when the panel needs more room than the image gives it.
+  .three-columns-card-grid-section .three-columns-card-grid-section__card {
+    display: grid;
+    padding-bottom: 0;
+
+    .three-columns-card-grid-section__media {
+      grid-area: 1 / 1;
+      // cqw, not %: the card is the size container, so 7cqw = 7% of its
+      // width - a % margin here is ignored when the card's height is worked out
+      margin-bottom: calc(7cqw * 2 + 38px);
+
+      @media (max-width: $screen-md-min) {
+        margin-bottom: calc(16px + 38px + 20px);
+      }
+    }
+
+    .three-columns-card-grid-section__content {
+      position: relative;
+      grid-area: 1 / 1;
+      align-self: end;
+    }
+  }
+}
+
 .accessibility-modal {
   .btn-close.custom-close {
     background-color: transparent !important;
@@ -522,6 +560,7 @@ body.text-medium {
 
     // Block section headings - see $a11y-block-headings
     @include a11y-block-headings(1.25);
+    @include a11y-block-text(1.25);
   }
 
 
@@ -811,6 +850,7 @@ body.text-large {
 
     // Block section headings - see $a11y-block-headings
     @include a11y-block-headings(1.5);
+    @include a11y-block-text(1.5);
   }
 
 }
