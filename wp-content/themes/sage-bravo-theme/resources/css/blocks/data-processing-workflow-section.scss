@@ -51,7 +51,7 @@ $dpw-items: (
     margin: 0 auto;
     aspect-ratio: #{$dpw-w} / #{$dpw-h};
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       width: 88vw;
     }
   }

@@ -42,7 +42,7 @@ $pss-transition: 350ms ease-in-out;
   --dot-grid-edge-opacity: 0.1;
   --dot-grid-fade: horizontal;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     --dot-grid-coverage: 0.5;
     --dot-grid-edge-opacity: 0.12;
     --dot-grid-fade: top;
@@ -88,7 +88,7 @@ $pss-transition: 350ms ease-in-out;
     gap: 48px;
     padding: 0 8px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       gap: 32px;
     }
   }
@@ -105,7 +105,7 @@ $pss-transition: 350ms ease-in-out;
     letter-spacing: 1%;
     overflow-wrap: break-word;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 42px;
       line-height: 50px;
     }

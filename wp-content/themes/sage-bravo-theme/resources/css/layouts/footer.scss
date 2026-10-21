@@ -192,7 +192,7 @@
       background-color: $black-off-color;
       color: $white-color;
     }
-     @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       height: 58px;
     }
     @media (prefers-reduced-motion: reduce) {

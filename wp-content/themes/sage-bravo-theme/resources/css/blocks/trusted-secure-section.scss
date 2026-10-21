@@ -30,7 +30,7 @@
     }
 
     // Mobile: icon row on top, centred content below
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex-direction: column;
       align-items: stretch;
       gap: 30px;
@@ -57,7 +57,7 @@
     }
 
     // Mobile: keep all icons on one row, spread across the full width
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       justify-content: space-between;
       gap: 16px;
     }
@@ -69,7 +69,7 @@
     justify-content: center;
     min-width: 0;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex: 1 1 0;
     }
 
@@ -85,7 +85,7 @@
         max-height: 54px;
       }
 
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         max-width: 100%;
         max-height: min(80px, 18vw);
       }
@@ -98,7 +98,7 @@
     min-width: 0;
     text-align: left;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       text-align: center;
     }
   }
@@ -106,7 +106,7 @@
   &--align-left .trusted-secure-section__content {
     text-align: left;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       text-align: center;
     }
   }
