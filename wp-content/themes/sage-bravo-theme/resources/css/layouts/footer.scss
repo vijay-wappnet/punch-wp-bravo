@@ -558,7 +558,7 @@
 
   li {
     break-inside: avoid;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
   }
 
   @media (max-width: $screen-lg-min) {
@@ -599,7 +599,7 @@
 
     li {
       text-align: center;
-      margin-bottom: 0;
+      margin-bottom: 5px;
     }
   }
 
@@ -775,7 +775,7 @@
     column-gap: 48px;
 
     li {
-      margin-bottom: 0;
+      margin-bottom: 5px;
     }
   }
 
