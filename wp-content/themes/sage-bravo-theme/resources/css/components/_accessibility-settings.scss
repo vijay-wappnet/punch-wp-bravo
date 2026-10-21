@@ -15,6 +15,42 @@ These styles are separated to avoid specificity conflicts
 @use "../common/variables" as *;
 @use "../components/buttons" as *;
 
+@use "sass:math";
+
+// Block section headings (h1-h6 chosen per block in ACF). The generic h1-h6
+// text-size rules below give every h2 the same size whatever the block's
+// design size, and their mobile sizes are smaller than the defaults - so each
+// block heading gets its own size here, scaled from its default.
+// Selector => (desktop default, mobile default)
+$a11y-block-headings: (
+  '.cta-banner-section__heading, .floating-content-card-section__heading, .iafs__heading, .latest-article-list-section__heading, .left-right-media-content-section__heading, .meet-the-team-section__heading, .pid__heading, .process-workflow-section__heading, .tcoi__heading, .tec__heading, .trusted-secure-section__heading, .two-columns-image-icons-with-cta-section__heading, h2.intro-section__heading': (40px, 40px),
+  '.video-banner-section__heading, .product-showcase-slider-section__heading, h1.intro-section__heading': (50px, 42px),
+  '.tcoi__subheading': (40px, 32px),
+  '.tciwccs__heading, h3.intro-section__heading': (32px, 32px),
+  '.three-columns-card-grid-section__heading': (30px, 30px),
+  '.clis__heading': (28px, 24px),
+  'h4.intro-section__heading': (24px, 24px),
+  'h5.intro-section__heading': (22px, 22px),
+  '.faqs-accordion-section__heading, h6.intro-section__heading': (18px, 18px),
+);
+
+// $scale: 1.25 for Medium, 1.5 for Large
+@mixin a11y-block-headings($scale) {
+  @each $selector, $sizes in $a11y-block-headings {
+    #{$selector} {
+      font-size: math.round(nth($sizes, 1) * $scale) !important;
+
+      // A long single word ("Introducing") at these sizes is wider than a
+      // phone's content column - hyphenate/wrap it instead of overflowing
+      @media (max-width: $screen-md-min) {
+        font-size: math.round(nth($sizes, 2) * $scale) !important;
+        overflow-wrap: break-word;
+        hyphens: auto;
+      }
+    }
+  }
+}
+
 .accessibility-modal {
   .btn-close.custom-close {
     background-color: transparent !important;
@@ -483,6 +519,9 @@ body.text-medium {
         line-height: 24px !important;
       }
     }
+
+    // Block section headings - see $a11y-block-headings
+    @include a11y-block-headings(1.25);
   }
 
 
@@ -769,6 +808,9 @@ body.text-large {
         line-height: 24px !important;
       }
     }
+
+    // Block section headings - see $a11y-block-headings
+    @include a11y-block-headings(1.5);
   }
 
 }
