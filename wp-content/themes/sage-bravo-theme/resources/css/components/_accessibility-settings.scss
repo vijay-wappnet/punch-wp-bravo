@@ -522,9 +522,6 @@ body.text-large {
         }
       }
     }
-    .accessibility-modal .modal-header .btn-close.custom-close {
-      font-size: 15px !important;
-    }
     .fullscreen-menu{
       .fullscreen-menu-list{
         .menu-item > a {
@@ -890,6 +887,28 @@ body.justify-text .accessibility-modal {
     color: $black-off-color !important;
   }
 
+  // The text-size rules (`body.text-medium > *:not(.accessibility-modal) h5`)
+  // still reach the title, because the modal sits inside the footer rather
+  // than directly in <body>. The extra classes here out-rank them so the
+  // title keeps its default size at every text-size setting.
+  .modal-header .modal-title.accessibility-title {
+    font-weight: 300 !important;
+    font-size: 32px !important;
+    line-height: 34px !important;
+  }
+
+  // Same for the close button: Medium enlarged the X to 49px and the
+  // button's line-height followed the page text size
+  .modal-header .btn-close.custom-close {
+    font-size: 16px !important;
+    line-height: 24px !important;
+
+    svg {
+      width: 32px !important;
+      height: 33px !important;
+    }
+  }
+
   /* Close button styles moved to the top in a flat structure */
 
   /* Modal body */
@@ -952,7 +971,9 @@ body.justify-text .accessibility-modal {
 
     .input-group {
       background-color: $white-color !important;
-      border-color: #ddd !important;
+      // Default design's dark border (_accessibility-modal.scss) - #ddd only
+      // won under Medium/Large, so the box changed with the text size
+      border-color: $black-off-color !important;
 
       .input-group-text {
         background-color: $white-color !important;
@@ -960,7 +981,7 @@ body.justify-text .accessibility-modal {
         color: $black-off-color !important;
 
         svg {
-          color: #777 !important;
+          color: $black-off-color !important;
           path{
             background-color: transparent !important;
           }
