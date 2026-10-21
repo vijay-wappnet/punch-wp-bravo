@@ -330,12 +330,19 @@ body.text-medium {
     form select,
     form select option,
     form .wpcf7-number,
-    .cta-banner-section__description p {
+    .cta-banner-section__description p,
+    .pps__feature-text span {
       font-size: 20px !important;
 
       @media (max-width: $screen-md-min) {
         font-size: 18px !important;
       }
+    }
+    .pps__check{
+      margin-top: 5px !important;
+    }
+    .agency-pricing-check{
+      margin-top: 10px !important;
     }
     .footer-newsletter-form label{
       font-size: 0px !important;
@@ -664,12 +671,19 @@ body.text-large {
     form select,
     form select option,
     form .wpcf7-number,
-    .cta-banner-section__description p {
+    .cta-banner-section__description p,
+    .pps__feature-text span {
       font-size: 22px !important;
 
       @media (max-width: $screen-md-min) {
         font-size: 18px !important;
       }
+    }
+    .pps__check{
+      margin-top: 5px !important;
+    }
+    .agency-pricing-check{
+      margin-top: 7px !important;
     }
     .footer-newsletter-form label{
       font-size: 0px !important;
