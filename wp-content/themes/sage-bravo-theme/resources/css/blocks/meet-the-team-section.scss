@@ -10,7 +10,7 @@ $mts-image-transition: 0.4s ease;
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -109,7 +109,7 @@ $mts-image-transition: 0.4s ease;
   // Mobile: native horizontal scroll; cards are narrower than the track so
   // the second one is always partly visible. The track bleeds to the screen's
   // right edge so the card is cut by the screen, not by the container.
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
 
     // content_alignment_mobile overrides the desktop setting
     &--align-mobile-left &__heading { text-align: left; }

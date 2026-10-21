@@ -349,6 +349,9 @@
       width: 100%;
       text-align: center;
       padding: 16px 24px;
+      @media (max-width: $screen-md-min) {
+        height: 58px;
+      }
     }
   }
 }

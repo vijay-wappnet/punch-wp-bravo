@@ -13,7 +13,7 @@ $apps-divider: $white-off-light-grayish-color;
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -27,7 +27,7 @@ $apps-divider: $white-off-light-grayish-color;
     border-radius: 10px;
     color: $white-color;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding: 21px 24px 40px 24px;
     }
   }
@@ -54,7 +54,7 @@ $apps-divider: $white-off-light-grayish-color;
     font-weight: $font-articulat-regular-weight;
     color: $white-color;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 20px;
       font-size: 34px;
     }
@@ -68,7 +68,7 @@ $apps-divider: $white-off-light-grayish-color;
     line-height: 40px;
     color: $gray-grayish-orange-color;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 24px;
       line-height: 40px;
     }
@@ -191,6 +191,9 @@ $apps-divider: $white-off-light-grayish-color;
       padding-left: 20px;
       padding-right: 20px;
       gap: 10px;
+      @media (max-width: $screen-md-min) {
+        height: 44px;
+      }
     }
 
     .apps-btn__icon {
@@ -203,7 +206,7 @@ $apps-divider: $white-off-light-grayish-color;
   // One column: details, a horizontal divider, the features, then the button.
   // The details column stops being a box (display: contents) so its button
   // can come after the features in the same markup.
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     .agency-pricing-card__row {
       flex-direction: column;
       flex-wrap: nowrap;
@@ -278,7 +281,7 @@ $apps-divider: $white-off-light-grayish-color;
   }
 
   // content_alignment_mobile: independent of the desktop setting
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     &--mobile-align-left {
       .agency-pricing-head,
       .agency-pricing-description {

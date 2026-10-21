@@ -14,7 +14,7 @@
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -36,7 +36,7 @@
       gap: 40px 30px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       grid-template-columns: 1fr;
       gap: 40px;
     }
@@ -56,7 +56,7 @@
   }
 
   // Mobile: mobile_workflow_position overrides the desktop order
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     &--mobile-top .process-workflow-section__column--workflow,
     &--mobile-bottom .process-workflow-section__column--content {
       order: 1;
@@ -107,7 +107,7 @@
     font-size: 36px; //clamp(14px, 5.2cqw, 24px);
     line-height: 1.2;
     color: $black-off-color;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: clamp(14px, 5.2cqw, 24px);
     }
   }
@@ -134,7 +134,7 @@
     margin: 0 auto;
     text-align: left;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       max-width: none;
     }
   }
@@ -162,7 +162,7 @@
       padding-left: 20px;
       padding-right: 20px;
       gap: 10px;
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         height: 58px;
       }
     }
@@ -170,12 +170,12 @@
     .pws-btn__icon {
       width: 21px;
       height: auto;
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         display: none;
       }
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-top: 69px;
 
       // Full-width CTA on mobile, as in the design
@@ -222,7 +222,7 @@
   }
 
   // content_alignment_mobile: text alignment only on mobile
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     &--mobile-align-left .process-workflow-section__content {
       text-align: left;
     }

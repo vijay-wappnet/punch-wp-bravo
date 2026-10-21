@@ -19,7 +19,7 @@ $apls-transition: 350ms ease-in-out;
       --bs-gutter-x: 99px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       --bs-gutter-y: 57px;
     }
   }
@@ -50,7 +50,7 @@ $apls-transition: 350ms ease-in-out;
     aspect-ratio: 31 / 20;
     margin-bottom: 35px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 19px;
     }
   }
@@ -75,7 +75,7 @@ $apls-transition: 350ms ease-in-out;
       &.article-post-card__title {
         font-size: 40px;
         line-height: 48px;
-        @media (max-width: $screen-md-min-767) {
+        @media (max-width: $screen-md-min) {
           font-size: 32px;
           line-height: 38px;
         }
@@ -83,7 +83,7 @@ $apls-transition: 350ms ease-in-out;
     }
     h3{
       &.article-post-card__title {
-        @media (max-width: $screen-md-min-767) {
+        @media (max-width: $screen-md-min) {
           font-size: 32px;
           line-height: 38px;
         }
@@ -97,7 +97,7 @@ $apls-transition: 350ms ease-in-out;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-light-weight;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 19px;
     }
   }
@@ -114,7 +114,7 @@ $apls-transition: 350ms ease-in-out;
     -webkit-line-clamp: 2;
     line-clamp: 2;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 31px;
     }
   }
@@ -130,7 +130,7 @@ $apls-transition: 350ms ease-in-out;
     font-size: 18px;
     line-height: 100%;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 22px;
       line-height: 100%;
     }
@@ -172,7 +172,7 @@ $apls-transition: 350ms ease-in-out;
       display: none;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-top: 69px;
       padding-top: 57px;
     }
@@ -185,7 +185,7 @@ $apls-transition: 350ms ease-in-out;
     font-size: 18px;
     line-height: 20px;
     text-align: center;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 22px;
       line-height: 100%
     }

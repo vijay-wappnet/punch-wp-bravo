@@ -25,7 +25,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   gap: 12px;
   min-height: 595px;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     display: block;
     min-height: 0;
   }
@@ -57,7 +57,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     }
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     display: none;
     background-color: $white-color;
 
@@ -98,7 +98,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     outline-offset: -4px;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     gap: 37px;
     padding: 18px 25px 0;
     white-space: normal;
@@ -109,7 +109,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 .cfs-step__progress {
   display: none;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     display: block;
     height: 12px;
     margin: 22px 25px 0;
@@ -135,14 +135,14 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     display: flex;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     padding: 25px 25px 30px;
   }
 }
 
 .cfs-page {
   // Mobile shows one page of the step at a time
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     display: none;
 
     &.is-current {
@@ -154,7 +154,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 .cfs-page + .cfs-page {
   margin-top: 37px;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     margin-top: 0;
   }
 }
@@ -170,7 +170,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     display: none;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     justify-content: center;
 
     .cfs-step--last:not(.is-last-page) & {
@@ -185,7 +185,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 37px 28px;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     gap: 25px 24px;
   }
 }
@@ -197,13 +197,13 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   &--half {
     grid-column: span 1;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       grid-column: 1 / -1;
     }
   }
 
   &--half-mobile {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       grid-column: span 1;
     }
   }
@@ -217,7 +217,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   line-height: 100%;
   font-weight: $font-articulat-medium-weight; // 600
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     font-size: 22px;
     line-height: 100%;
   }
@@ -231,7 +231,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     font-weight: $font-articulat-medium-weight;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     display: block;
   }
 }
@@ -267,7 +267,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     box-shadow: 0 1px 0 $red-fusion-color;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     font-size: 20px;
   }
 }
@@ -292,7 +292,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     box-shadow: 0 0 0 1px $red-fusion-color;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     height: 94px;
   }
 }
@@ -332,7 +332,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 // Boxed select ("Regional (Please select)", and the plan select on mobile)
 .cfs .cfs-select--boxed,
 .cfs .cfs-field--plan .cfs-select {
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     height: 49px;
     padding: 8px 46px 8px 16px;
     border: 1px solid $gray-grayish-orange-color;
@@ -355,7 +355,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     }
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     .cfs-label {
       position: absolute;
       width: 1px;
@@ -429,7 +429,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   flex-wrap: wrap;
   gap: 14px 22px;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     gap: 16px 12px;
   }
 }
@@ -467,7 +467,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
       outline-offset: 2px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       width: 32px;
       height: 32px;
       background-size: 16px 12px;
@@ -480,7 +480,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   line-height: 22px;
   font-weight: $font-articulat-regular-weight;
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     font-size: 20px;
     line-height: 25px;
   }
@@ -505,7 +505,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     .wpcf7-checkbox {
       flex-direction: column;
     }
@@ -526,7 +526,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     align-items: flex-start;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     grid-template-columns: 1fr;
     gap: 16px;
   }
@@ -544,7 +544,7 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
     flex: 0 1 345px;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     flex-direction: column;
     align-items: stretch;
     gap: 0;

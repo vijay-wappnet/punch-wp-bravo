@@ -7,15 +7,10 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
 .two-columns-image-icons-with-cta-section {
   position: relative;
-  padding: 80px 0;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   color: $black-off-color;
-
-  @media (max-width: $screen-md-min) {
-    padding: 60px 0;
-  }
 
   .two-columns-image-icons-with-cta-section__wrapper {
     display: grid;
@@ -115,6 +110,7 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       gap: 10px;
       @media (max-width: $screen-md-min) {
         width: 100%;
+        height: 58px;
       }
     }
 

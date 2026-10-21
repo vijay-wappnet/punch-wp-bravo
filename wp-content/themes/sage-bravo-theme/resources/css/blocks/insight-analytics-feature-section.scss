@@ -49,7 +49,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     padding-left: 0;
     padding-right: 0;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -60,7 +60,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   // (order-1/2, order-md-1/2) do the left/right and top/bottom switching, so
   // there is only one copy of the markup.
   .iafs__row {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       row-gap: 8vw;
     }
   }
@@ -118,7 +118,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
     // Mobile: sized from the screen (55.2vw in the design), same proportion, so
     // the height follows automatically (about 410px on a 490px-wide screen)
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       width: 55.2vw;
     }
   }
@@ -242,7 +242,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       line-height: 48px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 40px;
       line-height: 48px;
     }
@@ -258,7 +258,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       padding-left: 20px;
       padding-right: 20px;
       gap: 10px;
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         height: 58px;
       }
     }
@@ -266,12 +266,12 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     .iafs-btn__icon {
       width: 21px;
       height: auto;
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         display: none;
       }
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-top: 8vw;
 
       // Full-width CTA on mobile, as in the design
@@ -314,7 +314,7 @@ $iafs-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   // content_alignment_mobile: independent of the desktop setting
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     &--mobile-align-left {
       .iafs__content {
         text-align: left;

@@ -32,7 +32,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       object-position: 13% center;
     }
   }
@@ -99,8 +99,12 @@
       min-width: 171px;
       width: auto;
       gap: 10px;
+      @media (max-width: $screen-md-min) {
+        width: 240px;
+        height: 58px;
+      }
       img{
-        @media (max-width: $screen-md-min-767) {
+        @media (max-width: $screen-md-min) {
           display: none;
         }
       }

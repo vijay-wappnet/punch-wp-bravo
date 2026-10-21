@@ -12,13 +12,13 @@
   &--background-only {
     min-height: 240px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       min-height: 160px;
     }
   }
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -41,7 +41,7 @@
   .tibs__row {
     --bs-gutter-x: 24px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       --bs-gutter-y: 20px;
     }
   }
@@ -52,7 +52,7 @@
   .image-banner--tile {
     aspect-ratio: 396 / 256;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       aspect-ratio: 433 / 355;
     }
 

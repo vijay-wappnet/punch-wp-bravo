@@ -55,7 +55,7 @@ $lals-image-transition: 0.4s ease;
     margin-bottom: 52px;
     // Mobile: heading, button and arrows stay on one row (no wrapping,
     // which pushed the button onto its own line, far to the right)
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex-wrap: nowrap;
       gap: 12px;
       margin-bottom: 34px;
@@ -71,7 +71,7 @@ $lals-image-transition: 0.4s ease;
     font-size: 40px;
     line-height: 48px;
     overflow-wrap: break-word;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex: 1 1 auto;
       //min-width: 0;
     }
@@ -83,7 +83,7 @@ $lals-image-transition: 0.4s ease;
     gap: 16px;
     margin-left: auto;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex-shrink: 0;
       gap: 8px;
     }
@@ -93,7 +93,7 @@ $lals-image-transition: 0.4s ease;
   // Mobile: sized to its text instead of the fixed .btn width / 22px font,
   // and shown without its arrow as in the design.
   .btn-trans-border-arrow {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
 
       font-size: 22px !important; // beats the .btn mobile font-size, also !important
       line-height: 100%;
@@ -101,7 +101,7 @@ $lals-image-transition: 0.4s ease;
   }
 
   .btn-trans-border-arrow__icon {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       display: none;
     }
   }
@@ -125,7 +125,7 @@ $lals-image-transition: 0.4s ease;
     align-items: center;
     gap: 4px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       display: flex;
     }
   }
@@ -187,7 +187,7 @@ $lals-image-transition: 0.4s ease;
     // Mobile: horizontal scroll-snap row, the next card peeking in.
     // The row bleeds to the right edge of the screen; the section's
     // overflow: hidden stops it widening the page.
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       display: flex;
       gap: 16px;
       margin-right: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
@@ -209,7 +209,7 @@ $lals-image-transition: 0.4s ease;
     min-width: 0;
     margin: 0;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       flex: 0 0 44%;
       scroll-snap-align: start;
     }
@@ -240,7 +240,7 @@ $lals-image-transition: 0.4s ease;
     aspect-ratio: 4 / 5;
     margin-bottom: 12px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 12px;
     }
   }
@@ -274,7 +274,7 @@ $lals-image-transition: 0.4s ease;
       line-height: 40px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 12px;
       font-size: 24px;
       line-height: 40px;
@@ -293,7 +293,7 @@ $lals-image-transition: 0.4s ease;
     font-size: 18px;
     line-height: 30px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 22px;
       line-height: 30px;
     }

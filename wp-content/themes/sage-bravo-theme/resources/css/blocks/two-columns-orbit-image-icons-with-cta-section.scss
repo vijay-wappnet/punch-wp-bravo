@@ -80,7 +80,7 @@ $tcoi-pill-dark: #6b6560;
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -91,7 +91,7 @@ $tcoi-pill-dark: #6b6560;
   // order-md-1/2) do the left/right and top/bottom switching, so there is only
   // one copy of the markup.
   .tcoi__row {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       row-gap: 59px;
     }
   }
@@ -111,7 +111,7 @@ $tcoi-pill-dark: #6b6560;
     @media (max-width: $screen-xl-min) {
       max-width: 450px;
     }
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       max-width: none;
     }
   }
@@ -136,7 +136,7 @@ $tcoi-pill-dark: #6b6560;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-medium-weight; //600
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin: 0 0 25px;
     }
   }
@@ -147,7 +147,7 @@ $tcoi-pill-dark: #6b6560;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 32px;
       line-height: 38px;
       margin: 0 0 25px;
@@ -194,9 +194,10 @@ $tcoi-pill-dark: #6b6560;
       padding-right: 20px;
       gap: 10px;
 
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         flex: 1 1 100%;
         justify-content: center;
+        height: 58px;
       }
     }
 
@@ -263,7 +264,7 @@ $tcoi-pill-dark: #6b6560;
     color: $white-color;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     .tcoi__pills {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -350,7 +351,7 @@ $tcoi-pill-dark: #6b6560;
   @include tcoi-layout(300, 425, 54, 217, 207, 0, 52, 32, 128, 160, 46, 19, 14);
 
   // Mobile: the curve arches over the pills
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     @include tcoi-layout(475, 262, 237, 258, 228, -90, 60, 55, 117, 363, 66, 10, 16);
   }
 

@@ -38,7 +38,7 @@ $tss-transition: 350ms ease-in-out;
     &.has-slider {
       padding: 0 calc(#{$tss-arrow-size} + 40px);
 
-      @media (max-width: $screen-md-min-767) {
+      @media (max-width: $screen-md-min) {
         padding: 0;
       }
     }
@@ -65,7 +65,7 @@ $tss-transition: 350ms ease-in-out;
   .testimonial-slider-section__blockquote {
     margin: 0 0 39px;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       margin-bottom: 39px;
     }
   }
@@ -89,7 +89,7 @@ $tss-transition: 350ms ease-in-out;
       content: '\201D';
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       // font-size: 30px;
       // line-height: 38px;
     }
@@ -100,7 +100,7 @@ $tss-transition: 350ms ease-in-out;
     flex-direction: column;
     align-items: center;
     gap: 64px;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       gap: 54px;
     }
   }
@@ -111,7 +111,7 @@ $tss-transition: 350ms ease-in-out;
     font-size: 20px;
     line-height: 25px;
     letter-spacing: 1%;
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 22px;
       line-height: 100%;
     }
@@ -139,7 +139,7 @@ $tss-transition: 350ms ease-in-out;
     justify-content: space-between;
     pointer-events: none;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       position: static;
       justify-content: center;
       gap: 8px;

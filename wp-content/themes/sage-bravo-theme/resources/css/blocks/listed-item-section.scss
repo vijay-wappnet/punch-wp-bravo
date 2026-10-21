@@ -10,7 +10,7 @@
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       padding-left: 36px;
       padding-right: 36px;
     }
@@ -30,7 +30,7 @@
       column-gap: 40px;
     }
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       column-count: 1;
     }
   }
@@ -44,7 +44,7 @@
     // An item is never split between the two columns
     break-inside: avoid;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       gap: 14px;
       margin-bottom: 17px;
     }
@@ -70,7 +70,7 @@
     height: 20px;
     margin-top: calc((25px - 20px) / 2);
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       width: 30px;
       height: 30px;
       margin-top: calc((26px - 30px) / 2);

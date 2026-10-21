@@ -83,11 +83,12 @@
     min-width: 171px;
     border-radius: 5px;
 
-    @media (max-width: $screen-lg-min) {
+    @media (max-width: $screen-md-min) {
       justify-content: center;
       width: 100%;
       min-width: 0;
       padding: 16px;
+      height: 58px;
 
       .error-404-page__btn-icon {
         display: none;

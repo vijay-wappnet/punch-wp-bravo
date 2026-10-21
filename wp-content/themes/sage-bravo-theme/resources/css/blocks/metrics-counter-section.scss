@@ -6,7 +6,6 @@ $mcs-negative: $red-fusion-color;
 
 .metrics-counter-section {
   position: relative;
-  padding: 40px 0;
   color: $black-off-color;
   // Default when no ACF background color is set
   background-color: $white-off-color;
@@ -15,7 +14,7 @@ $mcs-negative: $red-fusion-color;
   background-size: cover;
 
   > .container {
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       // The track runs to the screen edge on mobile so the next card can peek in
       padding-left: 0;
       padding-right: 0;
@@ -65,7 +64,7 @@ $mcs-negative: $red-fusion-color;
       font-size: 60px;
       line-height: 40px;
     }
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 60px;
       line-height: 40px;
       margin-bottom: 20px;
@@ -106,7 +105,7 @@ $mcs-negative: $red-fusion-color;
     font-size: 22px;
     line-height: 1;
 
-    @media (max-width: $screen-md-min-767) {
+    @media (max-width: $screen-md-min) {
       font-size: 22px;
     }
   }
@@ -151,7 +150,7 @@ $mcs-negative: $red-fusion-color;
     display: none;
   }
 
-  @media (max-width: $screen-md-min-767) {
+  @media (max-width: $screen-md-min) {
     padding: 28px 0 24px;
 
     .metrics-counter {
