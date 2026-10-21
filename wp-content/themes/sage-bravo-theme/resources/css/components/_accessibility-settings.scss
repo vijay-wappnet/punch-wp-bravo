@@ -146,10 +146,27 @@ $a11y-block-headings: (
 body.contrast-higher,
 body.contrast-inverted {
   & > *:not(.accessibility-modal):not(.modal-backdrop) {
-    img {
-      filter: brightness(1);
+    .btn img,
+    .testimonial-slider-section__arrows img,
+    .faqs-accordion-section__heading img,
+    .menu-toggle-icon img{
+      filter: brightness(10) !important;
       background-color: transparent !important;
     }
+    .logo-wrapper .brand-logo-transition img {
+      filter: brightness(0) invert(1) !important;
+      background-color: transparent !important;
+    }
+    .two-columns-image-icons-with-cta-section {
+      .two-columns-image-icons-with-cta-section__icon-item{
+        background-color: $white-color !important;
+      }
+    }
+    .three-columns-card-grid-section .three-columns-card-grid-section__icon::before,
+    .three-columns-card-grid-section .three-columns-card-grid-section__icon::after {
+      background-color: $white-color !important;
+    }
+
     .modal-header {
       .btn-close{
         svg{
@@ -159,21 +176,25 @@ body.contrast-inverted {
         }
       }
     }
+    .footer-newsletter-form .footer-newsletter-submit:has(input[type="submit"])::after {
+      filter: brightness(0) invert(1) !important;
+    }
+    .footer-newsletter-form form input[type='email']{
+      &::placeholder{
+        color: #fff !important;
+      }
+    }
+    .cfs .cfs-select{
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='9' viewBox='0 0 16 9'%3E%3Cpath d='M1 1l7 7 7-7' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") !important;
+    }
+    .cfs .wpcf7-list-item input[type="checkbox"]:checked{
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9' fill='none'%3E%3Cpath d='M1 4.5L4.5 8 11 1' stroke='%23FFFFFF' stroke-width='1.5'/%3E%3C/svg%3E") !important;
+    }
+
     .search-results-form {
       background-color: transparent !important;
     }
-    .slider-with-multiple-box-section {
-      .smb-item__wrapper,
-      .smb-item__slider,
-      .slick-list,
-      .slick-track,
-      .slick-slide,
-      .slick-slide div,
-      .smb-item__slider-item,
-      .smb-item__slider-item img {
-        background-color: transparent !important;
-      }
-    }
+
     .accessibility-modal{
       background-color: transparent !important;
     }
@@ -237,7 +258,10 @@ body.contrast-higher {
       color: $white-color !important;
       border-color: $white-color !important;
     }
-
+    img {
+      filter: contrast(1) grayscale(0) invert(0) brightness(1) !important;
+      background-color: transparent !important;
+    }
     .top-nav img,
     .logo-container img,
     .footer-logo-wrapper img,
@@ -273,7 +297,10 @@ body.contrast-inverted {
       color: #ff0 !important;
       border-color: #ff0 !important;
     }
-
+    img {
+      filter: contrast(1) grayscale(0) invert(0) brightness(1) !important;
+      background-color: transparent !important;
+    }
     .top-nav img,
     .logo-container img,
     .footer-logo-wrapper img,
