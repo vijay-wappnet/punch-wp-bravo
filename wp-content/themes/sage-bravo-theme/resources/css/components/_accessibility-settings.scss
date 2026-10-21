@@ -238,6 +238,27 @@ body.text-medium {
         font-size: 18px !important;
       }
     }
+    .footer-newsletter-form label{
+      font-size: 0px !important;
+    }
+    .btn{
+      font-size: 20px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+      span{
+        font-size: 20px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 18px !important;
+        }
+      }
+    }
+    .close-btn span{
+      font-size: 30px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 24px !important;
+      }
+    }
     .modal-header {
       .btn-close{
         svg{
@@ -250,8 +271,19 @@ body.text-medium {
         }
       }
     }
-
+    .menu-right-label{
+      font-size: 40px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 36px !important;
+      }
+    }
     .fullscreen-menu{
+      .fullscreen-menu-link{
+        font-size: 40px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 36px !important;
+        }
+      }
       .fullscreen-menu-list{
         .menu-item > a {
           font-size: 40px !important;
@@ -500,7 +532,27 @@ body.text-large {
         font-size: 18px !important;
       }
     }
-
+    .footer-newsletter-form label{
+      font-size: 0px !important;
+    }
+    .btn{
+      font-size: 22px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 18px !important;
+      }
+      span{
+        font-size: 22px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 18px !important;
+        }
+      }
+    }
+    .close-btn span{
+      font-size: 36px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 30px !important;
+      }
+    }
     .modal-header {
       .btn-close{
         svg{
@@ -522,7 +574,19 @@ body.text-large {
         }
       }
     }
+    .menu-right-label{
+      font-size: 50px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 40px !important;
+      }
+    }
     .fullscreen-menu{
+      .fullscreen-menu-link{
+        font-size: 50px !important;
+        @media (max-width: $screen-md-min) {
+          font-size: 40px !important;
+        }
+      }
       .fullscreen-menu-list{
         .menu-item > a {
           font-size: 50px !important;
