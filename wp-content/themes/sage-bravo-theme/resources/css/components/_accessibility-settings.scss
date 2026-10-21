@@ -231,7 +231,10 @@ body.text-medium {
     input[type="text"],
     input[type="email"],
     input[type="tel"],
-    textarea {
+    textarea,
+    form select,
+    form select option,
+    form .wpcf7-number {
       font-size: 20px !important;
 
       @media (max-width: $screen-md-min) {
@@ -525,7 +528,10 @@ body.text-large {
     input[type="text"],
     input[type="email"],
     input[type="tel"],
-    textarea {
+    textarea,
+    form select,
+    form select option,
+    form .wpcf7-number {
       font-size: 22px !important;
 
       @media (max-width: $screen-md-min) {
