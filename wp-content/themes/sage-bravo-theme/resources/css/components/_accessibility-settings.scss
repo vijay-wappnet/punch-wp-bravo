@@ -582,6 +582,12 @@ body.text-medium {
     // Block section headings - see $a11y-block-headings
     @include a11y-block-headings(1.25);
     @include a11y-block-text(1.25);
+    // Bold/italic/linked words inside a heading take the heading's size,
+    // not the 20px body-text size (strong, span, a) or the catch-all 5rem (b)
+    :is(h1, h2, h3, h4, h5, h6) :is(b, strong) {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
   }
 
 
@@ -872,6 +878,12 @@ body.text-large {
     // Block section headings - see $a11y-block-headings
     @include a11y-block-headings(1.5);
     @include a11y-block-text(1.5);
+    // Bold/italic/linked words inside a heading take the heading's size,
+    // not the 20px body-text size (strong, span, a) or the catch-all 5rem (b)
+    :is(h1, h2, h3, h4, h5, h6) :is(b, strong) {
+      font-size: inherit !important;
+      line-height: inherit !important;
+    }
   }
 
 }
