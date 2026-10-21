@@ -15,6 +15,7 @@ These styles are separated to avoid specificity conflicts
 @use "../common/variables" as *;
 @use "../components/buttons" as *;
 
+@use "sass:list";
 @use "sass:math";
 
 // Block section headings (h1-h6 chosen per block in ACF). The generic h1-h6
@@ -38,12 +39,12 @@ $a11y-block-headings: (
 @mixin a11y-block-headings($scale) {
   @each $selector, $sizes in $a11y-block-headings {
     #{$selector} {
-      font-size: math.round(nth($sizes, 1) * $scale) !important;
+      font-size: math.round(list.nth($sizes, 1) * $scale) !important;
 
       // A long single word ("Introducing") at these sizes is wider than a
       // phone's content column - hyphenate/wrap it instead of overflowing
       @media (max-width: $screen-md-min) {
-        font-size: math.round(nth($sizes, 2) * $scale) !important;
+        font-size: math.round(list.nth($sizes, 2) * $scale) !important;
         overflow-wrap: break-word;
         -webkit-hyphens: auto; // Safari < 17
         hyphens: auto;
