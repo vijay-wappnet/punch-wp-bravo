@@ -66,6 +66,27 @@ $a11y-block-headings: (
   // got clipped at the top. Image and panel share one grid cell instead:
   // the panel still overlays the image from the bottom, and the card grows
   // when the panel needs more room than the image gives it.
+  // Video banner: a fixed 100vh section with the box centred under the fixed
+  // header. The bigger heading made the box taller than the space left, so
+  // it ran up under the header. The section grows instead (at least a full
+  // screen), and the box always starts below the header (95px desktop,
+  // 100px mobile) + 30px.
+  .video-banner-section {
+    height: auto;
+
+    .video-banner-section__content {
+      height: auto;
+      min-height: 100vh;
+      padding-top: calc(95px + 30px);
+      padding-bottom: 60px;
+
+      @media (max-width: $screen-lg-min) {
+        padding-top: calc(100px + 30px);
+        padding-bottom: 40px;
+      }
+    }
+  }
+
   .three-columns-card-grid-section .three-columns-card-grid-section__card {
     display: grid;
     padding-bottom: 0;
@@ -500,8 +521,8 @@ body.text-medium {
     }
 
     h1 {
-      font-size: 80px !important;
-      line-height: 88px !important;
+      font-size: 60px !important;
+      line-height: 66px !important;
       @media (max-width: $screen-md-min) {
         font-size: 36px !important;
         line-height: 44px !important;
@@ -795,8 +816,8 @@ body.text-large {
 
 
     h1 {
-      font-size: 90px !important;
-      line-height: 100px !important;
+      font-size: 70px !important;
+      line-height: 77px !important;
       @media (max-width: $screen-md-min) {
         font-size: 40px !important;
         line-height: 44px !important;
