@@ -45,6 +45,7 @@ $a11y-block-headings: (
       @media (max-width: $screen-md-min) {
         font-size: math.round(nth($sizes, 2) * $scale) !important;
         overflow-wrap: break-word;
+        -webkit-hyphens: auto; // Safari < 17
         hyphens: auto;
       }
     }
