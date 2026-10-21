@@ -331,11 +331,24 @@ body.text-medium {
     form select option,
     form .wpcf7-number,
     .cta-banner-section__description p,
-    .pps__feature-text span {
+    .pps__feature-text span,
+    .search-results-section__input {
       font-size: 20px !important;
 
       @media (max-width: $screen-md-min) {
         font-size: 18px !important;
+      }
+    }
+    .metric-value-wrapper span{
+      font-size: 50px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 30px !important;
+      }
+    }
+    .metric-label{
+      font-size: 24px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 22px !important;
       }
     }
     .pps__check{
@@ -491,23 +504,10 @@ body.text-medium {
       }
     }
 
-    .search-results-section{
-      font-size: 36px !important;
-      div{
-        font-size: 36px !important;
-        @media (max-width: $screen-md-min) {
-          font-size: 30px !important;
-        }
-        strong{
-          font-size: 36px !important;
-          @media (max-width: $screen-md-min) {
-            font-size: 30px !important;
-          }
-        }
-      }
-
+    .search-results-section__item-title{
+      font-size: 40px !important;
       @media (max-width: $screen-md-min) {
-        font-size: 30px !important;
+        font-size: 32px !important;
       }
     }
 
@@ -672,11 +672,24 @@ body.text-large {
     form select option,
     form .wpcf7-number,
     .cta-banner-section__description p,
-    .pps__feature-text span {
+    .pps__feature-text span,
+    .search-results-section__input {
       font-size: 22px !important;
 
       @media (max-width: $screen-md-min) {
         font-size: 18px !important;
+      }
+    }
+    .metric-value-wrapper span{
+      font-size: 66px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 30px !important;
+      }
+    }
+    .metric-label{
+      font-size: 30px !important;
+      @media (max-width: $screen-md-min) {
+        font-size: 24px !important;
       }
     }
     .pps__check{
@@ -840,26 +853,12 @@ body.text-large {
       }
     }
 
-    .search-results-section{
+    .search-results-section__item-title{
       font-size: 42px !important;
-      div{
-        font-size: 42px !important;
-        @media (max-width: $screen-md-min) {
-          font-size: 36px !important;
-        }
-        strong{
-          font-size: 42px !important;
-          @media (max-width: $screen-md-min) {
-            font-size: 36px !important;
-          }
-        }
-      }
-
       @media (max-width: $screen-md-min) {
-        font-size: 36px !important;
+        font-size: 32px !important;
       }
     }
-
 
     .faqs-accordion-section__question{
       span.faqs-accordion-section__question-text{
