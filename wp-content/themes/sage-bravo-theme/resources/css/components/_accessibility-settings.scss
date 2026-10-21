@@ -329,7 +329,8 @@ body.text-medium {
     textarea,
     form select,
     form select option,
-    form .wpcf7-number {
+    form .wpcf7-number,
+    .cta-banner-section__description p {
       font-size: 20px !important;
 
       @media (max-width: $screen-md-min) {
@@ -662,7 +663,8 @@ body.text-large {
     textarea,
     form select,
     form select option,
-    form .wpcf7-number {
+    form .wpcf7-number,
+    .cta-banner-section__description p {
       font-size: 22px !important;
 
       @media (max-width: $screen-md-min) {
