@@ -254,6 +254,19 @@ body.contrast-inverted {
     .two-columns-image-icons-with-cta-section__center {
       background-color: transparent !important;
     }
+    .pid__media,
+    .pid__media * {
+      background-color: transparent !important;
+    }
+    .pricing-plans-section .pps__card,
+    .agency-pricing-plans-section .agency-pricing-card,
+    .compare-listed-item-section .clis__card {
+      border: 1px solid $white-color !important;
+    }
+    .pricing-plans-section .pps__card .pps__tag{
+      background-color: #DBD7D2 !important;
+      color: #2E2E2E !important;
+    }
     .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
       background-color: transparent !important;
     }
