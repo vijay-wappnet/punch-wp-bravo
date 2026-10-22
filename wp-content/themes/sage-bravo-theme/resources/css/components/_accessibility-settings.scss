@@ -157,7 +157,7 @@ body.contrast-inverted {
     }
     .logo-wrapper a img,
     .footer-logo-wrapper a img,
-    .menu-header-logo img,{
+    .menu-header-logo img{
         filter: brightness(0) invert(1) !important;
         background-color: transparent !important;
     }
@@ -280,6 +280,9 @@ body.contrast-inverted {
     .contact-form-block-section .cfs-final .wpcf7-submit {
       border: 1px solid $white-color !important;
     }
+    footer .footer-bottom{
+      border-top: 1px solid $white-color !important;
+    }
     .pricing-plans-section .pps__card .pps__tag{
       background-color: #DBD7D2 !important;
       color: #2E2E2E !important;
@@ -294,13 +297,15 @@ body.contrast-inverted {
     .tcoi__icon-item {
       background-color: transparent !important;
     }
-
     .tcoi__pill {
       border: 2px solid currentColor !important;
     }
-
     .tcoi__icon-pos {
       background-color: $white-color !important;
+    }
+
+    .footer-main * {
+      background-color: transparent !important;
     }
 
     .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
