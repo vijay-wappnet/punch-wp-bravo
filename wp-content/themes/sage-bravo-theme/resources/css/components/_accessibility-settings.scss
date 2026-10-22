@@ -40,11 +40,12 @@ $a11y-block-headings: (
   @each $selector, $sizes in $a11y-block-headings {
     #{$selector} {
       font-size: math.round(list.nth($sizes, 1) * $scale) !important;
-
+      line-height: math.round(list.nth($sizes, 1) * $scale * 1) !important;
       // A long single word ("Introducing") at these sizes is wider than a
       // phone's content column - hyphenate/wrap it instead of overflowing
       @media (max-width: $screen-md-min) {
         font-size: math.round(list.nth($sizes, 2) * $scale) !important;
+        line-height: math.round(list.nth($sizes, 2) * $scale * 1) !important;
         overflow-wrap: break-word;
         -webkit-hyphens: auto; // Safari < 17
         hyphens: auto;
