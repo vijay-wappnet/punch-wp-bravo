@@ -158,9 +158,9 @@ body.contrast-inverted {
         filter: brightness(0) invert(1) !important;
         background-color: transparent !important;
     }
-    // .insight-analytics-feature-section .iafs__column--image .iafs__overlay img{
-    //   filter: brightness(0) invert(1) !important;
-    // }
+    .insight-analytics-feature-section .iafs__column--image .iafs__overlay img{
+      filter: brightness(0) invert(1) !important;
+    }
 
     .two-columns-image-icons-with-cta-section {
       .two-columns-image-icons-with-cta-section__icon-item{
@@ -224,6 +224,20 @@ body.contrast-inverted {
     }
     .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
       background-color: transparent !important;
+    }
+
+    // Product showcase slider dots are drawn with background colours only
+    // (grey / red for the current slide), so on the contrast background they
+    // vanished. Shown as rings in the contrast text colour (white / yellow),
+    // the current slide's dot filled. (Selector out-ranks the rule above.)
+    .product-showcase-slider-section.js-dot-grid .product-showcase-slider-section__dots-list .product-showcase-slider-section__dot {
+      box-sizing: border-box;
+      border: 2px solid currentColor !important;
+      background-color: transparent !important;
+    }
+
+    .product-showcase-slider-section.js-dot-grid .product-showcase-slider-section__dots-list .slick-active .product-showcase-slider-section__dot {
+      background-color: currentColor !important;
     }
 
     .accessibility-modal{
