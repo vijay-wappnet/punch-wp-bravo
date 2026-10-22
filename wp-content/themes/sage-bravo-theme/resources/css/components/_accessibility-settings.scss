@@ -149,12 +149,14 @@ body.contrast-inverted {
     .btn img,
     .testimonial-slider-section__arrows img,
     .faqs-accordion-section__heading img,
-    .menu-toggle-icon img{
+    .menu-toggle-icon img,
+    .fullscreen-menu .menu-left .close-btn img{
       filter: brightness(10) !important;
       background-color: transparent !important;
     }
     .logo-wrapper a img,
-    .footer-logo-wrapper a img{
+    .footer-logo-wrapper a img,
+    .menu-header-logo img,{
         filter: brightness(0) invert(1) !important;
         background-color: transparent !important;
     }
@@ -162,6 +164,14 @@ body.contrast-inverted {
       filter: brightness(0) invert(1) !important;
     }
     .tech-ecosystem-connections-section .tec__card .tec__logos .tec__logo img{
+      filter: brightness(0) invert(1) !important;
+    }
+    .article-post-listing-section .article-post-card__read-more img,
+    .article-post-listing-section .article-post-listing-section__pagination img{
+      filter: brightness(0) invert(1) !important;
+    }
+    .latest-article-list-section .latest-article-list-section__actions .btn-trans-border-arrow__icon,
+    .latest-article-list-section .latest-article-list-section__item .latest-article-list-section__read-more .latest-article-list-section__read-more-icon{
       filter: brightness(0) invert(1) !important;
     }
     .tech-ecosystem-connections-section .container,
@@ -260,27 +270,47 @@ body.contrast-inverted {
     }
     .pricing-plans-section .pps__card,
     .agency-pricing-plans-section .agency-pricing-card,
-    .compare-listed-item-section .clis__card {
+    .compare-listed-item-section .clis__card,
+    .search-results-section form .srs-btn,
+    .search-results-section__list .search-results-section__item .search-results-section__more,
+    .faqs-accordion-section .faqs-accordion-section__item,
+    .contact-form-block-section .cfs-step,
+    .contact-form-block-section .cfs-step .cfs-step__actions .btn-contact-from-7,
+    .contact-form-block-section .cfs-final .wpcf7-submit {
       border: 1px solid $white-color !important;
     }
     .pricing-plans-section .pps__card .pps__tag{
       background-color: #DBD7D2 !important;
       color: #2E2E2E !important;
     }
+    .floating-content-card-section .container,
+    .floating-content-card-section .floating-content-card-section__inner{
+      background-color: transparent !important;
+    }
+    .tcoi__orbit,
+    .tcoi__arc,
+    .tcoi__icons,
+    .tcoi__icon-item {
+      background-color: transparent !important;
+    }
+
+    .tcoi__pill {
+      border: 2px solid currentColor !important;
+    }
+
+    .tcoi__icon-pos {
+      background-color: $white-color !important;
+    }
+
     .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
       background-color: transparent !important;
     }
 
-    // Product showcase slider dots are drawn with background colours only
-    // (grey / red for the current slide), so on the contrast background they
-    // vanished. Shown as rings in the contrast text colour (white / yellow),
-    // the current slide's dot filled. (Selector out-ranks the rule above.)
     .product-showcase-slider-section.js-dot-grid .product-showcase-slider-section__dots-list .product-showcase-slider-section__dot {
       box-sizing: border-box;
       border: 2px solid currentColor !important;
       background-color: transparent !important;
     }
-
     .product-showcase-slider-section.js-dot-grid .product-showcase-slider-section__dots-list .slick-active .product-showcase-slider-section__dot {
       background-color: currentColor !important;
     }
