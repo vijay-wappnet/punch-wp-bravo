@@ -155,9 +155,12 @@ body.contrast-inverted {
     }
     .logo-wrapper a img,
     .footer-logo-wrapper a img{
-      filter: brightness(0) invert(1) !important;
-      background-color: transparent !important;
+        filter: brightness(0) invert(1) !important;
+        background-color: transparent !important;
     }
+    // .insight-analytics-feature-section .iafs__column--image .iafs__overlay img{
+    //   filter: brightness(0) invert(1) !important;
+    // }
 
     .two-columns-image-icons-with-cta-section {
       .two-columns-image-icons-with-cta-section__icon-item{
@@ -215,13 +218,10 @@ body.contrast-inverted {
         background-color: transparent !important;
       }
     }
-    // Orbit rings are stacked circles (outer one on top): a solid contrast
-    // background on the outer ring hid the inner ring underneath
     .two-columns-image-icons-with-cta-section__ring,
     .two-columns-image-icons-with-cta-section__center {
       background-color: transparent !important;
     }
-
     .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
       background-color: transparent !important;
     }
