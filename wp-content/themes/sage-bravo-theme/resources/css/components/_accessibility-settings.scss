@@ -153,10 +153,12 @@ body.contrast-inverted {
       filter: brightness(10) !important;
       background-color: transparent !important;
     }
-    .logo-wrapper .brand-logo-transition img {
+    .logo-wrapper a img,
+    .footer-logo-wrapper a img{
       filter: brightness(0) invert(1) !important;
       background-color: transparent !important;
     }
+
     .two-columns-image-icons-with-cta-section {
       .two-columns-image-icons-with-cta-section__icon-item{
         background-color: $white-color !important;
@@ -176,6 +178,9 @@ body.contrast-inverted {
         }
       }
     }
+    .search-results-section__icon{
+       filter: brightness(0) invert(1) !important;
+    }
     .footer-newsletter-form .footer-newsletter-submit:has(input[type="submit"])::after {
       filter: brightness(0) invert(1) !important;
     }
@@ -193,12 +198,32 @@ body.contrast-inverted {
     .search-results-form {
       background-color: transparent !important;
     }
-
     .testimonial-slider-section__arrows {
       background-color: transparent !important;
     }
     .testimonial-slider-section__logo {
       filter: brightness(0) invert(1) !important;
+    }
+    .video-banner-section {
+      .video-banner-section__media,
+      .video-banner-section__video,
+      .video-banner-section__image,
+      .video-banner-section__fallback-image,
+      .video-banner-section__overlay,
+      .dot-grid-canvas,
+      .video-banner-section__content {
+        background-color: transparent !important;
+      }
+    }
+    // Orbit rings are stacked circles (outer one on top): a solid contrast
+    // background on the outer ring hid the inner ring underneath
+    .two-columns-image-icons-with-cta-section__ring,
+    .two-columns-image-icons-with-cta-section__center {
+      background-color: transparent !important;
+    }
+
+    .js-dot-grid *:not(.btn):not(.video-banner-section__box) {
+      background-color: transparent !important;
     }
 
     .accessibility-modal{
