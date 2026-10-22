@@ -161,7 +161,34 @@ body.contrast-inverted {
     .insight-analytics-feature-section .iafs__column--image .iafs__overlay img{
       filter: brightness(0) invert(1) !important;
     }
-
+    .tech-ecosystem-connections-section .tec__card .tec__logos .tec__logo img{
+      filter: brightness(0) invert(1) !important;
+    }
+    .tech-ecosystem-connections-section .container,
+    .tech-ecosystem-connections-section .tec__heading,
+    .tech-ecosystem-connections-section .tec__visual-wrap,
+    .tech-ecosystem-connections-section .tec__visual-wrap .tec__visual,
+    .tech-ecosystem-connections-section .tec__visual-wrap .tec__visual .tec__lines.tec__lines--desktop,
+    .tech-ecosystem-connections-section .tec__visual-wrap .tec__visual .tec__lines.tec__lines--mobile{
+      background-color: transparent !important;
+    }
+    .tech-ecosystem-connections-section .tec__item--top .tec__item-icon,
+    .tech-ecosystem-connections-section .tec__visual .tec__card .tec__logos{
+      background-color: transparent !important;
+    }
+    .tech-ecosystem-connections-section .tec__item--right,
+    .tech-ecosystem-connections-section .tec__item--left {
+      background-color: #6b6560 !important;
+    }
+    .tech-ecosystem-connections-section .tec__item--bottom {
+      background-color: #FF5F5D !important;
+      color: #2E2E2E !important;
+    }
+    .tech-ecosystem-connections-section .tec__item--right .tec__item-title,
+    .tech-ecosystem-connections-section .tec__item--left .tec__item-title,
+    .tech-ecosystem-connections-section .tec__item--bottom .tec__item-title{
+      background-color: transparent !important;
+    }
     .two-columns-image-icons-with-cta-section {
       .two-columns-image-icons-with-cta-section__icon-item{
         background-color: $white-color !important;
