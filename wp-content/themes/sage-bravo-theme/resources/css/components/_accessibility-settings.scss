@@ -194,6 +194,11 @@ body.contrast-inverted {
         background-color: $white-color !important;
       }
     }
+    .insight-analytics-feature-section .pid__media img {
+      filter: contrast(1) grayscale(0) invert(0) brightness(1) !important;
+      background-color: transparent !important;
+    }
+
     .three-columns-card-grid-section .three-columns-card-grid-section__icon::before,
     .three-columns-card-grid-section .three-columns-card-grid-section__icon::after {
       background-color: $white-color !important;
