@@ -78,7 +78,7 @@
                 'depth' => 1,
                 'container' => false,
                 'walker' => new \App\MenuWalker(),
-                'items_wrap' => '<ul id="%1$s" class="%2$s" role="menu">%3$s</ul>',
+                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
             ]) !!}
 
             @if ($login_url)

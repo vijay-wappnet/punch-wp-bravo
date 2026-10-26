@@ -36,7 +36,7 @@ class MenuWalker extends Walker_Nav_Menu
         $title = apply_filters('the_title', $item->title, $item->ID);
 
         $item_output = $args->before ?? '';
-        $item_output .= '<a role="menuitem"' . $attributes . '>' . $title . '</a>';
+        $item_output .= '<a' . $attributes . '>' . $title . '</a>';
         $item_output .= $args->after ?? '';
 
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
