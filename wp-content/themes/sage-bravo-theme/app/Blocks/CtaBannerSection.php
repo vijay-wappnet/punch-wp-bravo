@@ -153,7 +153,7 @@ class CtaBannerSection
                 'rel'         => $target === '_blank' ? 'noopener noreferrer' : '',
                 'aria_label'  => trim($row['aria_label'] ?? '') ?: $title,
                 'event_label' => trim($row['button_google_event_label'] ?? ''),
-                'class'       => implode(' ', array_merge(['btn', 'ctabs-btn'], $extra_classes)),
+                'class'       => implode(' ', array_merge(['btn'], $extra_classes)),
             ];
         }
 

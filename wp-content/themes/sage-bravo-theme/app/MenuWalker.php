@@ -18,9 +18,10 @@ class MenuWalker extends Walker_Nav_Menu
 
         $output .= '<li' . $class_names . '>';
 
+        // Link attributes
         $atts = [
             'href' => ! empty($item->url) ? $item->url : '#',
-            'class' => 'fullscreen-menu-link',
+            'class' => 'fullscreen-menu-link header-btn',
             'data-event' => $item->title,
             'aria-label' => $item->title,
         ];

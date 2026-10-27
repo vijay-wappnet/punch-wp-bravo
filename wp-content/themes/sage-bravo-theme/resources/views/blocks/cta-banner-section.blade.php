@@ -30,7 +30,7 @@
       <div class="cta-banner-section__buttons">
         @foreach($buttons as $button)
           <a href="{!! esc_url($button['url']) !!}"
-            class="{!! esc_attr($button['class']) !!}"
+            class="cbs-btn {!! esc_attr($button['class']) !!}"
             aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
             @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
             @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif

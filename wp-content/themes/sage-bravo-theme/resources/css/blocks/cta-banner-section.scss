@@ -208,7 +208,7 @@
 
   // Same design as the fullscreen menu's .menu-right-btn, at the standard
   // .btn width (171px) and with the .btn rounded corners
-  .ctabs-btn {
+  .cbs-btn {
     @include dark-arrow-btn('.cta-banner-section__btn-icon');
     min-width: 171px;
     border-radius: 5px;

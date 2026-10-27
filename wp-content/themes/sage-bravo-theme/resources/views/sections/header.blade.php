@@ -157,7 +157,7 @@
       @if ($login_url)
         <a
           href="{{ esc_url($login_url) }}"
-          class="header-login-link"
+          class="header-login-link header-btn"
           aria-label="{{ esc_attr($login_aria_label) }}"
           @if ($login_target) target="{{ esc_attr($login_target) }}" @endif
           @if ($login_ga_label) data-event="{{ esc_attr($login_ga_label) }}" @endif
@@ -169,7 +169,7 @@
       @if ($primary_button && $cta_url)
         <a
           href="{{ esc_url($cta_url) }}"
-          class="btn btn-red-fusion header-cta-btn"
+          class="btn btn-red-fusion header-cta-btn header-btn"
           aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_title'] ?? '') }}"
           @if ($cta_target) target="{{ esc_attr($cta_target) }}" @endif
           @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif

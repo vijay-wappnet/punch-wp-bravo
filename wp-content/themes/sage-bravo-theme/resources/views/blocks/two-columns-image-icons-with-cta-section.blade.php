@@ -32,13 +32,13 @@ use Illuminate\Support\Facades\Vite;
             <div class="two-columns-image-icons-with-cta-section__buttons">
               @foreach($buttons as $button)
                 <a href="{!! esc_url($button['url']) !!}"
-                  class="btn twociiwcs-btn {!! esc_attr($button['class']) !!}"
+                  class="btn tciiwcs-btn {!! esc_attr($button['class']) !!}"
                   @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
                   @if($button['target'] === '_blank') rel="noopener noreferrer" @endif
                   aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"
                   data-event="{!! esc_attr(bravo_label($button['event_label'], $button['title'])) !!}">
                   <span>{{ $button['title'] }}</span>
-                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="twociiwcs-btn__icon" aria-hidden="true" width="22" height="15">
+                  <img src="{{ Vite::asset('resources/images/btn-left-arrow.svg') }}" alt="{{ __('Right arrow icon', 'sage') }}" class="tciiwcs-btn__icon" aria-hidden="true" width="22" height="15">
                 </a>
               @endforeach
             </div>

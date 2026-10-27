@@ -85,7 +85,7 @@
               <div class="fullscreen-menu-login-item">
                 <a
                   href="{{ esc_url($login_url) }}"
-                  class="fullscreen-menu-link fullscreen-menu-login"
+                  class="fullscreen-menu-link fullscreen-menu-login header-btn"
                   aria-label="{{ esc_attr($login['login_aria_label'] ?? $login_title) }}"
                   @if ($login_target) target="{{ esc_attr($login_target) }}" @endif
                   @if (! empty($login['login_button_google_event_label'])) data-event="{{ esc_attr($login['login_button_google_event_label']) }}" @endif
@@ -109,7 +109,7 @@
               @if ($btn_url)
                 <a
                   href="{{ esc_url($btn_url) }}"
-                  class="btn menu-right-btn"
+                  class="btn menu-right-btn header-btn"
                   aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_title'] ?? '') }}"
                   @if ($btn_target) target="{{ esc_attr($btn_target) }}" @endif
                   @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif
@@ -129,7 +129,7 @@
     <div class="menu-footer">
       <a
         href="{{ esc_url($btn_url) }}"
-        class="btn menu-footer-btn"
+        class="btn menu-footer-btn header-btn"
         aria-label="{{ esc_attr($primary_button['aria_label'] ?? $primary_button['button_title'] ?? '') }}"
         @if ($btn_target) target="{{ esc_attr($btn_target) }}" @endif
         @if (! empty($primary_button['button_google_event_label'])) data-event="{{ esc_attr($primary_button['button_google_event_label']) }}" @endif
