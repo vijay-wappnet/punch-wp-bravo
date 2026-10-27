@@ -107,8 +107,9 @@ class ThreeColumnsCardGridSection
             $heading = trim($row['heading_text'] ?? '');
             $description = trim($row['description'] ?? '');
             $image = self::formatImage($row['image'] ?? null);
+            $mobile_image = self::formatImage($row['mobile_image'] ?? null);
 
-            if (!$heading && !$description && !$image) {
+            if (!$heading && !$description && !$image && !$mobile_image) {
                 continue;
             }
 
@@ -121,7 +122,10 @@ class ThreeColumnsCardGridSection
                 'heading'       => $heading,
                 'heading_level' => $heading_level,
                 'description'   => $description,
-                'image'         => $image,
+                // Desktop image; mobile_image replaces it on mobile. If only one
+                // is set it is used on every screen size.
+                'image'         => $image ?: $mobile_image,
+                'mobile_image'  => $image ? $mobile_image : null,
             ];
         }
 

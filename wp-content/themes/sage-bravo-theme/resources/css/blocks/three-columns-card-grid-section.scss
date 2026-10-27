@@ -85,6 +85,14 @@ $tccgs-duration: 300ms;
     }
   }
 
+  // <picture> wrapper (desktop / mobile image) fills the media box like
+  // the <img> did on its own
+  .three-columns-card-grid-section__picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   .three-columns-card-grid-section__image {
     display: block;
     width: 100%;

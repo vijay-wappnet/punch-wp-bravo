@@ -16,13 +16,24 @@
 
               <div class="three-columns-card-grid-section__media">
                 @if($card['image'])
-                  <img src="{!! esc_url($card['image']['url']) !!}"
-                    alt="{!! esc_attr(bravo_alt($card['image']['alt'], $card['heading'], __('Card image', 'sage'))) !!}"
-                    @if($card['image']['width']) width="{!! esc_attr($card['image']['width']) !!}" @endif
-                    @if($card['image']['height']) height="{!! esc_attr($card['image']['height']) !!}" @endif
-                    loading="lazy"
-                    decoding="async"
-                    class="three-columns-card-grid-section__image">
+                  {{-- Mobile image (if set) on mobile devices (767px and
+                       below), the desktop image above that. The browser only
+                       downloads the one it shows. --}}
+                  <picture class="three-columns-card-grid-section__picture">
+                    @if($card['mobile_image'])
+                      <source media="(max-width: 767px)"
+                        srcset="{!! esc_url($card['mobile_image']['url']) !!}"
+                        @if($card['mobile_image']['width']) width="{!! esc_attr($card['mobile_image']['width']) !!}" @endif
+                        @if($card['mobile_image']['height']) height="{!! esc_attr($card['mobile_image']['height']) !!}" @endif>
+                    @endif
+                    <img src="{!! esc_url($card['image']['url']) !!}"
+                      alt="{!! esc_attr(bravo_alt($card['image']['alt'], $card['heading'], __('Card image', 'sage'))) !!}"
+                      @if($card['image']['width']) width="{!! esc_attr($card['image']['width']) !!}" @endif
+                      @if($card['image']['height']) height="{!! esc_attr($card['image']['height']) !!}" @endif
+                      loading="lazy"
+                      decoding="async"
+                      class="three-columns-card-grid-section__image">
+                  </picture>
                 @endif
               </div>
 
