@@ -118,7 +118,6 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     ) {
         $atts['data-toggle'] = 'modal';
         $atts['data-target'] = '#accessibilityModal';
-        $atts['aria-label'] = __('Site Accessibility settings', 'sage');
     }
     return $atts;
 }, 10, 3);

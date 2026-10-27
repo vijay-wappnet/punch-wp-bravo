@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.footer-nav-toggle');
-  const nav = document.getElementById('footer-nav-menu');
+  const nav = document.querySelector('.footer-navigation');
 
   if (toggle && nav) {
     toggle.addEventListener('click', () => {

@@ -21,8 +21,6 @@ class FooterBottomMenuWalker extends Walker_Nav_Menu
         $atts = [
             'href' => ! empty($item->url) ? $item->url : '#',
             'class' => 'footer-menu-link',
-            'data-event' => $item->title,
-            'aria-label' => $item->title,
         ];
 
         // Let nav_menu_link_attributes filters add to the link - e.g. the

@@ -84,7 +84,7 @@
           @if ($footer_logo_url)
             <a
               href="{{ esc_url($footer_logo_url) }}"
-              class="footer-logo"
+              class="footer-btn footer-logo"
               aria-label="{{ esc_attr($footer_logo_aria_label) }}"
               @if ($footer_logo_target) target="{{ esc_attr($footer_logo_target) }}" @endif
               @if ($footer_logo_ga_label) data-event="{{ esc_attr($footer_logo_ga_label) }}" @endif
@@ -128,7 +128,7 @@
                 <li class="footer-contact-item">
                   <a
                     href="{{ esc_url($contact_url) }}"
-                    class="footer-contact-link"
+                    class="footer-btn footer-contact-link"
                     aria-label="{{ esc_attr($contact_aria_label) }}"
                     @if ($contact_target) target="{{ esc_attr($contact_target) }}" @endif
                     @if ($contact_ga_label) data-event="{{ esc_attr($contact_ga_label) }}" @endif
@@ -153,7 +153,6 @@
             type="button"
             class="footer-nav-toggle"
             aria-expanded="false"
-            aria-controls="footer-nav-menu"
             aria-label="{{ __('Site map', 'sage') }}"
             data-event="{{ __('Site map', 'sage') }}"
           >
@@ -162,9 +161,7 @@
           </button>
 
           <nav
-            id="footer-nav-menu"
             class="footer-navigation"
-            role="navigation"
             aria-label="{{ wp_get_nav_menu_name('footer_main_navigation_one') }}"
           >
             {!! wp_nav_menu([
