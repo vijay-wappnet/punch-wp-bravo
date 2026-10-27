@@ -156,6 +156,9 @@ body.contrast-inverted {
       filter: brightness(10) !important;
       background-color: transparent !important;
     }
+    .footer-newsletter-form input[type='email']:focus{
+      border: 2px solid red !important;
+    }
     .logo-wrapper a img,
     .footer-logo-wrapper a img,
     .menu-header-logo img{
