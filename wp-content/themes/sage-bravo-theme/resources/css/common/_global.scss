@@ -236,3 +236,32 @@ b{
     padding-right: 36px;
   }
 }
+
+// Screen-reader-only text (WordPress' class and the Bootstrap 4 name; used
+// e.g. by the CF7 "Form Metadata" legend in resources/js/cf7-hidden-meta.js)
+.screen-reader-text,
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// CF7 hidden meta inputs, moved into a fieldset with a legend: kept out of
+// the layout (absolute, so it doesn't take a flex/gap slot in the
+// newsletter form) and out of view, but left in the accessibility tree
+.cf7-hidden-meta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

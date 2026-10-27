@@ -14,6 +14,7 @@ window.bootstrap = bootstrap;
 import './header.js'; // Header JS
 import './footer.js'; // Footer JS
 import initContactStepForm from './contact-step-form.js'; // CF7 "Contact us Form" steps
+import initCf7HiddenMeta from './cf7-hidden-meta.js'; // CF7 hidden meta inputs in a fieldset + legend
 
 /* ==========================================
    BLOCK SCRIPTS
@@ -56,3 +57,4 @@ document.addEventListener('DOMContentLoaded', () => initArticlePostListingSectio
 document.addEventListener('DOMContentLoaded', () => initSearchResultsSection());
 document.addEventListener('DOMContentLoaded', () => initTwoColumnsOrbitImageIconsWithCtaSection());
 document.addEventListener('DOMContentLoaded', () => initContactStepForm());
+document.addEventListener('DOMContentLoaded', () => initCf7HiddenMeta());
