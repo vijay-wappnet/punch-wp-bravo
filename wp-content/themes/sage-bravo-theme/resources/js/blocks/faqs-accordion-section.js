@@ -1,6 +1,68 @@
-// Scroll-after-open: wait for the 300ms open/close transition, then scroll
-const SCROLL_DELAY = 350;
-const SCROLL_OFFSET = 400;
+// Space between the fixed header and the opened question
+const SCROLL_GAP = 20;
+// Longest we wait for an answer's open/close transition (it's 300ms)
+const TRANSITION_TIMEOUT = 700;
+
+/**
+ * Where the visible page starts: the bottom of the fixed site header (which
+ * is also pushed down by the WP admin bar when logged in). Measured each
+ * time, as the header is shorter on mobile.
+ */
+function headerOffset() {
+  const header = document.getElementById('site-header');
+  if (!header) return 0;
+  const { bottom } = header.getBoundingClientRect();
+  return Math.max(0, bottom);
+}
+
+/**
+ * Resolves when the answer's max-height transition has finished (or straight
+ * away if there's nothing to animate, e.g. reduced motion), with a timeout
+ * so a missed transitionend can't block the scroll.
+ */
+function transitionDone(answer) {
+  const duration = parseFloat(getComputedStyle(answer).transitionDuration) || 0;
+  if (!duration) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    const finish = () => {
+      answer.removeEventListener('transitionend', onEnd);
+      clearTimeout(timer);
+      resolve();
+    };
+    const onEnd = (event) => {
+      if (event.target === answer && event.propertyName === 'max-height') finish();
+    };
+    const timer = setTimeout(finish, TRANSITION_TIMEOUT);
+    answer.addEventListener('transitionend', onEnd);
+  });
+}
+
+/**
+ * Scrolls the item to just below the fixed header. Content can still move
+ * while a long smooth scroll runs (lazy images loading, animated sections),
+ * so once it settles the position is checked and corrected if needed.
+ */
+function scrollToItem(item) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const behavior = reduceMotion ? 'auto' : 'smooth';
+  const offset = () => item.getBoundingClientRect().top - headerOffset() - SCROLL_GAP;
+
+  window.scrollTo({ top: window.pageYOffset + offset(), behavior });
+
+  let corrected = false;
+  const correct = () => {
+    if (corrected) return;
+    corrected = true;
+    window.removeEventListener('scrollend', correct);
+    if (Math.abs(offset()) > 2) {
+      window.scrollTo({ top: window.pageYOffset + offset(), behavior });
+    }
+  };
+  // `scrollend` where supported, otherwise a timeout after the smooth scroll
+  window.addEventListener('scrollend', correct, { once: true });
+  setTimeout(correct, 1500);
+}
 
 /**
  * Sets one FAQ item open or closed. The answer's max-height is animated
@@ -15,7 +77,7 @@ function setOpen(item, open) {
 
   item.classList.toggle('is-open', open);
   toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
-  if (!answer) return;
+  if (!answer) return Promise.resolve();
 
   answer.inert = !open;
   const height = `${content?.offsetHeight ?? 0}px`;
@@ -33,6 +95,8 @@ function setOpen(item, open) {
     void answer.offsetHeight; // force reflow
     answer.style.maxHeight = '0px';
   }
+
+  return transitionDone(answer);
 }
 
 /**
@@ -56,21 +120,21 @@ export default function initFaqsAccordionSection(root = document) {
       const item = toggle.closest('.faqs-accordion-section__item');
       const willOpen = !item.classList.contains('is-open');
 
+      const transitions = [];
       accordion.querySelectorAll('.faqs-accordion-section__item.is-open').forEach((openItem) => {
-        if (openItem !== item) setOpen(openItem, false);
+        if (openItem !== item) transitions.push(setOpen(openItem, false));
       });
 
-      setOpen(item, willOpen);
+      transitions.push(setOpen(item, willOpen));
 
-      // Same as the old site: once the answer has opened, smooth-scroll the
-      // item to SCROLL_OFFSET px from the top of the viewport
+      // Once the answer has opened AND any other item has finished closing
+      // (which moves this one up), scroll the opened question to the top of
+      // the viewport, just below the fixed header - so its answer is in view
+      // on mobile too
       if (willOpen) {
-        setTimeout(() => {
-          window.scrollTo({
-            top: item.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET,
-            behavior: 'smooth',
-          });
-        }, SCROLL_DELAY);
+        Promise.all(transitions).then(() => {
+          if (item.classList.contains('is-open')) scrollToItem(item);
+        });
       }
     });
   });
