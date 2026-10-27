@@ -57,11 +57,27 @@
                the 50% split with .menu-right untouched. --}}
           <div class="menu-left-inner">
             <div class="menu-header">
+              {{-- Mobile/tablet only (hidden on desktop by CSS). Same link as the
+                   header logo - $logo_* come from sections/header.blade.php,
+                   which includes this partial. --}}
+              @php($menu_logo_url = $logo_url ?? home_url('/'))
               <div class="menu-header-logo">
-                @if ($header_logo_black)
-                  <img src="{{ esc_url($header_logo_black['url']) }}" alt="{{ esc_attr($header_logo_black['alt'] ?: $siteName) }}" class="img-fluid">
-                @else
-                  {!! $siteName !!}
+                @if ($menu_logo_url)
+                  <a
+                    href="{{ esc_url($menu_logo_url) }}"
+                    class="menu-header-logo-link"
+                    aria-label="{{ esc_attr($logo_aria_label ?? __('Home', 'sage')) }}"
+                    @if (! empty($logo_target)) target="{{ esc_attr($logo_target) }}" @endif
+                    @if (! empty($logo_ga_label)) data-event="{{ esc_attr($logo_ga_label) }}" @endif
+                  >
+                @endif
+                  @if ($header_logo_black)
+                    <img src="{{ esc_url($header_logo_black['url']) }}" alt="{{ esc_attr($header_logo_black['alt'] ?: $siteName) }}" class="img-fluid">
+                  @else
+                    {!! $siteName !!}
+                  @endif
+                @if ($menu_logo_url)
+                  </a>
                 @endif
               </div>
 

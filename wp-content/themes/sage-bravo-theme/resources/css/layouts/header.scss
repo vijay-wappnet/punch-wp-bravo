@@ -293,6 +293,17 @@
     width: auto;
   }
 
+  // Home link around the logo; same keyboard focus ring as the header logo
+  .menu-header-logo-link {
+    display: block;
+    border-radius: 2px;
+
+    &:focus-visible {
+      outline: 2px solid $red-fusion-color;
+      outline-offset: 6px;
+    }
+  }
+
   @media (max-width: $screen-lg-min) {
     display: block;
     position: absolute;
