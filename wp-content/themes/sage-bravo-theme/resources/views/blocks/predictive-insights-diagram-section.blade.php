@@ -80,7 +80,7 @@ $desktopContentOrder = 3 - $desktopImageOrder;
             @if($button)
               <div class="pid__buttons">
                 <a href="{!! esc_url($button['url']) !!}"
-                  class="{!! esc_attr($button['class']) !!}"
+                  class="pids-btn {!! esc_attr($button['class']) !!}"
                   @if($button['target']) target="{!! esc_attr($button['target']) !!}" @endif
                   @if($button['rel']) rel="{!! esc_attr($button['rel']) !!}" @endif
                   aria-label="{!! esc_attr(bravo_label($button['aria_label'], $button['title'])) !!}"

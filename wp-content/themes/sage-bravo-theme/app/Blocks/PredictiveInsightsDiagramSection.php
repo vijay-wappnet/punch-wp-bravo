@@ -272,7 +272,7 @@ class PredictiveInsightsDiagramSection
             'rel'         => $target === '_blank' ? 'noopener noreferrer' : '',
             'aria_label'  => trim($group['aria_label'] ?? ''),
             'event_label' => trim($group['button_google_event_label'] ?? ''),
-            'class'       => implode(' ', array_merge(['btn', 'pid-btn'], $extra_classes ?: ['btn-red-fusion'])),
+            'class'       => implode(' ', array_merge(['btn'], $extra_classes ?: ['btn-red-fusion'])),
             'arrow_span'  => in_array('btn-trans-border-arrow', $extra_classes, true),
         ];
     }

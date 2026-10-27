@@ -159,6 +159,17 @@ body.contrast-inverted {
     .footer-newsletter-form input[type='email']:focus{
       border: 2px solid red !important;
     }
+    .contact-form-block-section .cfs input[type=text]:focus,
+    .contact-form-block-section .cfs input[type=email]:focus,
+    .contact-form-block-section .cfs input[type=tel]:focus,
+    .contact-form-block-section .cfs input[type=number]:focus,
+    .contact-form-block-section .cfs .cfs-select:not(.cfs-select--boxed):focus,
+    .contact-form-block-section .cfs .wpcf7-list-item input[type=checkbox]:focus,
+    .contact-form-block-section .cfs .cfs-select--boxed:focus,
+    .contact-form-block-section .cfs textarea:focus{
+      border: 2px solid red !important;
+    }
+
     .logo-wrapper a img,
     .footer-logo-wrapper a img,
     .menu-header-logo img{

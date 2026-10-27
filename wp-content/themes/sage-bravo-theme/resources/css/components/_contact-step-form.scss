@@ -563,8 +563,8 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
 
 // -------------------------------------------------- Thank you
 .cfs-thanks {
-  max-width: 640px;
-
+  max-width: 675px;
+  text-wrap: balance;
   p {
     margin: 0;
     font-size: 22px;
