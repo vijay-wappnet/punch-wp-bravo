@@ -18,16 +18,22 @@
     // actions are pushed to the right by their own margin-left: auto.
     justify-content: flex-start;
     gap: 59px;
-    padding: 20px 15px;
+    padding: 20px 160px;
 
-    @media (max-width: $screen-lg-min) {
-      // Logo is centered independently (position: absolute on
-      // .logo-wrapper below); menu-toggle is the only element left in
-      // flow now that .header-actions is hidden on mobile, so it must
-      // sit at the start (left) rather than space-between's end position.
-      position: relative;
-      justify-content: flex-start;
-      padding: 33px 20px 33px 36px;
+
+    &.container-fluid{
+      @media (max-width: 1520px) {
+        padding: 20px 120px;
+      }
+      @media (max-width: $screen-lg-min) {
+        // Logo is centered independently (position: absolute on
+        // .logo-wrapper below); menu-toggle is the only element left in
+        // flow now that .header-actions is hidden on mobile, so it must
+        // sit at the start (left) rather than space-between's end position.
+        position: relative;
+        justify-content: flex-start;
+        padding: 33px 20px 33px 36px;
+      }
     }
   }
 
@@ -325,9 +331,12 @@
   line-height: 40px;
   color: $black-off-color;
   margin-left: right;
-
+  position: fixed;
+  top : 36px;
   @media (max-width: $screen-lg-min) {
     margin-left: 0;
+    position: inherit;
+    top : auto;
   }
 
   // Keyboard focus (the menu moves focus here when it opens)
@@ -380,7 +389,9 @@
   // content (short nav list against a tall/zoomed-out viewport), matching
   // how .menu-right already centers its own content.
   justify-content: center;
-
+  @media (max-width: 1520px) {
+      padding: 20px 120px;
+    }
   @media (max-width: $screen-lg-min) {
     flex: 1;
     padding: 0 36px;
