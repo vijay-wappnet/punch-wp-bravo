@@ -194,6 +194,15 @@ $cfs-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' 
   grid-column: 1 / -1;
   min-width: 0;
 
+  // Checkbox groups are <fieldset> + <legend class="cfs-label">; drop the
+  // browser's fieldset box so they look like the other fields (the legend
+  // takes the .cfs-label styles, full width like a block label)
+  @at-root fieldset#{&} {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
   &--half {
     grid-column: span 1;
 
