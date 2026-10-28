@@ -6,8 +6,14 @@
   class="data-processing-workflow-section js-dpw"
   @if($section_style) style="{!! esc_attr($section_style) !!}" @endif>
 
+  {{-- Screen readers get the editor's description of the diagram and its
+       flow instead of the animated drawing (hidden from them below) --}}
+  @if($diagram_description)
+    <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+  @endif
+
   {{-- Everything in the diagram is positioned against this box, so it scales as one piece --}}
-  <div class="dpw__diagram js-dpw-diagram">
+  <div class="dpw__diagram js-dpw-diagram" @if($diagram_description) aria-hidden="true" @endif>
 
     {{-- Connection lines: behind the icons. Each is drawn on through a mask, so dashed lines are drawn on as dashed lines. --}}
     @if(count($connections) > 0)

@@ -42,6 +42,7 @@ class DataProcessingWorkflowSection
         // Get field values using ACF
         $elements = self::formatElements(get_field('diagram_elements'));
         $connections = self::formatConnections(get_field('diagram_connections'), count($elements));
+        $diagram_description = trim((string) get_field('diagram_description'));
         $section_bg_color = self::formatColor(get_field('section_bg_color'));
         $section_bg_image = get_field('section_bg_image');
         $margin = get_field('margin');
@@ -78,6 +79,7 @@ class DataProcessingWorkflowSection
             'responsiveCss' => $responsiveCss,
             'elements'      => $elements,
             'connections'   => $connections,
+            'diagram_description' => $diagram_description,
             'section_style' => $section_styles ? implode('; ', $section_styles) . ';' : '',
             'is_preview'    => $is_preview,
         ]);

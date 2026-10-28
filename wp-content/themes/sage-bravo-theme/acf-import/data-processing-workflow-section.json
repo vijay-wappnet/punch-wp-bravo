@@ -126,6 +126,26 @@
                 ]
             },
             {
+                "key": "field_dpw_diagram_description",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, e.g. \"A data flow from left to right: your data sources feed into Bravo, which processes them into reports and actions.\"",
+                "required": 0,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
+            },
+            {
                 "key": "field_dpw_section_bg_color",
                 "label": "Section Background Color",
                 "name": "section_bg_color",
@@ -212,7 +232,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf/data-processing-workflow-section"
+                    "value": "acf\/data-processing-workflow-section"
                 }
             ]
         ],
