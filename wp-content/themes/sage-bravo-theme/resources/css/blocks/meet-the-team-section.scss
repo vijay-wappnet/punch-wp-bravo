@@ -110,11 +110,8 @@ $mts-image-transition: 0.4s ease;
   // the second one is always partly visible. The track bleeds to the screen's
   // right edge so the card is cut by the screen, not by the container.
   @media (max-width: $screen-md-min) {
-    // The track below reaches the screen edge; clip it there so it can never
-    // make the page scroll sideways (100vw includes a desktop scrollbar)
-    overflow-x: clip;
-
     // content_alignment_mobile overrides the desktop setting
+    overflow-x: clip;
     &--align-mobile-left &__heading { text-align: left; }
     &--align-mobile-center &__heading { text-align: center; }
     &--align-mobile-right &__heading { text-align: right; }
@@ -131,10 +128,6 @@ $mts-image-transition: 0.4s ease;
     &__track {
       flex-wrap: nowrap;
       gap: 22px;
-      // Bleed to the screen's right edge, whatever the container's padding
-      // or width (36px padding below 576px, a centred 540px box above it):
-      // 50% - 50vw is the distance from the track's edge to the screen's.
-      // The same padding lets the last card still scroll fully into view.
       margin-right: calc(50% - 50vw);
       padding-right: calc(50vw - 50%);
       overflow-x: auto;
