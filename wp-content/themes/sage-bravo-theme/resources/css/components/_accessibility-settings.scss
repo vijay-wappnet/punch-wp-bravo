@@ -1276,13 +1276,16 @@ body.justify-text {
   text-align: left !important;
 
   & > *:not(.accessibility-modal):not(.modal-backdrop) {
-    text-align: left !important;
+    text-align: justify !important;
 
     p,
     li,
     td,
-    th {
-      text-align: left !important;
+    th, h1,h2,h3,h4,h5,h6,
+    body, a, strong, span,
+    li, p b, p strong,
+    figure, figcaption, blockquote, pre, code {
+      text-align: justify !important;
     }
   }
 }
