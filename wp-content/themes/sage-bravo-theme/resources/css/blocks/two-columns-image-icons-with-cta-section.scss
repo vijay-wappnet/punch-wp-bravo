@@ -57,7 +57,7 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .two-columns-image-icons-with-cta-section__heading {
-    margin-bottom: 25px;
+    margin-bottom: 45px;
     letter-spacing: 1%;
     @media (max-width: $screen-md-min) {
       margin-bottom: 44px;
@@ -69,7 +69,7 @@ $tcic-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     font-weight: $font-articulat-regular-weight;
     letter-spacing: 1%;
     p {
-      margin-bottom: 15px;
+      margin-bottom: 30px;
       letter-spacing: 1%;
 
       &:last-child {
