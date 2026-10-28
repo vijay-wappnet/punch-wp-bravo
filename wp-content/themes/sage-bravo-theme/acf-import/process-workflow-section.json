@@ -75,6 +75,26 @@
                 ]
             },
             {
+                "key": "field_pws_diagram_description",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, e.g. \"A three-step workflow: Report, then Plan, then Deliver. Each step builds on the one before.\"",
+                "required": 0,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
+            },
+            {
                 "key": "field_pws_heading_text",
                 "label": "Heading Text",
                 "name": "heading_text",
@@ -223,7 +243,7 @@
                         "name": "button_class",
                         "aria-label": "",
                         "type": "text",
-                        "instructions": "<b>Please add a button with one of the following classes only:</b>\n\nbtn-red-fusion, btn-trans-border-arrow",
+                        "instructions": "<b>Please add a button with one of the following classes only:<\/b>\n\nbtn-red-fusion, btn-trans-border-arrow",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -426,7 +446,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf/process-workflow-section"
+                    "value": "acf\/process-workflow-section"
                 }
             ]
         ],

@@ -47,6 +47,7 @@ class ProcessWorkflowSection
     {
         // Get field values using ACF
         $workflow_items = get_field('workflow_items');
+        $diagram_description = trim((string) get_field('diagram_description'));
         $heading_text = trim((string) get_field('heading_text'));
         $heading_level = get_field('heading_level') ?: 'h2';
         $description = get_field('description');
@@ -101,6 +102,7 @@ class ProcessWorkflowSection
             'blockId'                  => $blockId,
             'responsiveCss'            => $responsiveCss,
             'workflow'                 => $workflow,
+            'diagram_description'      => $diagram_description,
             'heading_text'             => $heading_text,
             'heading_level'            => $heading_level,
             'description'              => is_string($description) ? trim($description) : '',

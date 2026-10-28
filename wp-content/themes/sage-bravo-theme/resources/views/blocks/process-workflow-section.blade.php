@@ -18,7 +18,13 @@ $hasContent = $heading_text || $description || $button;
       {{-- Workflow column. Column order (desktop and mobile) is set in CSS from the modifier classes. --}}
       @if($workflow)
         <div class="process-workflow-section__column process-workflow-section__column--workflow">
-          <div class="pws__workflow-visual">
+          {{-- Screen readers get the editor's description of the diagram and its
+               flow instead of the animated drawing (hidden from them below) --}}
+          @if($diagram_description)
+            <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+          @endif
+
+          <div class="pws__workflow-visual" @if($diagram_description) aria-hidden="true" @endif>
             <svg class="pws__lines" viewBox="{{ $workflow['view_box'] }}" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
               @foreach($workflow['steps'] as $step)
                 <g class="pws__line-group js-pws-line-group">
