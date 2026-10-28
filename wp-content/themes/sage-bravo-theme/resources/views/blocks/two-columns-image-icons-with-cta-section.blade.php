@@ -50,7 +50,13 @@ use Illuminate\Support\Facades\Vite;
       {{-- Image / icons visualization column --}}
       @if($image || count($icons) > 0)
         <div class="two-columns-image-icons-with-cta-section__column two-columns-image-icons-with-cta-section__column--visual">
-          <div class="two-columns-image-icons-with-cta-section__image_icon js-tcic-orbit">
+          {{-- Screen readers get the editor's description of the diagram and its
+               flow instead of the animated drawing (hidden from them below) --}}
+          @if($diagram_description)
+            <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+          @endif
+
+          <div class="two-columns-image-icons-with-cta-section__image_icon js-tcic-orbit" @if($diagram_description) aria-hidden="true" @endif>
 
             @if(count($icons) > 0)
               <span class="two-columns-image-icons-with-cta-section__ring two-columns-image-icons-with-cta-section__ring--inner" aria-hidden="true"></span>

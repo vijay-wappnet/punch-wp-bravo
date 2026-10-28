@@ -1,0 +1,402 @@
+[
+    {
+        "key": "group_6ab4e45ec6719",
+        "title": "Two Column Image Icons with CTA Section",
+        "fields": [
+            {
+                "key": "field_6ab4e45ec671e",
+                "label": "Heading Text",
+                "name": "heading_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_6ab4e45ec6720",
+                "label": "Heading Level",
+                "name": "heading_level",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "h1": "H1",
+                    "h2": "H2",
+                    "h3": "H3",
+                    "h4": "H4",
+                    "h5": "H5",
+                    "h6": "H6",
+                    "p": "Paragraph"
+                },
+                "default_value": "p",
+                "return_format": "value",
+                "layout": "vertical",
+                "other_choice": 0,
+                "save_other_choice": 0,
+                "allow_null": 0
+            },
+            {
+                "key": "field_6ab4e45ec6721",
+                "label": "Description",
+                "name": "description",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0,
+                "default_value": ""
+            },
+            {
+                "key": "field_6ab4e45ec6722",
+                "label": "Circle Middle Image",
+                "name": "image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "allow_in_bindings": 1,
+                "preview_size": "medium"
+            },
+            {
+                "key": "field_6ab4e45ec6723",
+                "label": "Circle Image Icons",
+                "name": "image_icons",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "Icons 1–2 sit on the inner circle (1 = left, 2 = right). Icons 3+ sit on the outer circle, clockwise from the top.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "table",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Add Icon",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_6ab4e45ec6724",
+                        "label": "Icon",
+                        "name": "icon",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": false,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "library": "all",
+                        "preview_size": "thumbnail",
+                        "min_width": 0,
+                        "min_height": 0,
+                        "min_size": 0,
+                        "max_width": 0,
+                        "max_height": 0,
+                        "max_size": 0,
+                        "mime_types": "",
+                        "parent_repeater": "field_6ab4e45ec6723"
+                    }
+                ]
+            },
+            {
+                "key": "field_6ab4e45ec6740",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, e.g. \"Bravo sits at the center, connected to your data sources: Google Analytics, Meta, HubSpot...\"",
+                "required": 0,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_6ab4e45ec6725",
+                "label": "Buttons",
+                "name": "buttons",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "button_label": "Add Button",
+                "min": 0,
+                "max": 0,
+                "rows_per_page": 20,
+                "collapsed": "",
+                "sub_fields": [
+                    {
+                        "key": "field_6ab4e45ec6726",
+                        "label": "Button Link",
+                        "name": "button_link",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": false,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "parent_repeater": "field_6ab4e45ec6725"
+                    },
+                    {
+                        "key": "field_6ab4e45ec6727",
+                        "label": "Aria Label",
+                        "name": "aria_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": false,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_6ab4e45ec6725"
+                    },
+                    {
+                        "key": "field_6ab4e45ec6728",
+                        "label": "Button Google Event Label",
+                        "name": "button_google_event_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": false,
+                        "conditional_logic": false,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_6ab4e45ec6725"
+                    },
+                    {
+                        "key": "field_6ab4e45ec6729",
+                        "label": "Button Class",
+                        "name": "button_class",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "<b>Please add a button with one of the following classes only:<\/b>\r\n\r\nbtn-red-fusion",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "allow_in_bindings": 1,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_6ab4e45ec6725"
+                    }
+                ]
+            },
+            {
+                "key": "field_6ab4e45ec672a",
+                "label": "Image Alignment Left Side",
+                "name": "image_alignment_left_side",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "no": "No",
+                    "yes": "Yes"
+                },
+                "default_value": "no",
+                "return_format": "value",
+                "layout": "horizontal",
+                "other_choice": 0,
+                "save_other_choice": 0,
+                "allow_null": 0
+            },
+            {
+                "key": "field_6ab4e45ec672b",
+                "label": "Section Background Color",
+                "name": "section_bg_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "string",
+                "enable_opacity": 0,
+                "default_value": "",
+                "custom_palette_source": "",
+                "palette_colors": "",
+                "show_color_wheel": true
+            },
+            {
+                "key": "field_6ab4e45ec672c",
+                "label": "Section Background Image",
+                "name": "section_bg_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "preview_size": "medium",
+                "min_width": 0,
+                "min_height": 0,
+                "min_size": 0,
+                "max_width": 0,
+                "max_height": 0,
+                "max_size": 0,
+                "mime_types": ""
+            },
+            {
+                "key": "field_6ab4e45ec672d",
+                "label": "Margin",
+                "name": "margin",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            },
+            {
+                "key": "field_6ab4e45ec672e",
+                "label": "Padding",
+                "name": "padding",
+                "aria-label": "",
+                "type": "dimensions",
+                "instructions": "",
+                "required": false,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/two-columns-image-icons-with-cta-section"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": ""
+    }
+]

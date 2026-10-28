@@ -59,6 +59,7 @@ class TwoColumnsImageIconsWithCtaSection
         $description = get_field('description');
         $image = get_field('image');
         $image_icons = get_field('image_icons');
+        $diagram_description = trim((string) get_field('diagram_description'));
         $buttons = get_field('buttons');
         $image_alignment_left_side = get_field('image_alignment_left_side') === 'yes';
         $section_bg_color = get_field('section_bg_color');
@@ -95,6 +96,7 @@ class TwoColumnsImageIconsWithCtaSection
             'description'               => $description,
             'image'                     => self::formatImage($image),
             'icons'                     => self::formatIcons($image_icons),
+            'diagram_description'       => $diagram_description,
             'buttons'                   => self::formatButtons($buttons),
             'image_alignment_left_side' => $image_alignment_left_side,
             'section_style'             => implode('; ', $section_styles),
