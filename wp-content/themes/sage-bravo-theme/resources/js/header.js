@@ -114,6 +114,7 @@ function openMenu() {
   fullscreenMenu.classList.add('is-open');
   fullscreenMenu.setAttribute('aria-hidden', 'false');
   menuToggle.setAttribute('aria-expanded', 'true');
+  closeBtn?.setAttribute('aria-expanded', 'true');
   lockBodyScroll();
 
   // Only the menu can be reached while it is open
@@ -129,6 +130,7 @@ function closeMenu() {
   fullscreenMenu.classList.remove('is-open');
   fullscreenMenu.setAttribute('aria-hidden', 'true');
   menuToggle.setAttribute('aria-expanded', 'false');
+  closeBtn?.setAttribute('aria-expanded', 'false');
   unlockBodyScroll();
 
   document.removeEventListener('keydown', trapFocus);

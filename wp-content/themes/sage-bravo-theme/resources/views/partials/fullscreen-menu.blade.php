@@ -81,7 +81,7 @@
                 @endif
               </div>
 
-              <button class="close-btn" type="button" aria-label="{{ __('Close menu', 'sage') }}" data-event="{{ __('Close menu', 'sage') }}" aria-controls="fullscreen-menu">
+              <button class="close-btn" type="button" aria-label="{{ __('Close menu', 'sage') }}" data-event="{{ __('Close menu', 'sage') }}" aria-controls="fullscreen-menu" aria-expanded="false">
                 <img src="{{ Vite::asset('resources/images/Menu-close-icon.svg') }}" alt="" class="close-icon" aria-hidden="true">
                 <span class="close-label">{{ __('Close', 'sage') }}</span>
               </button>
