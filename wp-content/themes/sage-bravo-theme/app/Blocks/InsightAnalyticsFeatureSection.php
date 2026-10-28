@@ -47,6 +47,7 @@ class InsightAnalyticsFeatureSection
         $image = self::formatImage(get_field('image'));
         $image_left = (bool) get_field('image_alignment_left_side');
         $overlays = self::formatOverlays(get_field('overlay_items'));
+        $diagram_description = trim((string) get_field('diagram_description'));
         $button = self::formatButton(get_field('button'));
         $content_alignment = get_field('content_alignment') ?: 'left';
         $content_alignment_mobile = get_field('content_alignment_mobile') ?: 'left';
@@ -103,6 +104,7 @@ class InsightAnalyticsFeatureSection
             'image'                    => $image,
             'image_left'               => $image_left,
             'overlays'                 => $overlays,
+            'diagram_description'      => $diagram_description,
             'button'                   => $button,
             'content_alignment'        => $content_alignment,
             'content_alignment_mobile' => $content_alignment_mobile,
