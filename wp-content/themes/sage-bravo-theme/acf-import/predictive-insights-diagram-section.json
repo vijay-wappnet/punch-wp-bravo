@@ -222,6 +222,26 @@
                 ]
             },
             {
+                "key": "field_pids_diagram_description",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, e.g. \"A flow diagram over a photo: your data feeds into two insight steps, which lead to a recommended action.\"",
+                "required": 0,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
+            },
+            {
                 "key": "field_pids_button",
                 "label": "Button",
                 "name": "button",
@@ -299,7 +319,7 @@
                         "name": "button_class",
                         "aria-label": "",
                         "type": "text",
-                        "instructions": "<b>Please add a button with one of the following classes only:</b>\n\nbtn-red-fusion, btn-trans-border-arrow",
+                        "instructions": "<b>Please add a button with one of the following classes only:<\/b>\n\nbtn-red-fusion, btn-trans-border-arrow",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -482,7 +502,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf/predictive-insights-diagram-section"
+                    "value": "acf\/predictive-insights-diagram-section"
                 }
             ]
         ],

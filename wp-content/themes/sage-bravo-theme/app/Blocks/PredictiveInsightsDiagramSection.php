@@ -65,6 +65,7 @@ class PredictiveInsightsDiagramSection
         $image_left = (bool) get_field('image_alignment_left_side');
         $elements = self::formatElements(get_field('diagram_elements'));
         $connections = self::formatConnections(get_field('diagram_connections'), count($elements));
+        $diagram_description = trim((string) get_field('diagram_description'));
         $button = self::formatButton(get_field('button'));
         $content_alignment = get_field('content_alignment') ?: 'left';
         $content_alignment_mobile = get_field('content_alignment_mobile') ?: 'left';
@@ -122,6 +123,7 @@ class PredictiveInsightsDiagramSection
             'image_left'               => $image_left,
             'elements'                 => $elements,
             'connections'              => $connections,
+            'diagram_description'      => $diagram_description,
             'button'                   => $button,
             'content_alignment'        => $content_alignment,
             'content_alignment_mobile' => $content_alignment_mobile,

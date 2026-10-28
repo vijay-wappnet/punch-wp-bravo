@@ -24,8 +24,14 @@ $desktopContentOrder = 3 - $desktopImageOrder;
       {{-- Image + diagram column. The order classes move it (desktop and mobile); the markup is only written once. --}}
       @if($image)
         <div class="col-12 order-{{ $mobileImageOrder }} order-md-{{ $desktopImageOrder }} pid__column pid__column--image">
+          {{-- Screen readers get the editor's description of the diagram and its
+               flow instead of the animated drawing (hidden from them below) --}}
+          @if($diagram_description)
+            <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+          @endif
+
           {{-- Everything in the diagram is positioned against this wrapper, so it stays attached to the image wherever it sits --}}
-          <div class="pid__media js-pid-media">
+          <div class="pid__media js-pid-media" @if($diagram_description) aria-hidden="true" @endif>
             <img src="{!! esc_url($image['url']) !!}"
               alt="{!! esc_attr(bravo_alt($image['alt'], $heading_text, __('Predictive insights image', 'sage'))) !!}"
               @if($image['width']) width="{!! esc_attr($image['width']) !!}" @endif
