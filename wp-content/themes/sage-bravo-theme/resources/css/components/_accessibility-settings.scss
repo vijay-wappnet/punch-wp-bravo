@@ -59,6 +59,24 @@ $a11y-block-headings: (
 // keeps its own clamp(), scaled, so it still fits its card at every width.
 // $scale: 1.25 for Medium, 1.5 for Large
 @mixin a11y-block-text($scale) {
+  // Arrow buttons (header "Get Started", block CTAs, 404, contact form...):
+  // the arrow slides translateX(0.5em) on hover/focus, but the catch-all
+  // gave the <img> itself 80-96px, so "0.5em" became a 40-48px jump out of
+  // the button. The icon now takes the button's text size (a ~10px slide),
+  // and the button grows with its bigger label instead of keeping its
+  // fixed 171px width - at least as wide as before, with room either side.
+  .btn:has(> img, > svg) {
+    width: auto !important;
+    min-width: 171px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+
+    > img,
+    > svg {
+      font-size: inherit !important;
+    }
+  }
+
   // Default: clamp(16px, 7cqw, 30px) - three-columns-card-grid-section.scss
   .three-columns-card-grid-section .three-columns-card-grid-section__description {
     font-size: clamp(#{math.round(16px * $scale)}, #{7cqw * $scale}, #{math.round(30px * $scale)}) !important;
