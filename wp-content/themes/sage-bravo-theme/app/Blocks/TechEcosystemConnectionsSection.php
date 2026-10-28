@@ -40,6 +40,7 @@ class TechEcosystemConnectionsSection
         $heading_level = get_field('heading_level') ?: 'h2';
         $center_logos = get_field('center_logos');
         $ecosystem_items = get_field('ecosystem_items');
+        $diagram_description = trim((string) get_field('diagram_description'));
         $content_alignment = get_field('content_alignment') ?: 'center';
         $content_alignment_mobile = get_field('content_alignment_mobile') ?: 'center';
         $section_bg_color = get_field('section_bg_color');
@@ -92,6 +93,7 @@ class TechEcosystemConnectionsSection
             'heading_level'            => $heading_level,
             'logos'                    => $logos,
             'items'                    => $items,
+            'diagram_description'      => $diagram_description,
             'content_alignment'        => $content_alignment,
             'content_alignment_mobile' => $content_alignment_mobile,
             'section_style'            => $section_style,

@@ -42,7 +42,13 @@ $drawings = [
   {{-- Outside the container: the drawing is sized from the screen width (as in the design), so it can be wider than the container --}}
   @if(count($logos) > 0 || count($items) > 0)
     <div class="tec__visual-wrap">
-      <div class="tec__visual js-tec-visual">
+      {{-- Screen readers get the editor's description of the diagram and its
+           flow instead of the animated drawing (hidden from them below) --}}
+      @if($diagram_description)
+        <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+      @endif
+
+      <div class="tec__visual js-tec-visual" @if($diagram_description) aria-hidden="true" @endif>
 
         {{-- Connection lines: decorative, behind the card and the items --}}
         @foreach($drawings as $name => $drawing)

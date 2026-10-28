@@ -205,6 +205,26 @@
                 ]
             },
             {
+                "key": "field_tec_diagram_description",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, e.g. \"Bravo connects your whole tech ecosystem: booking engine, PMS, CRM, analytics and advertising platforms all feed into one place.\"",
+                "required": 0,
+                "conditional_logic": false,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
+            },
+            {
                 "key": "field_tec_content_alignment",
                 "label": "Content Alignment",
                 "name": "content_alignment",
@@ -345,7 +365,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf/tech-ecosystem-connections-section"
+                    "value": "acf\/tech-ecosystem-connections-section"
                 }
             ]
         ],
