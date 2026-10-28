@@ -26,9 +26,10 @@ use Illuminate\Support\Facades\Vite;
       </video>
     @elseif($video_image)
       <img src="{{ esc_url($video_image) }}" alt="{!! esc_attr(bravo_alt($heading_text, __('Video banner image', 'sage'))) !!}" class="video-banner-section__image" @if($video_image_width) width="{{ esc_attr($video_image_width) }}" @endif @if($video_image_height) height="{{ esc_attr($video_image_height) }}" @endif>
-    @else
-      <img src="{{ Vite::asset('resources/images/home-video.webp') }}" alt="{!! esc_attr(bravo_alt($heading_text, __('Bravo home banner image', 'sage'))) !!}" class="video-banner-section__fallback-image home-video-banner">
     @endif
+    {{-- No video and no image: just the section background (the old built-in
+         fallback, resources/images/home-video.webp, doesn't exist - it showed
+         as a broken image with its alt text across the banner) --}}
   </div>
 
   @if($section_bg)

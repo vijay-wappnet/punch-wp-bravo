@@ -248,8 +248,33 @@
 }
 
 .site-header--home.header-scrolled .header-login-link,
-.site-header:not(.site-header--home) .header-login-link {
+.site-header:not(.site-header--home) .header-login-link,
+// Home with no video/image in the banner: white Login would sit on a light
+// background, so it's charcoal there too
+.site-header--no-banner-media .header-login-link {
   color: $black-off-color;
+}
+
+// Home header over the Video Banner (before it scrolls to the light style):
+// the CTA's usual charcoal hover gets lost on the dark video, so it turns
+// white with charcoal text, and Login turns coral - both stay legible.
+// Everywhere else (and once scrolled) the hovers are unchanged.
+.site-header--video-banner:not(.header-scrolled) {
+  .header-cta-btn:hover,
+  .header-cta-btn:focus-visible {
+    background-color: $white-color;
+    color: $black-off-color;
+
+    // The arrow artwork is already charcoal: keep it (no white filter)
+    img {
+      filter: none;
+    }
+  }
+
+  .header-login-link:hover,
+  .header-login-link:focus-visible {
+    color: $red-fusion-color;
+  }
 }
 
 /* ==========================================

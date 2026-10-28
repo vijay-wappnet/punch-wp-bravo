@@ -82,7 +82,9 @@
     $login_ga_label = $login['login_button_google_event_label'] ?? '';
 @endphp
 
-<header id="site-header" class="site-header @if (is_front_page()) site-header--home @endif" role="banner">
+{{-- Home header modifiers: --video-banner when it sits over a Video Banner
+     with a video/image, --no-banner-media when there's no video/image behind it --}}
+<header id="site-header" class="site-header @if (is_front_page()) site-header--home {{ bravo_has_video_banner_media() ? 'site-header--video-banner' : 'site-header--no-banner-media' }} @endif" role="banner">
   <div class="header-inner container-fluid">
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="fullscreen-menu" aria-label="{{ __('Open menu', 'sage') }}" data-event="{{ __('Open menu', 'sage') }}">
       <span class="menu-toggle-icon">

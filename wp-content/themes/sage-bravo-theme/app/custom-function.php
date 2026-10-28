@@ -338,3 +338,29 @@ function bravo_link_attrs($html, $event_prefix = '')
         return $extra ? '<' . $tag . $attrs . $extra . '>' . $inner . '</' . $tag . '>' : $all;
     }, $html);
 }
+
+/**
+ * Does this page have a Video Banner block with a video or an image? The
+ * home header's "over the video" styles (white/charcoal CTA hover, coral
+ * Login hover) only apply then - a banner with neither is a plain
+ * background, so the normal hovers stay.
+ */
+function bravo_has_video_banner_media($post_id = null): bool
+{
+    $post = get_post($post_id ?: get_queried_object_id());
+    if (!$post || !has_block('acf/video-banner-section', $post)) {
+        return false;
+    }
+
+    foreach (parse_blocks($post->post_content) as $block) {
+        if (($block['blockName'] ?? '') !== 'acf/video-banner-section') {
+            continue;
+        }
+        $data = $block['attrs']['data'] ?? [];
+        if (!empty($data['video_file']) || !empty($data['video_image'])) {
+            return true;
+        }
+    }
+
+    return false;
+}
