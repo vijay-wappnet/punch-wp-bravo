@@ -255,12 +255,15 @@
 
   &:hover,
   &:focus-visible {
-    background-color: $white-off-color;
-    color: $red-fusion-color;
+    // background-color: $white-off-color;
+    // color: $red-fusion-color;
+    background-color: $white-color;
+    color: $black-off-color;
 
     #{$icon} {
       // ≈ $red-fusion-color (#ff5f5d)
-      filter: brightness(0) saturate(100%) invert(54%) sepia(53%) saturate(2564%) hue-rotate(323deg) brightness(102%) contrast(101%);
+      //filter: brightness(0) saturate(100%) invert(54%) sepia(53%) saturate(2564%) hue-rotate(323deg) brightness(102%) contrast(101%);
+      filter: brightness(0) saturate(100%) invert(15%) sepia(11%) saturate(15%) hue-rotate(31deg) brightness(95%) contrast(91%);
       transform: translateX(0.5em);
     }
   }

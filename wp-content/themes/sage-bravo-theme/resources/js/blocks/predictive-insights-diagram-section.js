@@ -4,7 +4,8 @@ import { gsap } from 'gsap';
  * Builds the diagram from left to right when the section scrolls into view.
  * The order is the repeater order (no animation field):
  *   image -> icon 1 -> line 1 -> icon 2 -> line 2 -> icon 3 -> line 3 -> icon 4 -> line 4 -> icon 5
- * Each line is drawn on (stroke-dashoffset through its mask); each icon fades
+ * Each line draws on smoothly along its length, like a trim-path reveal
+ * (stroke-dashoffset of the mask path that reveals it); each icon fades
  * and scales in a little, nudged in from the left. It plays once and
  * everything stays in its final place. Without JS, with reduced motion, or
  * with animations turned off in the site options, the finished diagram is
@@ -38,9 +39,12 @@ export default function initPredictiveInsightsDiagramSection(root = document) {
     const itemImages = items.map((item) => item.querySelector('img') || item);
 
     // Start state. The reveal paths have pathLength=1, so 1 = not drawn yet.
+    // autoRound: false - GSAP rounds px values by default, which snapped the
+    // 0-1 dashoffset straight from 1 to 0 (the line popped on instead of
+    // drawing along its length).
     if (image) gsap.set(image, { opacity: 0 });
     gsap.set(itemImages, { opacity: 0, x: -10, scale: 0.9 });
-    gsap.set(lines, { strokeDasharray: 1, strokeDashoffset: 1 });
+    gsap.set(lines, { strokeDasharray: 1, strokeDashoffset: 1, autoRound: false });
 
     const play = () => {
       // Smaller nudges on mobile
@@ -62,10 +66,11 @@ export default function initPredictiveInsightsDiagramSection(root = document) {
           index === 0 && image ? '>-0.2' : '>'
         );
 
-        // ... then the line from it to the next one
+        // ... then the line from it to the next one, drawn on like a trim
+        // path: it grows from the icon to the next one, easing in and out
         const line = lines[index];
         if (line) {
-          timeline.to(line, { strokeDashoffset: 0, duration: 0.6, ease: 'power1.inOut' }, '>-0.1');
+          timeline.to(line, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut', autoRound: false }, '>-0.15');
         }
       });
     };
