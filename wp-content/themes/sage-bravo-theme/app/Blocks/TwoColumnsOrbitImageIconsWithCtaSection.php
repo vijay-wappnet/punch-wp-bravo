@@ -51,6 +51,7 @@ class TwoColumnsOrbitImageIconsWithCtaSection
         $description = get_field('description');
         $pills = self::formatPills(get_field('data_pills'));
         $icons = self::formatIcons(get_field('orbit_icons'));
+        $diagram_description = trim((string) get_field('diagram_description'));
         $buttons = self::formatButtons(get_field('buttons'));
         $visual_left = (get_field('image_alignment_left_side') ?: 'right') === 'left';
         $content_alignment = get_field('content_alignment') ?: 'left';
@@ -106,6 +107,7 @@ class TwoColumnsOrbitImageIconsWithCtaSection
             'pills'             => $pills,
             'icons'             => self::placeIcons($icons),
             'arc'               => self::arc($icons),
+            'diagram_description' => $diagram_description,
             'buttons'           => $buttons,
             'visual_left'       => $visual_left,
             'content_alignment' => $content_alignment,

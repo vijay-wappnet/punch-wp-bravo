@@ -69,7 +69,13 @@ $desktopContentOrder = 3 - $desktopVisualOrder;
       {{-- Pills and icons column --}}
       @if($hasVisual)
         <div class="col-12 @if($hasContent) col-md-7 @endif order-{{ $mobileVisualOrder }} order-md-{{ $desktopVisualOrder }} tcoi__column tcoi__column--visual">
-          <div class="tcoi__visual js-tcoi-visual">
+          {{-- Screen readers get the editor's description of the diagram and its
+               flow instead of the animated pills + orbit (hidden from them below) --}}
+          @if($diagram_description)
+            <div class="sr-only">{!! nl2br(esc_html($diagram_description)) !!}</div>
+          @endif
+
+          <div class="tcoi__visual js-tcoi-visual" @if($diagram_description) aria-hidden="true" @endif>
 
             @if(count($pills) > 0)
               <ul class="tcoi__pills" role="list">

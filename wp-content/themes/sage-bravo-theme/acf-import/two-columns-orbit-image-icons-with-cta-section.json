@@ -127,6 +127,110 @@
                 "delay": 0
             },
             {
+                "key": "field_tcoi_buttons",
+                "label": "Buttons",
+                "name": "buttons",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Add Button",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_tcoi_button_link",
+                        "label": "Button Link",
+                        "name": "button_link",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "parent_repeater": "field_tcoi_buttons"
+                    },
+                    {
+                        "key": "field_tcoi_aria_label",
+                        "label": "Aria Label",
+                        "name": "aria_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcoi_buttons"
+                    },
+                    {
+                        "key": "field_tcoi_button_google_event_label",
+                        "label": "Button Google Event Label",
+                        "name": "button_google_event_label",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "Used for Google Analytic event tracking.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcoi_buttons"
+                    },
+                    {
+                        "key": "field_tcoi_button_class",
+                        "label": "Button Class",
+                        "name": "button_class",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "<b>Please add a button with one of the following classes only:<\/b>\n\nbtn-red-fusion, btn-trans-border-arrow",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_tcoi_buttons"
+                    }
+                ]
+            },
+            {
                 "key": "field_tcoi_data_pills",
                 "label": "Data Pills",
                 "name": "data_pills",
@@ -271,108 +375,24 @@
                 ]
             },
             {
-                "key": "field_tcoi_buttons",
-                "label": "Buttons",
-                "name": "buttons",
+                "key": "field_tcoi_diagram_description",
+                "label": "Diagram Description (screen readers)",
+                "name": "diagram_description",
                 "aria-label": "",
-                "type": "repeater",
-                "instructions": "",
+                "type": "textarea",
+                "instructions": "Not shown on screen. Read out by screen readers instead of the animated diagram: describe what it shows and the flow, including the pill labels (the pills are hidden with the rest of the diagram), e.g. \"Commercial, Marketing and Operations data flow into Bravo, which connects to your tools: guest profiles, Shopify, Google Analytics, Meta, Mailchimp, HubSpot and Salesforce.\"",
                 "required": 0,
-                "conditional_logic": 0,
+                "conditional_logic": false,
                 "wrapper": {
                     "width": "",
                     "class": "",
                     "id": ""
                 },
-                "layout": "block",
-                "pagination": 0,
-                "min": 0,
-                "max": 0,
-                "collapsed": "",
-                "button_label": "Add Button",
-                "rows_per_page": 20,
-                "sub_fields": [
-                    {
-                        "key": "field_tcoi_button_link",
-                        "label": "Button Link",
-                        "name": "button_link",
-                        "aria-label": "",
-                        "type": "link",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "return_format": "array",
-                        "parent_repeater": "field_tcoi_buttons"
-                    },
-                    {
-                        "key": "field_tcoi_aria_label",
-                        "label": "Aria Label",
-                        "name": "aria_label",
-                        "aria-label": "",
-                        "type": "text",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "parent_repeater": "field_tcoi_buttons"
-                    },
-                    {
-                        "key": "field_tcoi_button_google_event_label",
-                        "label": "Button Google Event Label",
-                        "name": "button_google_event_label",
-                        "aria-label": "",
-                        "type": "text",
-                        "instructions": "Used for Google Analytic event tracking.",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "parent_repeater": "field_tcoi_buttons"
-                    },
-                    {
-                        "key": "field_tcoi_button_class",
-                        "label": "Button Class",
-                        "name": "button_class",
-                        "aria-label": "",
-                        "type": "text",
-                        "instructions": "<b>Please add a button with one of the following classes only:</b>\n\nbtn-red-fusion, btn-trans-border-arrow",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "parent_repeater": "field_tcoi_buttons"
-                    }
-                ]
+                "rows": 4,
+                "new_lines": "",
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": ""
             },
             {
                 "key": "field_tcoi_image_alignment_left_side",
@@ -540,7 +560,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf/two-columns-orbit-image-icons-with-cta-section"
+                    "value": "acf\/two-columns-orbit-image-icons-with-cta-section"
                 }
             ]
         ],
