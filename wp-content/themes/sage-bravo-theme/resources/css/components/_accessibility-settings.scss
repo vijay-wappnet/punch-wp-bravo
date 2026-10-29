@@ -187,6 +187,10 @@ body.contrast-inverted {
     .contact-form-block-section .cfs textarea:focus{
       border-bottom: 2px solid red !important;
     }
+    .cfs .wpcf7-list-item input[type=checkbox]:focus-visible {
+      outline: 3px solid red !important;
+      outline-offset: 3px;
+    }
 
     .logo-wrapper a img,
     .footer-logo-wrapper a img,
