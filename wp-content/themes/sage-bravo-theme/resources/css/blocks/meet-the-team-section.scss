@@ -27,6 +27,11 @@ $mts-image-transition: 0.4s ease;
     @media (max-width: $screen-md-min) {
       margin-bottom: 34px;
     }
+    // Small phones: the arrows squeezed the heading onto 2-3 lines - they go
+    // on their own row under it, at the right (as in the latest articles block)
+    @media (max-width: $screen-mobile-min) {
+      flex-wrap: wrap;
+    }
   }
 
   &__heading {
@@ -135,6 +140,11 @@ $mts-image-transition: 0.4s ease;
 
       &[hidden] {
         display: none;
+      }
+
+      @media (max-width: $screen-mobile-min) {
+        flex: 1 1 100%;
+        justify-content: flex-end;
       }
     }
 

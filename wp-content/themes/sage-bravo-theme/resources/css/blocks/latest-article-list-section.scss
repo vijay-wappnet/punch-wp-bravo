@@ -60,6 +60,11 @@ $lals-image-transition: 0.4s ease;
       gap: 12px;
       margin-bottom: 34px;
     }
+    // Small phones: the button + arrows alone are ~230px, so on one row they
+    // stuck out past the screen edge (cut off) - they go under the heading
+    @media (max-width: $screen-mobile-min) {
+      flex-wrap: wrap;
+    }
   }
 
   // Same look whichever heading tag (h1-h6 / p) is chosen in heading_level
@@ -86,6 +91,14 @@ $lals-image-transition: 0.4s ease;
     @media (max-width: $screen-md-min) {
       flex-shrink: 0;
       gap: 8px;
+    }
+
+    // Own row under the heading on small phones (see __header), button on
+    // the left and the arrows at the far right
+    @media (max-width: $screen-mobile-min) {
+      flex: 1 1 100%;
+      justify-content: space-between;
+      margin-left: 0;
     }
   }
 
