@@ -44,7 +44,7 @@
             @if($member['name'] || $member['job_title'])
             <div class="meet-the-team-section__content">
               @if($member['name'])
-                <h4 class="meet-the-team-section__name">{{ $member['name'] }}</h4>
+                <h3 class="meet-the-team-section__name">{{ $member['name'] }}</h3>
               @endif
               @if($member['job_title'])
                 <p class="meet-the-team-section__job-title">{{ $member['job_title'] }}</p>

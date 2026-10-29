@@ -1,4 +1,6 @@
+@use "../common/fonts" as *;
 @use "../common/variables" as *;
+@use "../components/buttons" as *;
 
 $mts-image-transition: 0.4s ease;
 
@@ -21,7 +23,10 @@ $mts-image-transition: 0.4s ease;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 30px;
+    @media (max-width: $screen-md-min) {
+      margin-bottom: 34px;
+    }
   }
 
   &__heading {
@@ -103,7 +108,15 @@ $mts-image-transition: 0.4s ease;
   }
 
   &__name {
-    margin: 0;
+    margin: 0 0 5px 0;
+    font-family: $font-articulat-family;
+    font-weight: $font-articulat-regular-weight;
+    font-size: 24px;
+    line-height: 40px;
+    @media (max-width: $screen-md-min) {
+      font-size: 24px;
+      line-height: 40px;
+    }
   }
 
   // Mobile: native horizontal scroll; cards are narrower than the track so
