@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c
+class ComposerStaticInit4884d41ddd1e83970dc288b5d5b234d7
 {
     public static $prefixLengthsPsr4 = array (
         'L' => 
@@ -144,6 +144,7 @@ class ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c
         'AIOSEO\\Plugin\\Common\\Main\\Main' => __DIR__ . '/../..' . '/app/Common/Main/Main.php',
         'AIOSEO\\Plugin\\Common\\Main\\Media' => __DIR__ . '/../..' . '/app/Common/Main/Media.php',
         'AIOSEO\\Plugin\\Common\\Main\\Migrations\\Definitions\\DropLegacyCacheIndexes' => __DIR__ . '/../..' . '/app/Common/Main/Migrations/Definitions/DropLegacyCacheIndexes.php',
+        'AIOSEO\\Plugin\\Common\\Main\\Migrations\\Definitions\\DropLegacyOgImageDimensionColumns' => __DIR__ . '/../..' . '/app/Common/Main/Migrations/Definitions/DropLegacyOgImageDimensionColumns.php',
         'AIOSEO\\Plugin\\Common\\Main\\Migrations\\Definitions\\UnscheduleAiCreditFetch' => __DIR__ . '/../..' . '/app/Common/Main/Migrations/Definitions/UnscheduleAiCreditFetch.php',
         'AIOSEO\\Plugin\\Common\\Main\\Migrations\\Migration' => __DIR__ . '/../..' . '/app/Common/Main/Migrations/Migration.php',
         'AIOSEO\\Plugin\\Common\\Main\\Migrations\\MigrationLog' => __DIR__ . '/../..' . '/app/Common/Main/Migrations/MigrationLog.php',
@@ -405,9 +406,11 @@ class ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c
         'League\\HTMLToMarkdown\\HtmlConverter' => __DIR__ . '/..' . '/league/html-to-markdown/src/HtmlConverter.php',
         'League\\HTMLToMarkdown\\HtmlConverterInterface' => __DIR__ . '/..' . '/league/html-to-markdown/src/HtmlConverterInterface.php',
         'League\\HTMLToMarkdown\\LinkSyntax' => __DIR__ . '/..' . '/league/html-to-markdown/src/LinkSyntax.php',
+        'League\\HTMLToMarkdown\\NoBreakSpaces' => __DIR__ . '/..' . '/league/html-to-markdown/src/NoBreakSpaces.php',
         'League\\HTMLToMarkdown\\PreConverterInterface' => __DIR__ . '/..' . '/league/html-to-markdown/src/PreConverterInterface.php',
         'League\\HTMLToMarkdown\\PrecedingMarkdown' => __DIR__ . '/..' . '/league/html-to-markdown/src/PrecedingMarkdown.php',
         'League\\HTMLToMarkdown\\RawHtml' => __DIR__ . '/..' . '/league/html-to-markdown/src/RawHtml.php',
+        'League\\HTMLToMarkdown\\SiblingPositionCache' => __DIR__ . '/..' . '/league/html-to-markdown/src/SiblingPositionCache.php',
         'PHPInsight\\Autoloader' => __DIR__ . '/..' . '/jwhennessey/phpinsight/lib/PHPInsight/Autoloader.php',
         'PHPInsight\\Sentiment' => __DIR__ . '/..' . '/jwhennessey/phpinsight/lib/PHPInsight/Sentiment.php',
     );
@@ -415,10 +418,10 @@ class ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0b175048f55b8653d4aefdfd99d5bb0c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4884d41ddd1e83970dc288b5d5b234d7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4884d41ddd1e83970dc288b5d5b234d7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4884d41ddd1e83970dc288b5d5b234d7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4884d41ddd1e83970dc288b5d5b234d7::$classMap;
 
         }, null, ClassLoader::class);
     }

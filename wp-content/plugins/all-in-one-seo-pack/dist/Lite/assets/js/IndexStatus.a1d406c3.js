@@ -1,0 +1,1 @@
+import{S as n}from"./CheckSolid.1c91b914.js";import{i as t,j as o,a0 as r,v as e}from"./vendor-vue-ui.252e8d31.js";const s={class:"aioseo-index-status"},_={__name:"IndexStatus",setup(a){return(c,u)=>(t(),o("div",s,[r(e(n))]))}};export{_};

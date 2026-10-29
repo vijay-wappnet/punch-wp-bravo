@@ -1,0 +1,1 @@
+import{a as o}from"./app-core.6beab9a7.js";import{_ as t}from"./Button.f421fe9d.js";import{B as r}from"./Input.4a0012ca.js";import{B as s}from"./Select.cafd2049.js";import{B as a}from"./Toggle.99cacb8a.js";const e={Button:t,Input:r,Select:s,Toggle:a},m=n=>(o(n,e,"Base"),n);export{m as l};
