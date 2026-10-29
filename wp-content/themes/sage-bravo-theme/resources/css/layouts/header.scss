@@ -582,7 +582,7 @@
   padding: 18px;
   border-radius: 0px;
   background-color: $red-fusion-color;
-  color: $white-color;
+  color: $black-off-color;
   font-family: $font-articulat-family;
   font-weight: $font-articulat-regular-weight;
   font-size: 18px;
@@ -590,11 +590,14 @@
   &:hover,
   &:focus,
   &:active {
-    color: $black-off-color;
-    background-color: $red-fusion-color;
+    color: $red-fusion-color;
+    background-color: $black-off-color;
+    @media (max-width: $screen-lg-min) {
+      color: $white-color;
+      background-color: $black-off-color;
+    }
   }
   @media (max-width: $screen-lg-min) {
-    color: $black-off-color;
     font-size: 32px;
     line-height: 38px;
   }
