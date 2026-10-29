@@ -145,7 +145,7 @@ $apps-divider: $white-off-light-grayish-color;
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     padding: 0;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-light-weight;
@@ -153,6 +153,11 @@ $apps-divider: $white-off-light-grayish-color;
     line-height: 1.4;
     // A feature is never split between the two columns
     break-inside: avoid;
+    @media (max-width: $screen-md-min) {
+      font-size: 22px;
+      line-height: 100%;
+      margin: 0 0 15px;
+    }
   }
 
   // Aligned to the first line of the text, however long the text is

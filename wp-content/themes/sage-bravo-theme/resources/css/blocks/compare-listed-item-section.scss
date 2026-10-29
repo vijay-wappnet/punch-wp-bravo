@@ -57,8 +57,8 @@ $clis-tick-green: #2e9800;
     color: $black-off-color;
     font-family: $font-articulat-family;
     font-weight: $font-articulat-regular-weight;
-    font-size: 28px;
-    line-height: 1.2;
+    font-size: 32px;
+    line-height: 38px;
     overflow-wrap: break-word;
 
     &:last-child {
@@ -66,8 +66,9 @@ $clis-tick-green: #2e9800;
     }
 
     @media (max-width: $screen-md-min) {
-      margin-bottom: 18px;
-      font-size: 24px;
+      margin-bottom: 25px;
+      font-size: 32px;
+      line-height: 25px;
     }
   }
 

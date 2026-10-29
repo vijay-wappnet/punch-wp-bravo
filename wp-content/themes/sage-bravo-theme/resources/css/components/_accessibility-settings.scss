@@ -524,7 +524,8 @@ body.text-medium {
     form .wpcf7-number,
     .cta-banner-section__description p,
     .pps__feature-text span,
-    .search-results-section__input {
+    .search-results-section__input,
+    .compare-listed-item-section .clis__text {
       font-size: 20px !important;
 
       @media (max-width: $screen-md-min) {
@@ -865,7 +866,8 @@ body.text-large {
     form .wpcf7-number,
     .cta-banner-section__description p,
     .pps__feature-text span,
-    .search-results-section__input {
+    .search-results-section__input,
+    .compare-listed-item-section .clis__text{
       font-size: 22px !important;
 
       @media (max-width: $screen-md-min) {
