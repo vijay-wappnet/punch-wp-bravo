@@ -1345,7 +1345,7 @@ body.justify-text .accessibility-modal {
     color: $black-off-color !important;
   }
 
-  // The text-size rules (`body.text-medium > *:not(.accessibility-modal) h5`)
+  // The text-size rules (`body.text-medium > *:not(.accessibility-modal) h2`)
   // still reach the title, because the modal sits inside the footer rather
   // than directly in <body>. The extra classes here out-rank them so the
   // title keeps its default size at every text-size setting.

@@ -203,8 +203,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title accessibility-title" id="accessibilityModalLabel">Accessibility Display Settings
-                </h5>
+                <h2 class="modal-title accessibility-title" id="accessibilityModalLabel">Accessibility Display Settings
+                </h2>
                 <button type="button" class="btn-close custom-close" data-bs-dismiss="modal" aria-label="{{ __('Close accessibility settings', 'sage') }}" data-event="{{ __('Close accessibility settings', 'sage') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
